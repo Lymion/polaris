@@ -45,7 +45,7 @@ const GOALS: Goal[] = [
 const LAST_STEP = 5;
 
 const inputClass =
-  "w-full rounded-xl bg-fg/[0.05] px-4 py-3 text-ink ring-1 ring-line placeholder:text-faint focus:outline-none focus:ring-2 focus:ring-star-400/70";
+  "w-full rounded-xl bg-fg/[0.05] px-4 py-3 text-ink ring-1 ring-line placeholder:text-faint focus:outline-none focus:ring-2 focus:ring-focus/70";
 
 export function Onboarding() {
   const router = useRouter();

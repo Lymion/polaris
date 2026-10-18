@@ -78,7 +78,7 @@ export function ContentCalendar({ nav }: { nav: StationNav }) {
         {posts && !run.busy ? (
           <CalendarPoster
             posts={posts}
-            actions={<SaveButton saved={run.isSaved("week")} onClick={() => run.toggleSave("week", title, { tool: "calendar", posts })} tone="light" />}
+            actions={<SaveButton saved={run.isSaved("week")} onClick={() => run.toggleSave("week", title, { tool: "calendar", posts })} tone="accent" />}
           />
         ) : (
           <BlankPoster start={start} busy={run.busy} />
@@ -97,7 +97,7 @@ function BlankPoster({ start, busy }: { start: string; busy: boolean }) {
   });
   return (
     <div className="overflow-hidden rounded-2xl bg-[#EEF2FF] text-space-900 shadow-[0_30px_50px_-24px_rgb(0_0_0/0.85)]" role={busy ? "status" : undefined}>
-      <div className="bg-star-400 px-5 py-3">
+      <div className="bg-star-400 px-5 py-3 text-on-accent">
         <p className="text-sm font-extrabold uppercase tracking-[0.2em]">
           Content plan{" "}
           <span className="font-semibold normal-case tracking-normal">

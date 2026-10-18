@@ -89,7 +89,7 @@ export function LessonsTour({ firstVisit, onClose }: { firstVisit: boolean; onCl
             <Button variant="ghost" size="sm" onClick={() => setStep(step - 1)} disabled={step === 0}>
               <ArrowLeft className="size-4" aria-hidden /> Back
             </Button>
-            <button type="button" onClick={onClose} className="px-2 text-sm text-faint hover:text-ink">
+            <button type="button" onClick={onClose} className="tap-target relative px-2 text-sm text-faint transition-colors hover:text-ink">
               Skip
             </button>
             <Button size="sm" className="ml-auto" onClick={() => setStep(step + 1)}>
@@ -125,10 +125,13 @@ export function LessonsTour({ firstVisit, onClose }: { firstVisit: boolean; onCl
   );
 }
 
-/** One dot per lesson: green when passed, gold for the current one. Click to jump. */
+/**
+ * One dot per lesson: green when passed, gold for the current one. Click to jump. On touch screens
+ * the dots spread across the row so each gets a cell big enough to tap without hitting the next.
+ */
 function Progress({ current, done, onPick }: { current: number; done: string[]; onPick: (i: number) => void }) {
   return (
-    <div className="flex items-center gap-1.5">
+    <div className="flex items-center gap-1.5 pointer-coarse:w-full pointer-coarse:gap-0">
       {LESSONS.map((l, i) => {
         const passed = done.includes(l.id);
         return (
@@ -138,11 +141,15 @@ function Progress({ current, done, onPick }: { current: number; done: string[]; 
             onClick={() => onPick(i)}
             aria-label={`Lesson ${i + 1}: ${l.title}${passed ? " (passed)" : ""}`}
             aria-current={i === current ? "step" : undefined}
-            className={clsx(
-              "grid h-2.5 place-items-center rounded-full transition-[width,background-color] duration-200 ease-out",
-              i === current ? "w-6 bg-star-400" : passed ? "w-2.5 bg-growth" : "w-2.5 bg-fg/20 hover:bg-fg/40",
-            )}
-          />
+            className="group grid place-items-center rounded-full pointer-coarse:h-11 pointer-coarse:flex-1"
+          >
+            <span
+              className={clsx(
+                "h-2.5 rounded-full transition-[width,background-color] duration-200 ease-out",
+                i === current ? "w-6 bg-star-400" : passed ? "w-2.5 bg-growth" : "w-2.5 bg-fg/20 group-hover:bg-fg/40",
+              )}
+            />
+          </button>
         );
       })}
     </div>
@@ -200,7 +207,7 @@ function LessonContent({ lesson, onAsk }: { lesson: Lesson; onAsk: () => void })
                 aria-pressed={picked === i}
                 onClick={() => pick(i)}
                 className={clsx(
-                  "flex w-full items-center justify-between gap-3 rounded-xl px-4 py-2.5 text-left text-sm ring-1 transition-colors",
+                  "flex w-full items-center justify-between gap-3 rounded-xl px-4 py-2.5 text-left text-sm ring-1 transition-colors pointer-coarse:py-3",
                   mark === "right" && "bg-growth/10 text-ink ring-growth/50",
                   mark === "wrong" && "bg-alert/10 text-ink ring-alert/40",
                   !mark && "bg-fg/[0.03] text-muted ring-line hover:bg-fg/[0.07] hover:text-ink",
@@ -223,7 +230,7 @@ function LessonContent({ lesson, onAsk }: { lesson: Lesson; onAsk: () => void })
       <button
         type="button"
         onClick={onAsk}
-        className="mt-4 inline-flex items-center gap-2 rounded-full bg-star-400/10 py-1.5 pl-1.5 pr-4 text-sm font-semibold text-star-200 ring-1 ring-star-400/40 hover:bg-star-400/20"
+        className="tap-target relative mt-4 inline-flex items-center gap-2 rounded-full bg-star-400/10 py-1.5 pl-1.5 pr-4 text-sm font-semibold text-star-200 ring-1 ring-star-400/40 transition-[transform,background-color] duration-150 ease-out hover:bg-star-400/20 active:scale-[0.97]"
       >
         <Mascot size={24} still /> Explain this with my numbers
       </button>

@@ -10,7 +10,7 @@ function BackToDesk() {
   return (
     <Link
       href="/"
-      className="world-wood absolute left-3 top-3 z-20 inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-bold text-white shadow-lg hover:brightness-110 sm:left-[3%]"
+      className="world-wood tap-target absolute left-3 top-3 z-20 inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-bold text-white shadow-lg transition-[filter] hover:brightness-110 sm:left-[3%]"
     >
       <ArrowLeft className="size-3.5" aria-hidden /> Back to your desk
     </Link>

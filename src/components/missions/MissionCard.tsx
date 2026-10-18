@@ -96,7 +96,7 @@ export function MissionCard({ mission, defaultOpen = false }: { mission: Mission
         <ul id={stepsId} className="space-y-1 border-t border-line bg-fg/[0.02] px-3 py-3">
           {mission.steps.map((step) => (
             <li key={step.id} className="flex items-start gap-1 rounded-lg transition-colors hover:bg-fg/[0.04]">
-              <label className={clsx("flex flex-1 items-start gap-3 px-2 py-2", done ? "cursor-default" : "cursor-pointer")}>
+              <label className={clsx("flex flex-1 items-start gap-3 px-2 py-2 pointer-coarse:py-3", done ? "cursor-default" : "cursor-pointer")}>
                 <input
                   type="checkbox"
                   checked={step.done}
@@ -107,7 +107,7 @@ export function MissionCard({ mission, defaultOpen = false }: { mission: Mission
                 <span
                   aria-hidden
                   className={clsx(
-                    "mt-0.5 grid size-5 shrink-0 place-items-center rounded-md ring-1 transition-[background-color,box-shadow] duration-150 peer-focus-visible:ring-2 peer-focus-visible:ring-star-400",
+                    "mt-0.5 grid size-5 shrink-0 place-items-center rounded-md ring-1 transition-[background-color,box-shadow] duration-150 peer-focus-visible:ring-2 peer-focus-visible:ring-focus",
                     step.done ? "bg-star-400 ring-star-400" : "bg-fg/[0.04] ring-fg/20",
                   )}
                 >
@@ -127,7 +127,7 @@ export function MissionCard({ mission, defaultOpen = false }: { mission: Mission
                   }
                   aria-label={`Ask ${name} about this step`}
                   title={`Ask ${name} about this step`}
-                  className="tap-target relative mr-1 mt-1.5 grid size-7 shrink-0 place-items-center rounded-full text-faint transition-colors hover:bg-star-400/15 hover:text-star-300"
+                  className="tap-target relative mr-1 mt-1.5 grid size-7 shrink-0 place-items-center rounded-full text-faint transition-colors hover:bg-star-400/15 hover:text-star-300 pointer-coarse:mt-2.5"
                 >
                   <CircleHelp className="size-4" aria-hidden />
                 </button>

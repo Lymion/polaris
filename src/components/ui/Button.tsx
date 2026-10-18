@@ -7,7 +7,7 @@ type Size = "sm" | "md" | "lg";
 
 // Disabled buttons keep pointer events so a title explaining why still shows on hover.
 const base =
-  "tap-target relative inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition-[transform,background-color,color,filter,box-shadow] duration-150 ease-out active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-star-400";
+  "tap-target relative inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition-[transform,background-color,color,filter,box-shadow] duration-150 ease-out active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
 
 const variants: Record<Variant, string> = {
   primary:

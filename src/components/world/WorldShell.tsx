@@ -48,7 +48,7 @@ export function WorldShell({ onAppearance, onData, children }: { onAppearance: (
   return (
     <div className="min-h-dvh">
       <header className="fixed inset-x-0 top-0 z-30 flex h-14 items-center gap-3 bg-linear-to-b from-surface-950/80 to-transparent px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2" aria-label="Polaris: back to your desk">
+        <Link href="/" className="tap-target relative flex items-center gap-2" aria-label="Polaris: back to your desk">
           <PolarisMark size={30} />
           <Wordmark className="hidden text-2xl sm:block" />
         </Link>

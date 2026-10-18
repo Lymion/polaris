@@ -11,7 +11,7 @@ import { newId, usePolaris } from "@/lib/store";
 import type { TreasuryEntry } from "@/lib/types";
 
 const cell =
-  "w-full rounded-md bg-transparent px-2 py-1.5 text-sm text-ink ring-1 ring-transparent placeholder:text-faint hover:ring-line focus:bg-fg/[0.05] focus:outline-none focus:ring-star-400/70";
+  "w-full rounded-md bg-transparent px-2 py-1.5 text-sm text-ink ring-1 ring-transparent placeholder:text-faint hover:ring-line focus:bg-fg/[0.05] focus:outline-none focus:ring-focus/70";
 
 /** Default date for a new row: today if this is the current month, otherwise the month's last logged day or its 1st. */
 function defaultDate(month: string, rows: TreasuryEntry[]) {
@@ -85,7 +85,7 @@ export function SheetGrid({ month, flags }: { month: string; flags: Map<string, 
           <button
             type="button"
             onClick={addRow}
-            className="mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-full py-2.5 text-sm font-semibold text-star-200 ring-1 ring-star-400/40 hover:bg-star-400/10"
+            className="mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-full py-2.5 text-sm font-semibold text-star-200 ring-1 ring-star-400/40 transition-[transform,background-color] duration-150 ease-out hover:bg-star-400/10 active:scale-[0.97] pointer-coarse:py-3"
           >
             <Plus className="size-4" aria-hidden /> Add row
           </button>
@@ -201,7 +201,7 @@ export function SheetGrid({ month, flags }: { month: string; flags: Map<string, 
                 <button
                   type="button"
                   onClick={addRow}
-                  className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold text-star-200 ring-1 ring-star-400/40 hover:bg-star-400/10"
+                  className="tap-target relative inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold text-star-200 ring-1 ring-star-400/40 transition-[transform,background-color] duration-150 ease-out hover:bg-star-400/10 active:scale-[0.97]"
                 >
                   <Plus className="size-3.5" aria-hidden /> Add row
                 </button>
@@ -220,7 +220,7 @@ export function SheetGrid({ month, flags }: { month: string; flags: Map<string, 
 }
 
 const field =
-  "w-full min-w-0 rounded-lg bg-fg/[0.05] px-3 py-2 text-sm text-ink ring-1 ring-line placeholder:text-faint focus:outline-none focus:ring-2 focus:ring-star-400/70";
+  "w-full min-w-0 rounded-lg bg-fg/[0.05] px-3 py-2 text-sm text-ink ring-1 ring-line placeholder:text-faint focus:outline-none focus:ring-2 focus:ring-focus/70";
 
 /** One transaction as a stacked card, for narrow screens. */
 function RowCard({

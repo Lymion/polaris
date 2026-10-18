@@ -326,12 +326,12 @@ export function CalendarPoster({ posts, actions }: { posts: PlannedPost[]; actio
 
   return (
     <div className="overflow-hidden rounded-2xl bg-[#EEF2FF] text-space-900 shadow-[0_30px_50px_-24px_rgb(0_0_0/0.85)]">
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-star-400 px-5 py-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-star-400 px-5 py-3 text-on-accent">
         <p className="text-sm font-extrabold uppercase tracking-[0.2em]">
           Content plan <span className="font-semibold normal-case tracking-normal">· {weekLabel(posts)}</span>
         </p>
         <div className="flex flex-wrap gap-2">
-          <CopyButton text={allCaptions} label="Copy all captions" tone="light" />
+          <CopyButton text={allCaptions} label="Copy all captions" tone="accent" />
           {actions}
         </div>
       </div>

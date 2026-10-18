@@ -243,7 +243,7 @@ function NameMe({ onSave }: { onSave: (name: string) => void }) {
           placeholder="Lumi"
           maxLength={24}
           aria-label="Your guide's name"
-          className="min-w-0 flex-1 rounded-full bg-fg/[0.06] px-4 py-2 text-sm ring-1 ring-line placeholder:text-faint focus:outline-none focus:ring-2 focus:ring-star-400/70"
+          className="min-w-0 flex-1 rounded-full bg-fg/[0.06] px-4 py-2 text-sm ring-1 ring-line placeholder:text-faint focus:outline-none focus:ring-2 focus:ring-focus/70"
         />
         <button
           type="submit"

@@ -47,7 +47,7 @@ export function CashflowChart({ months, currency }: { months: MonthSummary[]; cu
         <button
           type="button"
           onClick={() => setAsTable(!asTable)}
-          className="-my-1.5 py-1.5 text-xs font-medium text-muted underline-offset-2 hover:text-ink hover:underline"
+          className="tap-target relative -my-1.5 py-1.5 text-xs font-medium text-muted underline-offset-2 hover:text-ink hover:underline"
         >
           {asTable ? "Show as chart" : "Show as table"}
         </button>

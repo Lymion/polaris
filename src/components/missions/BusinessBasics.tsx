@@ -32,7 +32,7 @@ export function BusinessBasics({ className }: { className?: string }) {
               updateProfile({ country: e.target.value, ...(currency && { currency }) });
             }}
             placeholder="e.g. Malaysia"
-            className="mt-2 w-full rounded-xl bg-fg/[0.05] px-4 py-2.5 text-sm ring-1 ring-line placeholder:text-faint focus:outline-none focus:ring-2 focus:ring-star-400/70"
+            className="mt-2 w-full rounded-xl bg-fg/[0.05] px-4 py-2.5 text-sm ring-1 ring-line placeholder:text-faint focus:outline-none focus:ring-2 focus:ring-focus/70"
           />
         </label>
         {/* Set from the country; change it only if you trade in another currency. */}
@@ -41,7 +41,7 @@ export function BusinessBasics({ className }: { className?: string }) {
           <select
             value={profile.currency}
             onChange={(e) => updateProfile({ currency: e.target.value })}
-            className="mt-2 w-full rounded-xl bg-fg/[0.05] px-3 py-2.5 text-sm ring-1 ring-line focus:outline-none focus:ring-2 focus:ring-star-400/70"
+            className="mt-2 w-full rounded-xl bg-fg/[0.05] px-3 py-2.5 text-sm ring-1 ring-line focus:outline-none focus:ring-2 focus:ring-focus/70"
           >
             {CURRENCIES.map((c) => (
               <option key={c} value={c} className="bg-surface-800">
@@ -68,7 +68,7 @@ export function BusinessBasics({ className }: { className?: string }) {
                 aria-pressed={on}
                 onClick={() => toggle(f.id)}
                 className={clsx(
-                  "inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-sm font-medium ring-1 transition-[transform,background-color,color,box-shadow] duration-150 ease-out active:scale-[0.97]",
+                  "inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-sm font-medium ring-1 transition-[transform,background-color,color,box-shadow] duration-150 ease-out active:scale-[0.97] pointer-coarse:py-3",
                   on
                     ? "bg-growth/10 text-growth ring-growth/40"
                     : "bg-fg/[0.04] text-muted ring-line hover:bg-fg/[0.08] hover:text-ink",

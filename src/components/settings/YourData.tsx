@@ -57,7 +57,7 @@ export function YourDataDialog({ onClose }: { onClose: () => void }) {
               business name and a summary of your numbers) go to NVIDIA Nemotron on Nebius, then come straight back.
               Card and account numbers in statement files are blanked out first. Polaris&apos;s own server keeps nothing.
             </p>
-            <Link href="/privacy" onClick={onClose} className="mt-1 inline-block font-medium text-star-300 underline-offset-4 hover:underline">
+            <Link href="/privacy" onClick={onClose} className="tap-target relative mt-1 inline-block font-medium text-star-300 underline-offset-4 hover:underline">
               Read the privacy notice
             </Link>
           </div>
@@ -152,7 +152,7 @@ export function YourDataDialog({ onClose }: { onClose: () => void }) {
             <button
               type="button"
               onClick={() => setConfirmDelete(true)}
-              className="inline-flex items-center gap-2 text-sm font-medium text-alert hover:underline"
+              className="tap-target relative inline-flex items-center gap-2 text-sm font-medium text-alert hover:underline"
             >
               <Trash2 className="size-4" aria-hidden /> Delete all my data
             </button>

@@ -146,7 +146,7 @@ export function BiggestFixedCosts({ className }: { className?: string }) {
                 .join(", ")}. ${sales > 0 ? `My average monthly sales are about ${formatMoney(sales, currency)}.` : ""} Are any of these too high for a business like mine, and how could I lower them?`,
             )
           }
-          className="mt-6 inline-flex items-center gap-2 rounded-full bg-star-400/10 py-1.5 pl-1.5 pr-4 text-sm font-semibold text-star-200 ring-1 ring-star-400/40 hover:bg-star-400/20"
+          className="tap-target relative mt-6 inline-flex items-center gap-2 rounded-full bg-star-400/10 py-1.5 pl-1.5 pr-4 text-sm font-semibold text-star-200 ring-1 ring-star-400/40 transition-[transform,background-color] duration-150 ease-out hover:bg-star-400/20 active:scale-[0.97]"
         >
           <Mascot size={26} still /> Ask {mascotName(profile)} if these are healthy
         </button>

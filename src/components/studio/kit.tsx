@@ -162,8 +162,12 @@ export function TextField({ label, hint, children }: { label: string; hint?: str
 
 export const opts = (labels: string[]) => labels.map((l) => ({ value: l, label: l }));
 
-/** Small copy-to-clipboard button. `tone="light"` is for cards with a light background. */
-export function CopyButton({ text, label = "Copy", tone = "dark", className }: { text: string; label?: string; tone?: "dark" | "light"; className?: string }) {
+/** What a small studio button sits on: the dark page, a light paper card, or a strip in the theme's accent. */
+type Tone = "dark" | "light" | "accent";
+const ON_ACCENT = "bg-on-accent/10 text-on-accent hover:bg-on-accent/15";
+
+/** Small copy-to-clipboard button. */
+export function CopyButton({ text, label = "Copy", tone = "dark", className }: { text: string; label?: string; tone?: Tone; className?: string }) {
   const [copied, setCopied] = useState(false);
   useEffect(() => {
     if (!copied) return;
@@ -177,8 +181,12 @@ export function CopyButton({ text, label = "Copy", tone = "dark", className }: {
       aria-label={label ? undefined : copied ? "Copied" : "Copy"}
       title={label ? undefined : "Copy"}
       className={clsx(
-        "inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold transition-colors",
-        tone === "light" ? "bg-space-900/[0.07] text-space-800 hover:bg-space-900/[0.14]" : "bg-fg/[0.06] text-muted hover:bg-fg/[0.12] hover:text-ink",
+        "tap-target relative inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold transition-[transform,background-color,color] duration-150 ease-out active:scale-[0.97]",
+        tone === "accent"
+          ? ON_ACCENT
+          : tone === "light"
+            ? "bg-space-900/[0.07] text-space-800 hover:bg-space-900/[0.14]"
+            : "bg-fg/[0.06] text-muted hover:bg-fg/[0.12] hover:text-ink",
         className,
       )}
     >
@@ -188,7 +196,7 @@ export function CopyButton({ text, label = "Copy", tone = "dark", className }: {
   );
 }
 
-export function SaveButton({ saved, onClick, tone = "dark" }: { saved: boolean; onClick: () => void; tone?: "dark" | "light" }) {
+export function SaveButton({ saved, onClick, tone = "dark" }: { saved: boolean; onClick: () => void; tone?: Tone }) {
   const Icon = saved ? BookmarkCheck : Bookmark;
   return (
     <button
@@ -196,12 +204,14 @@ export function SaveButton({ saved, onClick, tone = "dark" }: { saved: boolean; 
       onClick={onClick}
       aria-pressed={saved}
       className={clsx(
-        "inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors",
-        saved
-          ? "bg-star-400 text-on-accent"
-          : tone === "light"
-            ? "bg-space-900/[0.08] text-space-800 hover:bg-space-900/[0.15]"
-            : "bg-fg/[0.08] text-ink hover:bg-fg/[0.14]",
+        "tap-target relative inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-[transform,background-color,color] duration-150 ease-out active:scale-[0.97]",
+        tone === "accent"
+          ? clsx(ON_ACCENT, saved && "ring-1 ring-on-accent/50")
+          : saved
+            ? "bg-star-400 text-on-accent"
+            : tone === "light"
+              ? "bg-space-900/[0.08] text-space-800 hover:bg-space-900/[0.15]"
+              : "bg-fg/[0.08] text-ink hover:bg-fg/[0.14]",
       )}
     >
       <Icon className="size-3.5" aria-hidden />

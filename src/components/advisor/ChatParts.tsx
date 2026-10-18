@@ -61,7 +61,7 @@ export function ChatComposer({ page, className }: { page?: string; className?: s
         send();
       }}
     >
-      <div className="flex items-end gap-2 rounded-3xl bg-surface-800/90 p-2 pl-5 shadow-2xl ring-1 ring-line backdrop-blur-xl focus-within:ring-star-400/60">
+      <div className="flex items-end gap-2 rounded-3xl bg-surface-800/90 p-2 pl-5 shadow-2xl ring-1 ring-line backdrop-blur-xl focus-within:ring-focus/60">
         <textarea
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
@@ -81,7 +81,7 @@ export function ChatComposer({ page, className }: { page?: string; className?: s
             type="button"
             onClick={stopAdvisor}
             aria-label="Stop"
-            className="grid size-10 shrink-0 place-items-center rounded-full bg-fg/10 text-ink transition-transform hover:bg-fg/15 active:scale-95"
+            className="tap-target relative grid size-10 shrink-0 place-items-center rounded-full bg-fg/10 text-ink transition-[transform,background-color] hover:bg-fg/15 active:scale-95"
           >
             <Square className="size-3.5 fill-current" aria-hidden />
           </button>
@@ -90,7 +90,7 @@ export function ChatComposer({ page, className }: { page?: string; className?: s
             type="submit"
             aria-label="Send"
             disabled={!draft.trim()}
-            className="grid size-10 shrink-0 place-items-center rounded-full bg-linear-to-b from-star-300 to-star-500 text-on-accent transition-transform active:scale-95 disabled:opacity-30"
+            className="tap-target relative grid size-10 shrink-0 place-items-center rounded-full bg-linear-to-b from-star-300 to-star-500 text-on-accent transition-[transform,opacity] active:scale-95 disabled:opacity-30"
           >
             <ArrowUp className="size-5" strokeWidth={2.5} aria-hidden />
           </button>
@@ -176,7 +176,7 @@ const AssistantMessage = memo(function AssistantMessage({
           {message.missionsAdded ? (
             <p className="inline-flex items-center gap-2 rounded-full bg-growth/10 px-3.5 py-1.5 text-xs font-semibold text-growth ring-1 ring-growth/30">
               {message.missionsAdded} {message.missionsAdded === 1 ? "mission" : "missions"} added
-              <Link href="/missions" className="underline underline-offset-2">
+              <Link href="/missions" className="tap-target relative underline underline-offset-2">
                 View
               </Link>
             </p>
@@ -185,7 +185,7 @@ const AssistantMessage = memo(function AssistantMessage({
               type="button"
               onClick={toMissions}
               disabled={converting}
-              className="inline-flex h-9 items-center gap-2 rounded-full bg-star-400/10 px-4 text-sm font-semibold text-star-200 ring-1 ring-star-400/40 transition-colors hover:bg-star-400/20 disabled:opacity-60"
+              className="tap-target relative inline-flex h-9 items-center gap-2 rounded-full bg-star-400/10 px-4 text-sm font-semibold text-star-200 ring-1 ring-star-400/40 transition-[transform,background-color] duration-150 ease-out not-disabled:hover:bg-star-400/20 not-disabled:active:scale-[0.97] disabled:opacity-60"
             >
               {converting ? (
                 <LoaderCircle className="size-4 animate-spin" aria-hidden />

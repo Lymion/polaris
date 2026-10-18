@@ -18,7 +18,7 @@ const FALLBACK_QUESTIONS: CheckInQuestion[] = [
 ];
 
 const fieldClass =
-  "w-full rounded-xl bg-fg/[0.05] px-4 py-3 text-sm text-ink ring-1 ring-line placeholder:text-faint focus:outline-none focus:ring-2 focus:ring-star-400/70";
+  "w-full rounded-xl bg-fg/[0.05] px-4 py-3 text-sm text-ink ring-1 ring-line placeholder:text-faint focus:outline-none focus:ring-2 focus:ring-focus/70";
 
 type Phase = "form" | "reviewing" | "result";
 

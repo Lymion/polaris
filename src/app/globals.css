@@ -18,6 +18,8 @@
   --color-fg: #ffffff;
   /* Text on accent-coloured buttons and chips. */
   --color-on-accent: #0b1b3f;
+  /* Keyboard focus rings: the accent, or a deeper shade where the accent is too pale to see. */
+  --color-focus: var(--color-star-400);
 
   --color-star-50: #fff8e6;
   --color-star-200: #ffe2a6;
@@ -126,7 +128,7 @@
   }
   /* One keyboard focus ring everywhere, in the theme's accent. */
   :focus-visible {
-    outline: 2px solid var(--color-star-400);
+    outline: 2px solid var(--color-focus);
     outline-offset: 2px;
   }
   /* Headings break into even lines; paragraphs avoid a lone last word. */
@@ -427,15 +429,19 @@
   display: none;
 }
 
-/* Category chips use light tints of sky and fuchsia; deepen them on light backgrounds. */
+/* Category chips and the legal note use light tints of sky and fuchsia; deepen them on light
+   backgrounds. */
 :root:is([data-theme="light"], [data-theme="cutesy"], [data-theme="professional"]) {
+  --color-sky-200: #0c4a6e;
   --color-sky-300: #0369a1;
   --color-fuchsia-300: #a21caf;
 }
 
 /* The bright accents stay bright as fills (buttons, bars, badges), but as text on a light page
-   they're too pale to read. Text in them takes the deeper shade of the same colour. */
+   they're too pale to read. Text in them takes the deeper shade of the same colour, and so do
+   focus rings, which need 3:1 against the page. */
 :root:is([data-theme="light"], [data-theme="cutesy"]) {
+  --color-focus: var(--color-star-200);
   & .text-star-400,
   & .text-star-300 {
     color: var(--color-star-200);
@@ -443,6 +449,40 @@
 }
 :root[data-theme="cutesy"] .text-orbit-400 {
   color: var(--color-orbit-300);
+}
+:root[data-theme="professional"] .text-orbit-300 {
+  color: var(--color-orbit-200);
+}
+
+/* Green, red and amber text usually sits on a tint of its own colour (status pills, the In/Out
+   switch, numbered badges). On light pages it takes a deeper shade so it still clears 4.5:1. */
+:root[data-theme="light"],
+.board-scope {
+  --growth-text: #166534;
+  --alert-text: #991b1b;
+  --caution-text: #92400e;
+}
+:root[data-theme="cutesy"] {
+  --growth-text: #166534;
+  --alert-text: #9f1239;
+  --caution-text: #9a3412;
+}
+:root[data-theme="professional"] {
+  --growth-text: #0d652d;
+  --alert-text: #a50e0e;
+  --caution-text: #7a4a00;
+}
+:root:is([data-theme="light"], [data-theme="cutesy"], [data-theme="professional"]),
+.board-scope {
+  & .text-growth {
+    color: var(--growth-text);
+  }
+  & .text-alert {
+    color: var(--alert-text);
+  }
+  & .text-caution {
+    color: var(--caution-text);
+  }
 }
 
 /* Islands that stay dark whatever the theme (the studio monitor, the video stage, Wrapped). */
@@ -462,6 +502,16 @@
   --color-orbit-400: #7fb4ff;
   --color-growth: #4ade80;
   --color-alert: #f87171;
+  --color-focus: #f5b942;
+  --growth-text: #4ade80;
+  --alert-text: #f87171;
+  --caution-text: #fbbf24;
+}
+/* In the base layer so a text colour set on the island itself still wins. */
+@layer base {
+  .scope-dark {
+    color: var(--color-ink);
+  }
 }
 
 body {
@@ -1323,9 +1373,11 @@ body::before {
   --color-growth: #15803d;
   --color-caution: #b45309;
   --color-alert: #b91c1c;
+  --color-sky-200: #0c4a6e;
   --color-sky-300: #0369a1;
   --color-fuchsia-300: #a21caf;
   --color-on-accent: #0b1b3f;
+  --color-focus: var(--color-star-200);
   --panel-shadow: 0 12px 20px -12px rgb(0 0 0 / 0.55);
   --panel-radius: 6px;
   color: var(--color-ink);
@@ -1334,8 +1386,9 @@ body::before {
     position: relative;
     border-color: transparent;
   }
-  /* Gold labels straight on the cork need the deeper gold to be readable. */
-  & .text-star-400 {
+  /* Gold labels on the cork and the paper need the deeper gold to be readable. */
+  & .text-star-400,
+  & .text-star-300 {
     color: var(--color-star-200);
   }
   & .panel::before {

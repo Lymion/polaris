@@ -69,6 +69,8 @@ export function DeskScene() {
 
   return (
     <>
+      {/* The scene is the page; screen readers still get a title to start from. */}
+      <h1 className="sr-only">Your desk</h1>
       {/* Desktop: the view from your chair, scaled to fit and standing on the bottom edge */}
       <div ref={frame} className="world-wall relative hidden h-[calc(100dvh-3.5rem)] min-h-[520px] overflow-hidden lg:flex lg:items-end lg:justify-center">
         <div className="relative shrink-0" style={{ width: STAGE.w, height: STAGE.h, zoom: scale ?? 1, visibility: scale ? undefined : "hidden" }}>

@@ -399,7 +399,7 @@ export function VitalsShelf({
       </div>
       <div className="-mt-3 flex justify-around px-1">
         {items.map((it) => (
-          <span key={it.label} className="rounded-full bg-surface-900/85 px-2 py-0.5 text-[11px] font-semibold text-muted ring-1 ring-line">
+          <span key={it.label} className="whitespace-nowrap rounded-full bg-surface-900/85 px-2 py-0.5 text-xs font-semibold text-muted ring-1 ring-line">
             {it.label}
           </span>
         ))}

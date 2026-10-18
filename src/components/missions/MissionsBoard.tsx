@@ -346,7 +346,7 @@ function AddMission({ onDone }: { onDone: () => void }) {
         }}
         placeholder="e.g. Start selling online, or get my first 10 reviews"
         autoFocus
-        className="mt-2 w-full rounded-xl bg-fg/[0.05] px-4 py-3 text-sm ring-1 ring-line placeholder:text-faint focus:outline-none focus:ring-2 focus:ring-star-400/70"
+        className="mt-2 w-full rounded-xl bg-fg/[0.05] px-4 py-3 text-sm ring-1 ring-line placeholder:text-faint focus:outline-none focus:ring-2 focus:ring-focus/70"
       />
       {error && (
         <p role="alert" className="mt-2 text-sm text-alert">

@@ -55,7 +55,7 @@ export function MissionFocus() {
                     <li key={m.id}>
                       <Link
                         href="/missions"
-                        className="flex items-center gap-3 rounded-xl bg-fg/[0.03] px-4 py-2.5 ring-1 ring-line transition-colors hover:bg-fg/[0.06]"
+                        className="flex items-center gap-3 rounded-xl bg-fg/[0.03] px-4 py-2.5 ring-1 ring-line transition-colors hover:bg-fg/[0.06] pointer-coarse:py-3"
                       >
                         <span className={clsx("shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold", CATEGORY_STYLES[m.category])}>
                           {CATEGORY_LABELS[m.category]}
@@ -123,7 +123,7 @@ export function MissionFocus() {
                   )}
                 >
                   {f.label}
-                  {planned.has(f.id) && <span className="ml-1 text-star-300/80">· planned</span>}
+                  {planned.has(f.id) && <span className="ml-1 text-star-300">· planned</span>}
                 </li>
               ))}
             </ul>
@@ -133,7 +133,7 @@ export function MissionFocus() {
             </p>
           )}
           {missing.some((f) => !planned.has(f.id)) && (
-            <Link href="/missions" className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-star-200 hover:underline">
+            <Link href="/missions" className="tap-target relative mt-4 inline-flex items-center gap-1 text-xs font-semibold text-star-200 hover:underline">
               Plan missions for the gaps <ChevronRight className="size-3.5" aria-hidden />
             </Link>
           )}

@@ -75,7 +75,7 @@ export function LumiAssist({
           <button
             type="button"
             onClick={onDownloadExcel}
-            className="flex items-center justify-center gap-2 rounded-xl bg-fg/[0.04] px-3 py-2.5 text-sm font-medium ring-1 ring-line transition-colors hover:bg-fg/[0.08]"
+            className="flex items-center justify-center gap-2 rounded-xl bg-fg/[0.04] px-3 py-2.5 text-sm font-medium ring-1 ring-line transition-[transform,background-color] duration-150 ease-out hover:bg-fg/[0.08] active:scale-[0.97] pointer-coarse:py-3"
           >
             <Download className="size-4 shrink-0 text-star-300" aria-hidden /> Download
           </button>
@@ -83,7 +83,7 @@ export function LumiAssist({
             type="button"
             onClick={onUploadExcel}
             disabled={!!busy}
-            className="flex items-center justify-center gap-2 rounded-xl bg-fg/[0.04] px-3 py-2.5 text-sm font-medium ring-1 ring-line transition-colors hover:bg-fg/[0.08] disabled:opacity-50"
+            className="flex items-center justify-center gap-2 rounded-xl bg-fg/[0.04] px-3 py-2.5 text-sm font-medium ring-1 ring-line transition-[transform,background-color] duration-150 ease-out not-disabled:hover:bg-fg/[0.08] not-disabled:active:scale-[0.97] disabled:opacity-50 pointer-coarse:py-3"
           >
             <Upload className="size-4 shrink-0 text-star-300" aria-hidden /> Upload filled
           </button>
@@ -126,7 +126,7 @@ export function LumiAssist({
           onChange={(e) => setQuestion(e.target.value)}
           placeholder={`Ask ${name} about this month…`}
           aria-label={`Ask ${name} about this month`}
-          className="min-w-0 flex-1 rounded-full bg-fg/[0.05] px-4 py-2 text-sm ring-1 ring-line placeholder:text-faint focus:outline-none focus:ring-2 focus:ring-star-400/70"
+          className="min-w-0 flex-1 rounded-full bg-fg/[0.05] px-4 py-2 text-sm ring-1 ring-line placeholder:text-faint focus:outline-none focus:ring-2 focus:ring-focus/70"
         />
         <button
           type="submit"
@@ -164,7 +164,7 @@ function AssistButton({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="flex w-full items-center gap-3 rounded-xl bg-fg/[0.04] px-3.5 py-2.5 text-left ring-1 ring-line transition-colors hover:bg-fg/[0.08] disabled:opacity-50"
+      className="flex w-full items-center gap-3 rounded-xl bg-fg/[0.04] px-3.5 py-2.5 text-left ring-1 ring-line transition-[transform,background-color] duration-150 ease-out not-disabled:hover:bg-fg/[0.08] not-disabled:active:scale-[0.98] disabled:opacity-50"
     >
       <Icon className="size-4 shrink-0 text-star-300" aria-hidden />
       <span>

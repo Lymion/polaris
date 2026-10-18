@@ -14,10 +14,10 @@ import { mascotName, usePolaris } from "@/lib/store";
 import { yourWeek, type WeekFollowUp, type WeekTone, type YourWeek } from "@/lib/week";
 
 const TONE: Record<WeekTone, { icon: LucideIcon; bg: string; ring: string; text: string }> = {
-  alert: { icon: TriangleAlert, bg: "from-[#7F1D1D] via-[#3F1010] to-[#140808]", ring: "bg-alert/20 text-alert", text: "text-alert" },
+  alert: { icon: TriangleAlert, bg: "from-[#7F1D1D] via-[#3F1010] to-[#140808]", ring: "bg-alert/15 text-alert", text: "text-alert" },
   caution: { icon: TriangleAlert, bg: "from-[#8A5A0B] via-[#3A2A0C] to-[#0B1B3F]", ring: "bg-caution/20 text-caution", text: "text-caution" },
   good: { icon: CheckCircle2, bg: "from-[#166534] via-[#0D3B22] to-[#062016]", ring: "bg-growth/20 text-growth", text: "text-growth" },
-  info: { icon: Compass, bg: "from-[#4C1D95] via-[#2A1260] to-[#0B1B3F]", ring: "bg-fg/15 text-star-200", text: "text-star-300" },
+  info: { icon: Compass, bg: "from-[#4C1D95] via-[#2A1260] to-[#0B1B3F]", ring: "bg-star-400/15 text-star-200", text: "text-star-300" },
 };
 
 /** Your Week from the shop's own records. Call only after hydration: it reads today's date. */
