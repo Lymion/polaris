@@ -104,8 +104,9 @@ function StockBody() {
     <>
       {header}
       <div className="space-y-6">
-        {/* Five tiles in two columns leave one alone on the last row; it takes the full width there. */}
-        <dl className="grid grid-cols-2 gap-3 *:last:odd:col-span-2 lg:grid-cols-5 lg:*:last:odd:col-span-1">
+        {/* Five tiles in two columns leave one alone on the last row; it takes the full width there.
+            Five across only from xl: at lg the sidebar leaves the money figures too little room. */}
+        <dl className="grid grid-cols-2 gap-3 *:last:odd:col-span-2 xl:grid-cols-5 xl:*:last:odd:col-span-1">
           <Tile label="Money in stock" value={fmt(sum.value)} note="What the shelf cost you" />
           <Tile
             label="Profit on the shelf"
@@ -287,7 +288,7 @@ function StockHistory() {
               <span className="w-14 shrink-0 text-xs tabular-nums text-faint">
                 {new Date(`${m.date}T00:00`).toLocaleDateString(undefined, { day: "numeric", month: "short" })}
               </span>
-              <span className="min-w-0 flex-1 truncate">
+              <span className="min-w-0 flex-1 truncate" title={names.get(m.productId)}>
                 {MOVE_LABEL[m.kind]} {names.get(m.productId)}
               </span>
               <span className={clsx("shrink-0 font-semibold tabular-nums", m.qty > 0 ? "text-growth" : m.qty < 0 ? "text-alert" : "text-muted")}>
@@ -306,9 +307,10 @@ function StockHistory() {
 
 function RowActions({ line, onOpen, align = "start" }: { line: StockLine; onOpen: OpenForm; align?: "start" | "end" }) {
   const id = line.product.id;
-  const btn = "grid size-8 place-items-center rounded-full text-muted ring-1 ring-line transition-colors hover:bg-fg/[0.06] hover:text-ink";
+  const btn = "tap-target relative grid size-8 place-items-center rounded-full text-muted ring-1 ring-line transition-colors hover:bg-fg/[0.06] hover:text-ink";
   return (
-    <div className={clsx("flex gap-1.5", align === "end" && "justify-end")}>
+    // Wider gaps on touch screens, so the buttons' 44px tap areas don't overlap.
+    <div className={clsx("flex gap-1.5 pointer-coarse:gap-3", align === "end" && "justify-end")}>
       <button type="button" className={btn} onClick={() => onOpen({ mode: "restock", productId: id })} aria-label={`Restock ${line.product.name}`} title="Restock">
         <Plus className="size-4" aria-hidden />
       </button>

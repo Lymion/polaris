@@ -51,7 +51,9 @@ export function ProfitPerSale() {
                     {channels.map((ch) => (
                       <li key={ch.id} className="flex items-center justify-between gap-3 py-2.5">
                         <span className="min-w-0">
-                          <span className="block truncate text-sm">{ch.name}</span>
+                          <span className="block truncate text-sm" title={ch.name}>
+                            {ch.name}
+                          </span>
                           <span className="block text-xs text-faint">
                             {ch.feePercent}% fee{ch.feeFixed ? ` + ${formatMoney(ch.feeFixed, currency)}` : ""}
                           </span>
@@ -158,7 +160,9 @@ function ProductsCard() {
         {products.map((p) => (
           <li key={p.id} className="flex items-center gap-3 py-2.5 text-sm">
             <span className="min-w-0 flex-1">
-              <span className="block truncate font-medium">{p.name}</span>
+              <span className="block truncate font-medium" title={p.name}>
+                {p.name}
+              </span>
               <span className="block text-xs text-faint">
                 Sells {formatMoney(p.price, currency)} · costs {formatMoney(p.unitCost, currency)}
               </span>
@@ -167,7 +171,7 @@ function ProductsCard() {
               type="button"
               onClick={() => removeProduct(p.id)}
               aria-label={`Remove ${p.name}`}
-              className="rounded-full p-1.5 text-faint hover:bg-fg/[0.06] hover:text-alert"
+              className="tap-target relative rounded-full p-1.5 text-faint transition-colors hover:bg-fg/[0.06] hover:text-alert"
             >
               <Trash2 className="size-3.5" aria-hidden />
             </button>
@@ -227,7 +231,9 @@ function ChannelsCard() {
       <ul className="mt-4 divide-y divide-line">
         {channels.map((c) => (
           <li key={c.id} className="flex items-center gap-3 py-2.5 text-sm">
-            <span className="min-w-0 flex-1 truncate font-medium">{c.name}</span>
+            <span className="min-w-0 flex-1 truncate font-medium" title={c.name}>
+              {c.name}
+            </span>
             <span className="tabular-nums text-muted">
               {c.feePercent}%{c.feeFixed ? ` + ${formatMoney(c.feeFixed, currency)}` : ""}
             </span>
@@ -236,7 +242,7 @@ function ChannelsCard() {
               onClick={() => removeChannel(c.id)}
               disabled={channels.length === 1}
               aria-label={`Remove ${c.name}`}
-              className="rounded-full p-1.5 text-faint hover:bg-fg/[0.06] hover:text-alert disabled:opacity-30"
+              className="tap-target relative rounded-full p-1.5 text-faint transition-colors hover:bg-fg/[0.06] hover:text-alert disabled:opacity-30"
             >
               <Trash2 className="size-3.5" aria-hidden />
             </button>

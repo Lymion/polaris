@@ -39,8 +39,9 @@ export function MissionFocus() {
   const missing = FOUNDATIONS.filter((f) => !inPlace.has(f.id));
 
   return (
-    <div className="grid gap-6 lg:grid-cols-5">
-      <section className="panel relative overflow-hidden p-5 sm:p-6 lg:col-span-3">
+    // Side by side from xl: at lg the sidebar leaves the right card too narrow for its labels.
+    <div className="grid gap-6 xl:grid-cols-5">
+      <section className="panel relative overflow-hidden p-5 sm:p-6 xl:col-span-3">
         <div aria-hidden className="pointer-events-none absolute -left-20 -top-24 size-72 rounded-full bg-star-400/10 blur-3xl" />
         <CardTitle icon={Target} title="Up next" href="/missions" />
         {featured ? (
@@ -59,7 +60,9 @@ export function MissionFocus() {
                         <span className={clsx("shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold", CATEGORY_STYLES[m.category])}>
                           {CATEGORY_LABELS[m.category]}
                         </span>
-                        <span className="min-w-0 flex-1 truncate text-sm font-medium">{m.title}</span>
+                        <span className="min-w-0 flex-1 truncate text-sm font-medium" title={m.title}>
+                          {m.title}
+                        </span>
                         <span className="shrink-0 text-xs font-semibold text-star-300">+{m.xp} XP</span>
                       </Link>
                     </li>
@@ -85,9 +88,10 @@ export function MissionFocus() {
         )}
       </section>
 
-      <section className="panel p-5 sm:p-6 lg:col-span-2">
+      <section className="panel p-5 sm:p-6 xl:col-span-2">
         <CardTitle icon={Trophy} title="Mission progress" href="/missions" />
-        <dl className="mt-4 grid grid-cols-3 gap-3">
+        {/* On a small phone the columns size to their labels, so "In progress" fits on one line. */}
+        <dl className="mt-4 grid grid-cols-[repeat(3,auto)] justify-between gap-3 sm:grid-cols-3">
           <Stat label="Done" value={String(done.length)} />
           <Stat label="In progress" value={String(open.length)} />
           <Stat label="XP waiting" value={xpWaiting.toLocaleString()} tone={xpWaiting ? "gold" : undefined} />
@@ -194,7 +198,11 @@ function FeaturedMission({ mission: m }: { mission: Mission }) {
         )}
       </div>
       <h3 className="mt-2.5 text-xl font-bold leading-tight">{m.title}</h3>
-      {m.description && <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-muted">{m.description}</p>}
+      {m.description && (
+        <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-muted" title={m.description}>
+          {m.description}
+        </p>
+      )}
 
       {m.steps.length > 0 && (
         <div className="mt-4">
@@ -202,7 +210,11 @@ function FeaturedMission({ mission: m }: { mission: Mission }) {
             <span>
               {stepsDone} of {m.steps.length} steps
             </span>
-            {nextStep && <span className="hidden sm:inline">Next: {nextStep.text.length > 60 ? `${nextStep.text.slice(0, 57)}…` : nextStep.text}</span>}
+            {nextStep && (
+              <span className="hidden sm:inline" title={nextStep.text.length > 60 ? nextStep.text : undefined}>
+                Next: {nextStep.text.length > 60 ? `${nextStep.text.slice(0, 57)}…` : nextStep.text}
+              </span>
+            )}
           </div>
           <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-fg/[0.08]">
             <div

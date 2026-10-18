@@ -34,7 +34,8 @@ export function OverviewTab({ selected, nav, helper }: { selected: Date; nav: Re
       {/* One filter row scopes everything below it. */}
       {nav}
 
-      <dl className="grid grid-cols-2 gap-3 lg:grid-cols-5">
+      {/* Five across only from xl: at lg the sidebar leaves the money figures too little room. */}
+      <dl className="grid grid-cols-2 gap-3 xl:grid-cols-5">
         <StatTile label="Money in" value={formatMoney(current.income, currency, { compact: true })} delta={pctChange(current.income, previous.income)} upIsGood prev={previous.label} />
         <StatTile label="Money out" value={formatMoney(current.expenses, currency, { compact: true })} delta={pctChange(current.expenses, previous.expenses)} upIsGood={false} prev={previous.label} />
         {/* Net can cross zero, where a percentage change is meaningless, so show the money change. */}
@@ -67,19 +68,19 @@ export function OverviewTab({ selected, nav, helper }: { selected: Date; nav: Re
           label="Fixed costs a month"
           value={formatMoney(totalOverheads(overheads), currency, { compact: true })}
           note={overheads.length ? `${overheads.length} ${overheads.length === 1 ? "cost" : "costs"} in Margins & overheads` : "Add them in Margins & overheads"}
-          className="col-span-2 lg:col-span-1"
+          className="col-span-2 xl:col-span-1"
         />
       </dl>
 
-      <div className="grid gap-6 lg:grid-cols-5">
-        <section className="panel p-5 sm:p-6 lg:col-span-3">
+      <div className="grid gap-6 xl:grid-cols-5">
+        <section className="panel p-5 sm:p-6 xl:col-span-3">
           <h2 className="font-semibold">Last 6 months</h2>
           <p className="mt-0.5 text-xs text-muted">Money in and out per month, ending {monthName}</p>
           <div className="mt-5">
             <CashflowChart months={series} currency={currency} />
           </div>
         </section>
-        <div className="lg:col-span-2">{helper}</div>
+        <div className="xl:col-span-2">{helper}</div>
       </div>
 
       {/* Where this month's money went, next to the fixed costs that come every month. */}

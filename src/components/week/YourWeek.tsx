@@ -365,7 +365,8 @@ export function YourWeekCard() {
   return (
     <section aria-labelledby="week-title" className="panel relative overflow-hidden p-5 sm:p-6">
       <div aria-hidden className="pointer-events-none absolute -right-20 -top-24 size-64 rounded-full bg-[#0E7490]/25 blur-3xl" />
-      <div className="relative flex flex-col gap-5 lg:flex-row lg:items-center lg:gap-8">
+      {/* The button only moves beside the cards from xl: at lg the sidebar leaves too little room. */}
+      <div className="relative flex flex-col gap-5 xl:flex-row xl:items-center xl:gap-8">
         <div className="min-w-0 flex-1">
           <p className="eyebrow text-star-400">Your Week · {week.label}</p>
           <h2 id="week-title" className="mt-1.5 text-lg font-semibold leading-snug sm:text-xl">
@@ -377,7 +378,7 @@ export function YourWeekCard() {
             </p>
           )}
           {/* On a phone the button sits under the headline, where it's on screen. */}
-          <PlayButton onClick={() => setPlaying(true)} className="mt-4 inline-flex lg:hidden" />
+          <PlayButton onClick={() => setPlaying(true)} className="mt-4 inline-flex xl:hidden" />
           {week.priorities.length > 0 && (
             <ol className="mt-4 grid gap-2.5 md:grid-cols-3">
               {week.priorities.map((p, i) => {
@@ -388,7 +389,7 @@ export function YourWeekCard() {
                       <span className={clsx("grid size-7 shrink-0 place-items-center rounded-lg text-xs font-bold", tone.ring)}>{i + 1}</span>
                       <span className="min-w-0">
                         <span className="block text-sm font-semibold leading-snug">{p.title}</span>
-                        <span className="mt-0.5 line-clamp-2 block text-xs leading-relaxed text-muted">{p.why}</span>
+                        <span className="mt-0.5 block text-xs leading-relaxed text-muted">{p.why}</span>
                       </span>
                     </Link>
                   </li>
@@ -397,7 +398,7 @@ export function YourWeekCard() {
             </ol>
           )}
         </div>
-        <PlayButton onClick={() => setPlaying(true)} className="hidden lg:inline-flex" />
+        <PlayButton onClick={() => setPlaying(true)} className="hidden xl:inline-flex" />
       </div>
       {playing && <YourWeekStory week={week} onClose={() => setPlaying(false)} />}
     </section>

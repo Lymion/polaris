@@ -94,7 +94,7 @@ export function AdvisorChat() {
         <Mascot size={56} mood={mood} className="shrink-0" />
         <div className="min-w-0 flex-1">
           <h1 className="text-xl font-bold tracking-tight sm:text-2xl">Ask {name}</h1>
-          <p className="truncate text-xs text-muted sm:text-sm">Your business guide, powered by NVIDIA Nemotron</p>
+          <p className="text-xs text-muted sm:text-sm">Your business guide, powered by NVIDIA Nemotron</p>
         </div>
         {!empty && (
           <button

@@ -56,6 +56,13 @@ export function AppShell({ children }: { children: ReactNode }) {
   const open = { onAppearance: () => setPanel("appearance"), onData: () => setPanel("data") };
   return (
     <>
+      {/* First stop for keyboard users: jumps past the navigation to the page. Hidden until focused. */}
+      <a
+        href="#main"
+        className="fixed left-4 top-3 z-[90] -translate-y-20 rounded-full bg-star-400 px-4 py-2 text-sm font-semibold text-on-accent shadow-lg focus:translate-y-0"
+      >
+        Skip to content
+      </a>
       {world ? (
         <WorldShell {...open}>{children}</WorldShell>
       ) : (
@@ -85,7 +92,8 @@ function ClassicShell({ pathname, onAppearance, onData, children }: ShellProps) 
       <header className="sticky top-0 z-30 flex items-center gap-2.5 border-b border-line bg-surface-950/80 px-4 py-3 backdrop-blur-lg lg:hidden">
         <PolarisMark size={30} />
         <Wordmark className="text-2xl" />
-        <div className="ml-auto flex items-center gap-2">
+        {/* gap-3 so the buttons' enlarged touch areas don't overlap */}
+        <div className="ml-auto flex items-center gap-3">
           <LevelBadge compact />
           <HeaderButton label="Your data" onClick={onData} icon={ShieldCheck} />
           <HeaderButton label="Appearance" onClick={onAppearance} icon={SwatchBook} />
@@ -93,7 +101,7 @@ function ClassicShell({ pathname, onAppearance, onData, children }: ShellProps) 
       </header>
 
       {/* Bottom padding leaves room to scroll content clear of the mascot and the mobile tab bar. */}
-      <main className="mx-auto w-full max-w-6xl px-4 pb-40 pt-6 sm:px-6 lg:px-10 lg:pb-32 lg:pt-10">
+      <main id="main" tabIndex={-1} className="mx-auto w-full max-w-6xl px-4 pb-40 pt-6 outline-none sm:px-6 lg:px-10 lg:pb-32 lg:pt-10">
         {children}
       </main>
 
@@ -136,7 +144,7 @@ function HeaderButton({ label, onClick, icon: Icon }: { label: string; onClick: 
       onClick={onClick}
       aria-label={label}
       title={label}
-      className="grid size-8 place-items-center rounded-full bg-fg/[0.06] text-muted ring-1 ring-line hover:text-ink"
+      className="tap-target relative grid size-8 place-items-center rounded-full bg-fg/[0.06] text-muted ring-1 ring-line transition-colors hover:text-ink"
     >
       <Icon className="size-4" aria-hidden />
     </button>

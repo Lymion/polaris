@@ -3,6 +3,7 @@
 import { useState } from "react";
 import clsx from "clsx";
 import { ArrowDownLeft, ArrowUpRight, Plus } from "lucide-react";
+import { rovingKeys } from "@/components/ui/a11y";
 import { Button } from "@/components/ui/Button";
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from "@/lib/categories";
 import { fieldClass, parseAmount, todayIso } from "@/lib/inputs";
@@ -60,7 +61,7 @@ export function LogMoney({ month, className }: { month: string; className?: stri
     >
       <h2 className="font-semibold">Log money</h2>
       <p className="mt-0.5 text-xs text-muted">One payment in or out. It goes straight into the sheet above.</p>
-      <div className="mt-4 grid grid-cols-2 rounded-full bg-fg/[0.04] p-1 ring-1 ring-line" role="radiogroup" aria-label="Type">
+      <div className="mt-4 grid grid-cols-2 rounded-full bg-fg/[0.04] p-1 ring-1 ring-line" role="radiogroup" aria-label="Type" onKeyDown={rovingKeys}>
         {(
           [
             ["income", "Money in", ArrowDownLeft],
@@ -72,9 +73,10 @@ export function LogMoney({ month, className }: { month: string; className?: stri
             type="button"
             role="radio"
             aria-checked={type === value}
+            tabIndex={type === value ? 0 : -1}
             onClick={() => switchType(value)}
             className={clsx(
-              "flex items-center justify-center gap-1.5 rounded-full py-1.5 text-sm font-medium transition-colors",
+              "tap-target relative flex items-center justify-center gap-1.5 rounded-full py-1.5 text-sm font-medium transition-colors",
               type === value ? (value === "income" ? "bg-growth/15 text-growth" : "bg-alert/15 text-alert") : "text-muted hover:text-ink",
             )}
           >

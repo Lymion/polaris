@@ -3,6 +3,7 @@
 import { useState } from "react";
 import clsx from "clsx";
 import { CalendarHeart, Plus, Trash2 } from "lucide-react";
+import { rovingKeys } from "@/components/ui/a11y";
 import { Button } from "@/components/ui/Button";
 import { ACTIVITY_KINDS } from "@/lib/excel";
 import { fieldClass, parseAmount, todayIso } from "@/lib/inputs";
@@ -53,13 +54,15 @@ export function ActivitiesLog({ month }: { month: string }) {
               <span className="shrink-0 rounded-full bg-fg/[0.06] px-2 py-0.5 text-xs text-muted">
                 {ACTIVITY_KINDS.find((k) => k.id === a.kind)?.label}
               </span>
-              <span className="min-w-0 flex-1 truncate">{a.title}</span>
+              <span className="min-w-0 flex-1 truncate" title={a.title}>
+                {a.title}
+              </span>
               {a.cost > 0 && <span className="text-xs tabular-nums text-muted">{formatMoney(a.cost, currency)}</span>}
               <button
                 type="button"
                 onClick={() => removeActivity(a.id)}
                 aria-label={`Remove ${a.title}`}
-                className="rounded-full p-1.5 text-faint hover:bg-fg/[0.06] hover:text-alert"
+                className="tap-target relative rounded-full p-1.5 text-faint transition-colors hover:bg-fg/[0.06] hover:text-alert"
               >
                 <Trash2 className="size-3.5" aria-hidden />
               </button>
@@ -75,13 +78,14 @@ export function ActivitiesLog({ month }: { month: string }) {
           add();
         }}
       >
-        <div className="flex flex-wrap gap-1.5" role="radiogroup" aria-label="Type">
+        <div className="flex flex-wrap gap-1.5" role="radiogroup" aria-label="Type" onKeyDown={rovingKeys}>
           {ACTIVITY_KINDS.map((k) => (
             <button
               key={k.id}
               type="button"
               role="radio"
               aria-checked={kind === k.id}
+              tabIndex={kind === k.id ? 0 : -1}
               onClick={() => setKind(k.id)}
               className={clsx(
                 "rounded-full px-3 py-1 text-xs font-medium ring-1 transition-colors",

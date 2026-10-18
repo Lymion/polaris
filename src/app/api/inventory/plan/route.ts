@@ -110,7 +110,8 @@ export async function POST(req: Request) {
 
   // The plan itself: enough for the next 5 weeks at the recent pace, plus the event's lift.
   const lift = 1 + judgement.uplift / 100;
-  const days = (d: number | null) => (d === null ? "a long time" : d < 14 ? `about ${Math.max(1, Math.round(d))} days` : `about ${Math.round(d / 7)} weeks`);
+  const days = (d: number | null) =>
+    d === null ? "a long time" : d < 1.5 ? "about a day" : d < 14 ? `about ${Math.round(d)} days` : `about ${Math.round(d / 7)} weeks`;
   const items: RestockPlan["items"] = products.map((p) => {
     const none = { product: p.name, order: 0, cost: 0, profit: 0 };
     if (p.slow) {

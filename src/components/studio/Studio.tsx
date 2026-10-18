@@ -188,7 +188,7 @@ function Room({ scene, onEnter, onZoomEnd }: { scene: Scene; onEnter: (id: Stati
             <button
               type="button"
               onClick={() => openMascot()}
-              className="mt-2.5 inline-flex items-center gap-1.5 rounded-full bg-fg/[0.08] px-3 py-1.5 text-xs font-semibold transition-colors hover:bg-fg/[0.14]"
+              className="tap-target relative mt-2.5 inline-flex items-center gap-1.5 rounded-full bg-fg/[0.08] px-3 py-1.5 text-xs font-semibold transition-colors hover:bg-fg/[0.14]"
             >
               <MessageCircle className="size-3.5" aria-hidden /> Ask {name} anything
             </button>
@@ -196,9 +196,13 @@ function Room({ scene, onEnter, onZoomEnd }: { scene: Scene; onEnter: (id: Stati
         </div>
       </div>
 
+      {/* Five across only from xl, with the icon above the text; at lg the sidebar leaves each card too narrow. */}
       <nav
         aria-label="Studio stations"
-        className={clsx("mt-6 grid gap-3 transition-opacity duration-300 sm:grid-cols-2 lg:grid-cols-5", scene.kind === "entering" && "opacity-0")}
+        className={clsx(
+          "mt-6 grid gap-3 transition-opacity duration-300 sm:grid-cols-2 sm:*:last:odd:col-span-2 xl:grid-cols-5 xl:*:last:odd:col-span-1",
+          scene.kind === "entering" && "opacity-0",
+        )}
       >
         {STATIONS.map((s) => {
           const Icon = STATION_ICONS[s.id];
@@ -211,7 +215,7 @@ function Room({ scene, onEnter, onZoomEnd }: { scene: Scene; onEnter: (id: Stati
               onPointerEnter={() => setHovered(s.id)}
               onPointerLeave={() => setHovered((h) => (h === s.id ? null : h))}
               className={clsx(
-                "panel flex items-start gap-3 p-4 text-left transition-colors",
+                "panel flex items-start gap-3 p-4 text-left transition-colors xl:flex-col xl:gap-2.5",
                 active ? "bg-star-400/10 ring-1 ring-star-400/50" : "hover:bg-fg/[0.06]",
               )}
             >

@@ -107,7 +107,9 @@ export function IdeaLibrary({ nav }: { nav: StationNav }) {
                     className="studio-book relative flex w-11 items-center justify-between overflow-hidden rounded-t-md rounded-b-sm px-2 py-3 text-left shadow-[inset_-6px_0_0_rgb(0_0_0/0.18),inset_3px_0_0_rgb(255_255_255/0.25)] sm:w-12"
                     style={{ height: bookHeight(item.id), backgroundColor: kind.spine, color: kind.text }}
                   >
-                    <span className="min-h-0 flex-1 truncate text-[13px] font-bold">{item.title}</span>
+                    <span className="min-h-0 flex-1 truncate text-[13px] font-bold" title={item.title}>
+                      {item.title}
+                    </span>
                     <Icon className="mt-2 size-4 shrink-0 rotate-90 opacity-80" aria-hidden />
                   </button>
                 </li>

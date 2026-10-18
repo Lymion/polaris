@@ -188,15 +188,16 @@ function LessonContent({ lesson, onAsk }: { lesson: Lesson; onAsk: () => void })
           Quick check {passed ? "· passed" : `· +${LESSON_XP} XP`}
         </p>
         <p className="mt-1.5 text-sm font-semibold">{lesson.quiz.question(currency)}</p>
-        <div className="mt-3 space-y-2" role="radiogroup" aria-label="Answer">
+        {/* Plain buttons, not radios: choosing an answer checks it straight away, so arrow keys
+            mustn't pick answers as they pass over them. */}
+        <div className="mt-3 space-y-2" role="group" aria-label="Answers">
           {options.map((o, i) => {
             const mark = picked === i ? (i === lesson.quiz.answer ? "right" : "wrong") : null;
             return (
               <button
                 key={o}
                 type="button"
-                role="radio"
-                aria-checked={picked === i}
+                aria-pressed={picked === i}
                 onClick={() => pick(i)}
                 className={clsx(
                   "flex w-full items-center justify-between gap-3 rounded-xl px-4 py-2.5 text-left text-sm ring-1 transition-colors",

@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
+import { useDialogFocus } from "./a11y";
 
-/** Centered dialog (bottom sheet on phones). Closes on Escape and backdrop click. */
+/** Centered dialog (bottom sheet on phones). Closes on Escape and backdrop click; keeps keyboard focus inside. */
 export function Modal({
   title,
   onClose,
@@ -16,6 +17,9 @@ export function Modal({
   children: ReactNode;
   labelledBy?: string;
 }) {
+  const dialog = useRef<HTMLDivElement>(null);
+  useDialogFocus(dialog);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
@@ -34,16 +38,18 @@ export function Modal({
       onMouseDown={(e) => e.target === e.currentTarget && onClose()}
     >
       <div
+        ref={dialog}
         role="dialog"
         aria-modal="true"
         aria-labelledby={labelledBy}
-        className="relative max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl bg-surface-800 p-6 shadow-2xl ring-1 ring-line animate-rise-in sm:max-w-lg sm:rounded-3xl sm:p-7"
+        tabIndex={-1}
+        className="relative max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl bg-surface-800 p-6 shadow-2xl ring-1 ring-line outline-none animate-rise-in sm:max-w-lg sm:rounded-3xl sm:p-7"
       >
         <button
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="absolute right-4 top-4 rounded-full p-1.5 text-faint transition-colors hover:bg-fg/[0.08] hover:text-ink"
+          className="tap-target absolute right-4 top-4 rounded-full p-1.5 text-faint transition-colors hover:bg-fg/[0.08] hover:text-ink"
         >
           <X className="size-5" aria-hidden />
         </button>

@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from "react";
 import clsx from "clsx";
 import { AlertTriangle, Plus, Trash2 } from "lucide-react";
+import { rovingKeys } from "@/components/ui/a11y";
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from "@/lib/categories";
 import { parseAmount, todayIso } from "@/lib/inputs";
 import { formatMoney } from "@/lib/money";
@@ -74,7 +75,9 @@ export function SheetGrid({ month, flags }: { month: string; flags: Map<string, 
           ))}
         </ul>
         <div className="border-t border-line bg-fg/[0.03] p-4">
-          <dl className="grid grid-cols-3 gap-2 text-center tabular-nums">
+          {/* Three across only when the sheet is wide enough for the amounts; narrower, one row each,
+              so a long amount never gets cut off or split from its minus sign. */}
+          <dl className="grid gap-1.5 tabular-nums @md:grid-cols-3 @md:gap-2 @md:text-center">
             <Total label="Money in" value={formatMoney(income, currency)} />
             <Total label="Money out" value={formatMoney(expenses, currency)} />
             <Total label="Net" value={formatMoney(income - expenses, currency)} alert={income - expenses < 0} />
@@ -248,16 +251,17 @@ function RowCard({
           aria-label="Date"
           className={clsx(field, "flex-1")}
         />
-        <div role="radiogroup" aria-label="Money in or out" className="flex shrink-0 rounded-full bg-fg/[0.04] p-0.5 ring-1 ring-line">
+        <div role="radiogroup" aria-label="Money in or out" className="flex shrink-0 rounded-full bg-fg/[0.04] p-0.5 ring-1 ring-line" onKeyDown={rovingKeys}>
           {(["income", "expense"] as const).map((t) => (
             <button
               key={t}
               type="button"
               role="radio"
               aria-checked={row.type === t}
+              tabIndex={row.type === t ? 0 : -1}
               onClick={() => row.type !== t && onType(t)}
               className={clsx(
-                "rounded-full px-3 py-1.5 text-xs font-semibold transition-colors",
+                "rounded-full px-3 py-1.5 text-xs font-semibold transition-colors pointer-coarse:py-2.5",
                 row.type === t ? (t === "income" ? "bg-growth/20 text-growth" : "bg-alert/15 text-alert") : "text-muted",
               )}
             >
@@ -269,7 +273,7 @@ function RowCard({
           type="button"
           onClick={onRemove}
           aria-label="Delete row"
-          className="grid size-8 shrink-0 place-items-center rounded-full text-faint hover:bg-fg/[0.06] hover:text-alert"
+          className="tap-target relative grid size-8 shrink-0 place-items-center rounded-full text-faint transition-colors hover:bg-fg/[0.06] hover:text-alert"
         >
           <Trash2 className="size-4" aria-hidden />
         </button>
@@ -323,9 +327,9 @@ function RowCard({
 
 function Total({ label, value, alert = false }: { label: string; value: string; alert?: boolean }) {
   return (
-    <div className="min-w-0">
+    <div className="flex items-baseline justify-between gap-3 @md:block">
       <dt className="text-xs text-faint">{label}</dt>
-      <dd className={clsx("mt-0.5 truncate text-sm font-semibold", alert && "text-alert")}>{value}</dd>
+      <dd className={clsx("whitespace-nowrap text-sm font-semibold @md:mt-0.5", alert && "text-alert")}>{value}</dd>
     </div>
   );
 }

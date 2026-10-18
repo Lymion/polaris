@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { Check, ClipboardCheck, LoaderCircle, Plus, Sparkles, Target, Wand2 } from "lucide-react";
 import { PolarisMark } from "@/components/brand/PolarisMark";
+import { rovingKeys } from "@/components/ui/a11y";
 import { Button } from "@/components/ui/Button";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { AiError, generateMissions } from "@/lib/ai/client";
@@ -148,7 +149,7 @@ export function MissionsBoard() {
             </p>
           )}
 
-          <div className="mb-5 inline-flex rounded-full bg-fg/[0.04] p-1 ring-1 ring-line" role="tablist">
+          <div className="mb-5 inline-flex rounded-full bg-fg/[0.04] p-1 ring-1 ring-line" role="tablist" aria-label="Missions" onKeyDown={rovingKeys}>
             {(
               [
                 ["active", `In progress (${active.length})`],
@@ -157,11 +158,14 @@ export function MissionsBoard() {
             ).map(([value, label]) => (
               <button
                 key={value}
+                id={`missions-tab-${value}`}
                 role="tab"
                 aria-selected={tab === value}
+                aria-controls="missions-panel"
+                tabIndex={tab === value ? 0 : -1}
                 onClick={() => setTab(value)}
                 className={clsx(
-                  "rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
+                  "tap-target relative rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
                   tab === value ? "bg-fg/[0.1] text-ink" : "text-muted hover:text-ink",
                 )}
               >
@@ -170,17 +174,21 @@ export function MissionsBoard() {
             ))}
           </div>
 
-          {planning && <PlanningState />}
+          <div id="missions-panel" role="tabpanel" aria-labelledby={`missions-tab-${tab}`}>
+            {/* Names the list for screen readers, so the mission titles sit under a heading of their own. */}
+            <h2 className="sr-only">{tab === "active" ? "Missions in progress" : "Completed missions"}</h2>
+            {planning && <PlanningState />}
 
-          {list.length === 0 && !planning ? (
-            <p className="rounded-xl border border-dashed border-fg/10 p-8 text-center text-sm text-muted">
-              {tab === "active"
-                ? "All missions complete. Ask for more missions to keep climbing."
-                : "No completed missions yet. Tick off steps to finish your first one."}
-            </p>
-          ) : (
-            <Questline missions={list} />
-          )}
+            {list.length === 0 && !planning ? (
+              <p className="rounded-xl border border-dashed border-fg/10 p-8 text-center text-sm text-muted">
+                {tab === "active"
+                  ? "All missions complete. Ask for more missions to keep climbing."
+                  : "No completed missions yet. Tick off steps to finish your first one."}
+              </p>
+            ) : (
+              <Questline missions={list} />
+            )}
+          </div>
         </>
       )}
     </>

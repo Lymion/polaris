@@ -304,12 +304,13 @@ function Computer({ className, stand = false, onOpen }: { className?: string; st
                 <span className="whitespace-nowrap text-alert">Out {fmt(cur.expenses)}</span>
               </p>
               {top && (
-                <p className="mt-2 truncate text-xs text-muted">
+                // Wraps rather than truncates: the amount is at the end, where an ellipsis would hide it.
+                <p className="mt-2 text-xs text-muted">
                   Biggest cost: {top.category} {fmt(top.amount)}
                 </p>
               )}
               {stock.tracked > 0 && (
-                <p className="mt-1 truncate text-xs text-muted">
+                <p className="mt-1 text-xs text-muted">
                   Stock: {fmt(stock.value)}
                   {needs && <span className={stock.out.length ? "text-alert" : "text-caution"}> · {needs}</span>}
                 </p>
@@ -614,7 +615,9 @@ function MonthPlanner({ className, onOpen }: { className?: string; onOpen: () =>
             {shown.map((f, i) => (
               <li key={i} className="flex h-6 items-center gap-1.5 text-[12px]">
                 <f.icon className="size-3.5 shrink-0 text-[#b45309]" aria-hidden />
-                <span className="min-w-0 flex-1 truncate font-medium">{f.text}</span>
+                <span className="min-w-0 flex-1 truncate font-medium" title={f.text}>
+                  {f.text}
+                </span>
                 <span className="shrink-0 text-[11px] font-semibold text-[#6b7280]">{when(f.at)}</span>
               </li>
             ))}

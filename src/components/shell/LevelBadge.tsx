@@ -17,7 +17,7 @@ export function LevelBadge({ compact = false }: { compact?: boolean }) {
     return (
       <Link
         href="/"
-        className="flex items-center gap-1.5 rounded-full bg-surface-900/75 px-3 py-1 text-xs font-semibold ring-1 ring-line backdrop-blur"
+        className="tap-target relative flex items-center gap-1.5 rounded-full bg-surface-900/75 px-3 py-1 text-xs font-semibold ring-1 ring-line backdrop-blur"
       >
         <span className="text-star-300">Lv {lvl.level}</span>
         <span className="text-faint">·</span>
@@ -29,7 +29,9 @@ export function LevelBadge({ compact = false }: { compact?: boolean }) {
 
   return (
     <Link href="/" className="panel block p-4 transition-colors hover:bg-fg/[0.06]">
-      <p className="truncate text-sm font-semibold">{businessName || "Your business"}</p>
+      <p className="truncate text-sm font-semibold" title={businessName || undefined}>
+        {businessName || "Your business"}
+      </p>
       <p className="mt-0.5 text-xs text-muted">
         Level {lvl.level} · <span className="text-star-300">{lvl.title}</span>
       </p>

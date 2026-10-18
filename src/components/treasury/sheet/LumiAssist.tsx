@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { ArrowRight, ArrowUp, Download, FileUp, ListChecks, LoaderCircle, ShieldCheck, Tags, Upload } from "lucide-react";
 import { Mascot, type MascotMood } from "@/components/mascot/Mascot";
@@ -35,9 +35,17 @@ export function LumiAssist({
 }) {
   const profile = usePolaris((s) => s.profile);
   const openMascot = usePolaris((s) => s.openMascot);
+  const setMascotOnStage = usePolaris((s) => s.setMascotOnStage);
   const [question, setQuestion] = useState("");
   const name = mascotName(profile);
   const mood: MascotMood = busy ? "thinking" : "idle";
+
+  // Lumi is already on the page here, so the corner Lumi and its tip bubble step aside, as in the
+  // studio. Otherwise the two speech bubbles can land on top of each other.
+  useEffect(() => {
+    setMascotOnStage(true);
+    return () => setMascotOnStage(false);
+  }, [setMascotOnStage]);
 
   return (
     <aside className={clsx("panel space-y-5 p-5 sm:p-6", className)} aria-label={`${name}, your money helper`}>
@@ -93,7 +101,11 @@ export function LumiAssist({
             ))}
           </ul>
           {onShowSheet && (
-            <button type="button" onClick={onShowSheet} className="mt-2.5 inline-flex items-center gap-1 text-xs font-semibold text-star-200 hover:underline">
+            <button
+              type="button"
+              onClick={onShowSheet}
+              className="tap-target relative mt-2.5 inline-flex items-center gap-1 text-xs font-semibold text-star-200 hover:underline"
+            >
               See them in the sheet <ArrowRight className="size-3.5" aria-hidden />
             </button>
           )}
@@ -120,7 +132,7 @@ export function LumiAssist({
           type="submit"
           aria-label="Ask"
           disabled={!question.trim()}
-          className="grid size-9 shrink-0 place-items-center rounded-full bg-star-400 text-on-accent disabled:opacity-30"
+          className="tap-target relative grid size-9 shrink-0 place-items-center rounded-full bg-star-400 text-on-accent transition-[transform,opacity] duration-150 ease-out active:scale-[0.97] disabled:opacity-30"
         >
           <ArrowUp className="size-4" strokeWidth={2.5} aria-hidden />
         </button>

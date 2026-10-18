@@ -310,7 +310,12 @@ export function Onboarding() {
                   <span>
                     Your business data stays in this browser. When you use AI help, the details it needs go to NVIDIA Nemotron on
                     Nebius to write the answer.{" "}
-                    <a href="/privacy" target="_blank" rel="noreferrer" className="font-medium text-star-300 underline-offset-4 hover:underline">
+                    <a
+                      href="/privacy"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-medium text-star-300 underline decoration-star-300/40 underline-offset-4 transition-colors hover:decoration-star-300"
+                    >
                       Privacy notice
                     </a>
                   </span>

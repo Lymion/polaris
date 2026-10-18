@@ -153,7 +153,7 @@ export function MoneyCheckup({ onClose }: { onClose: () => void }) {
           <div className="mt-6">
             {added ? (
               <p className="flex items-center justify-center gap-2 rounded-full bg-growth/10 px-4 py-2.5 text-sm font-semibold text-growth ring-1 ring-growth/30">
-                {added} missions added ·{" "}
+                {added} {added === 1 ? "mission" : "missions"} added ·{" "}
                 <Link href="/missions" onClick={onClose} className="underline underline-offset-2">
                   View
                 </Link>

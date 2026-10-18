@@ -8,6 +8,7 @@ import { ChatComposer, ChatThread } from "@/components/advisor/ChatParts";
 import { newAdvisorChat, sendAdvisorMessage } from "@/lib/advisorChat";
 import { effectiveRevenue } from "@/lib/finance";
 import { levelInfo } from "@/lib/levels";
+import { useDialogFocus } from "@/components/ui/a11y";
 import { mascotName, useHydrated, usePolaris, useWorld } from "@/lib/store";
 import { Mascot, type MascotMood } from "./Mascot";
 
@@ -80,13 +81,13 @@ export function MascotDock() {
           {bubble && (
             <div
               role="status"
-              className="relative mb-12 max-w-[230px] rounded-2xl rounded-br-md bg-white px-3.5 py-3 text-[13px] leading-snug text-space-900 shadow-2xl animate-rise-in sm:max-w-[260px]"
+              className="relative mb-12 max-w-[230px] origin-bottom-right rounded-2xl rounded-br-md bg-white px-3.5 py-3 text-[13px] leading-snug text-space-900 shadow-2xl animate-rise-in sm:max-w-[260px]"
             >
               <button
                 type="button"
                 onClick={() => setBubble(null)}
                 aria-label="Dismiss tip"
-                className="absolute -right-2 -top-2 grid size-6 place-items-center rounded-full bg-surface-700 text-ink ring-2 ring-surface-950 transition-colors before:absolute before:-inset-2 before:content-[''] hover:bg-surface-600"
+                className="tap-target absolute -right-2 -top-2 grid size-6 place-items-center rounded-full bg-surface-700 text-ink ring-2 ring-surface-950 transition-colors hover:bg-surface-600"
               >
                 <X className="size-3.5" aria-hidden />
               </button>
@@ -98,7 +99,7 @@ export function MascotDock() {
                     openMascot(bubble.action?.prompt);
                     setBubble(null);
                   }}
-                  className="mt-2 rounded-full bg-space-800 px-3 py-1.5 text-xs font-semibold text-white transition-[transform,background-color] duration-150 ease-out hover:bg-space-700 active:scale-[0.97]"
+                  className="tap-target relative mt-2 rounded-full bg-space-800 px-3 py-1.5 text-xs font-semibold text-white transition-[transform,background-color] duration-150 ease-out hover:bg-space-700 active:scale-[0.97]"
                 >
                   {bubble.action.label}
                 </button>
@@ -142,7 +143,9 @@ function MascotPanel({ page, mood }: { page: string; mood: MascotMood }) {
   const threadLength = usePolaris((s) => s.advisorThread.length);
   const streaming = usePolaris((s) => s.chatStreaming);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const panel = useRef<HTMLElement>(null);
   const name = mascotName(profile);
+  useDialogFocus(panel);
 
   // A question sent from a mission or tip ("Walk me through it") arrives with the open request.
   useEffect(() => {
@@ -164,9 +167,11 @@ function MascotPanel({ page, mood }: { page: string; mood: MascotMood }) {
 
   return (
     <section
+      ref={panel}
       role="dialog"
       aria-label={`Chat with ${name}`}
-      className="fixed inset-x-0 bottom-0 z-50 flex h-[85dvh] flex-col overflow-hidden rounded-t-3xl bg-surface-900 shadow-2xl ring-1 ring-line animate-rise-in lg:inset-x-auto lg:bottom-5 lg:right-5 lg:h-[min(640px,85dvh)] lg:w-[400px] lg:rounded-3xl"
+      tabIndex={-1}
+      className="fixed inset-x-0 bottom-0 z-50 flex h-[85dvh] flex-col overflow-hidden rounded-t-3xl bg-surface-900 shadow-2xl ring-1 ring-line outline-none animate-rise-in lg:inset-x-auto lg:bottom-5 lg:right-5 lg:h-[min(640px,85dvh)] lg:w-[400px] lg:origin-bottom-right lg:rounded-3xl"
     >
       <header className="flex items-center gap-3 border-b border-line bg-surface-800/80 px-4 py-3">
         <Mascot size={48} mood={mood} className="shrink-0" />
@@ -182,7 +187,7 @@ function MascotPanel({ page, mood }: { page: string; mood: MascotMood }) {
           onClick={closeMascot}
           aria-label="Open full chat"
           title="Open full chat"
-          className="grid size-9 place-items-center rounded-full text-muted transition-colors hover:bg-fg/[0.08] hover:text-ink"
+          className="tap-target relative grid size-9 place-items-center rounded-full text-muted transition-colors hover:bg-fg/[0.08] hover:text-ink"
         >
           <Maximize2 className="size-4" aria-hidden />
         </Link>
@@ -240,7 +245,10 @@ function NameMe({ onSave }: { onSave: (name: string) => void }) {
           aria-label="Your guide's name"
           className="min-w-0 flex-1 rounded-full bg-fg/[0.06] px-4 py-2 text-sm ring-1 ring-line placeholder:text-faint focus:outline-none focus:ring-2 focus:ring-star-400/70"
         />
-        <button type="submit" className="rounded-full bg-star-400 px-4 text-sm font-semibold text-on-accent">
+        <button
+          type="submit"
+          className="rounded-full bg-star-400 px-4 text-sm font-semibold text-on-accent transition-[transform,filter] duration-150 ease-out hover:brightness-105 active:scale-[0.97]"
+        >
           Save
         </button>
       </div>
@@ -255,7 +263,7 @@ function IconButton({ label, onClick, children }: { label: string; onClick: () =
       onClick={onClick}
       aria-label={label}
       title={label}
-      className="grid size-9 place-items-center rounded-full text-muted transition-colors hover:bg-fg/[0.08] hover:text-ink"
+      className="tap-target relative grid size-9 place-items-center rounded-full text-muted transition-colors hover:bg-fg/[0.08] hover:text-ink"
     >
       {children}
     </button>

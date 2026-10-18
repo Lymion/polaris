@@ -185,7 +185,7 @@ export function RestockPlanPanel({ lines }: { lines: StockLine[] }) {
           {plan.watch && <p className="text-xs leading-relaxed text-muted">Watch: {plan.watch}</p>}
           <div className="flex flex-wrap gap-2">
             {mission === "made" ? (
-              <Link href="/missions" className="inline-flex h-8 items-center gap-2 rounded-full px-3 text-sm font-semibold text-growth ring-1 ring-growth/40">
+              <Link href="/missions" className="tap-target relative inline-flex h-8 items-center gap-2 rounded-full px-3 text-sm font-semibold text-growth ring-1 ring-growth/40">
                 <Target className="size-4" aria-hidden /> Added to your missions
               </Link>
             ) : (

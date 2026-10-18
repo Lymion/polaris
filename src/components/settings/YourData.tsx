@@ -100,7 +100,8 @@ export function YourDataDialog({ onClose }: { onClose: () => void }) {
               <p className="mt-1 text-muted">
                 {pending.businessName}
                 {pending.exportedAt && `, saved ${new Date(pending.exportedAt).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" })}`}:{" "}
-                {pending.counts.entries} money records, {pending.counts.missions} missions, {pending.counts.ideas} saved ideas.
+                {pending.counts.entries} money {pending.counts.entries === 1 ? "record" : "records"}, {pending.counts.missions}{" "}
+                {pending.counts.missions === 1 ? "mission" : "missions"}, {pending.counts.ideas} saved {pending.counts.ideas === 1 ? "idea" : "ideas"}.
                 Everything for {businessName || "this business"} on this device will be replaced.
               </p>
               <div className="mt-3 flex gap-2">
@@ -133,7 +134,7 @@ export function YourDataDialog({ onClose }: { onClose: () => void }) {
               <div className="mt-3 flex gap-2">
                 <button
                   type="button"
-                  className="inline-flex h-8 items-center gap-2 rounded-full bg-alert px-3.5 text-sm font-semibold text-white transition hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-alert"
+                  className="tap-target relative inline-flex h-8 items-center gap-2 rounded-full bg-alert px-3.5 text-sm font-semibold text-white transition-[transform,filter] duration-150 ease-out hover:brightness-110 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-alert"
                   onClick={() => {
                     deleteEverything();
                     onClose();

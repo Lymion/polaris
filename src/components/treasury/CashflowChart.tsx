@@ -184,7 +184,9 @@ export function BarList({
     <ul className="space-y-2.5">
       {rows.map((r) => (
         <li key={r.label} className="grid grid-cols-[minmax(0,7.5rem)_1fr] items-center gap-3 text-sm sm:grid-cols-[minmax(0,10rem)_1fr]">
-          <span className="truncate text-muted">{r.label}</span>
+          <span className="truncate text-muted" title={r.label}>
+            {r.label}
+          </span>
           <span className="flex items-center gap-2">
             <span className="h-3 rounded-r-[4px]" style={{ width: `${Math.max(2, (r.amount / max) * 78)}%`, background: color }} />
             <span className="shrink-0 text-xs tabular-nums text-ink">{formatMoney(r.amount, currency, { compact: true })}</span>

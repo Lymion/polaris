@@ -187,7 +187,9 @@ function StockCard() {
               attention.map((l) => (
                 <li key={l.product.id} className="flex items-center justify-between gap-3">
                   <span className="min-w-0">
-                    <span className="block truncate font-medium">{l.product.name}</span>
+                    <span className="block truncate font-medium" title={l.product.name}>
+                      {l.product.name}
+                    </span>
                     <span className="block text-xs text-faint">
                       {l.status === "out"
                         ? l.perDay > 0 && l.margin.profit > 0
@@ -286,7 +288,9 @@ function RecentActivity() {
                 <f.icon className="size-4" />
               </span>
               <span className="min-w-0 flex-1">
-                <span className="block truncate text-sm font-medium">{f.text}</span>
+                <span className="block truncate text-sm font-medium" title={f.text}>
+                  {f.text}
+                </span>
                 <span className="block text-xs text-faint">
                   {f.detail} · {when(f.at)}
                 </span>
@@ -326,7 +330,7 @@ function StudioCard() {
               </li>
             ))}
           </ul>
-          <p className="relative mt-4 truncate text-sm">
+          <p className="relative mt-4 truncate text-sm" title={latest.title}>
             <span className="text-faint">Latest: </span>
             <span className="font-medium">{latest.title}</span>
           </p>
@@ -337,7 +341,7 @@ function StudioCard() {
           {items.length ? "Open the studio" : "Spark an idea"} <ArrowRight className="size-4" aria-hidden />
         </ButtonLink>
         {items.length > 0 && (
-          <Link href="/studio#library" className="inline-flex h-8 items-center px-2 text-sm font-medium text-muted hover:text-ink">
+          <Link href="/studio#library" className="tap-target relative inline-flex h-8 items-center px-2 text-sm font-medium text-muted transition-colors hover:text-ink">
             Idea library
           </Link>
         )}

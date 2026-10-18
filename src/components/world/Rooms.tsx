@@ -58,7 +58,9 @@ export function ComputerRoom({ children }: { children: ReactNode }) {
             <span className="size-2.5 rounded-full bg-[#f87171]" />
             <span className="size-2.5 rounded-full bg-[#fbbf24]" />
             <span className="size-2.5 rounded-full bg-[#4ade80]" />
-            <span className="ml-3 truncate text-xs font-semibold text-muted">Treasury · {businessName}</span>
+            <span className="ml-3 truncate text-xs font-semibold text-muted" title={businessName}>
+              Treasury · {businessName}
+            </span>
           </div>
           <div className="h-[calc(100dvh-14.5rem)] min-h-[380px] overflow-y-auto px-4 pb-10 pt-6 sm:px-8">{children}</div>
         </div>

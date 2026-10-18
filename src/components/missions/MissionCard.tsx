@@ -73,7 +73,7 @@ export function MissionCard({ mission, defaultOpen = false }: { mission: Mission
             onClick={() => setOpen(!open)}
             aria-expanded={open}
             aria-controls={stepsId}
-            className="group mt-2.5 flex w-full items-center gap-3 py-1.5 text-left"
+            className="group tap-target relative mt-2.5 flex w-full items-center gap-3 py-1.5 text-left"
           >
             <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-fg/[0.08]">
               <div
@@ -127,7 +127,7 @@ export function MissionCard({ mission, defaultOpen = false }: { mission: Mission
                   }
                   aria-label={`Ask ${name} about this step`}
                   title={`Ask ${name} about this step`}
-                  className="mr-1 mt-1.5 grid size-7 shrink-0 place-items-center rounded-full text-faint transition-colors hover:bg-star-400/15 hover:text-star-300"
+                  className="tap-target relative mr-1 mt-1.5 grid size-7 shrink-0 place-items-center rounded-full text-faint transition-colors hover:bg-star-400/15 hover:text-star-300"
                 >
                   <CircleHelp className="size-4" aria-hidden />
                 </button>
@@ -187,7 +187,7 @@ export function MissionCard({ mission, defaultOpen = false }: { mission: Mission
             <button
               type="button"
               onClick={() => openMascot(walkthrough)}
-              className="inline-flex h-8 items-center gap-1.5 rounded-full pl-1.5 pr-3 text-sm font-medium text-muted transition-colors hover:bg-fg/[0.06] hover:text-ink"
+              className="tap-target relative inline-flex h-8 items-center gap-1.5 rounded-full pl-1.5 pr-3 text-sm font-medium text-muted transition-colors hover:bg-fg/[0.06] hover:text-ink"
             >
               <Mascot size={24} still /> Walk me through it
             </button>
@@ -198,7 +198,7 @@ export function MissionCard({ mission, defaultOpen = false }: { mission: Mission
           onClick={() => confirmThen("delete", () => removeMission(mission.id))}
           aria-label={confirm === "delete" ? "Confirm delete" : "Delete mission"}
           className={clsx(
-            "inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-xs font-medium transition-colors",
+            "tap-target relative inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-xs font-medium transition-colors",
             !done && "ml-auto",
             confirm === "delete" ? "bg-alert/15 text-alert" : "text-faint hover:bg-fg/[0.06] hover:text-alert",
           )}

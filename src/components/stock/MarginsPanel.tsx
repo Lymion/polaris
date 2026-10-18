@@ -50,7 +50,9 @@ export function MarginsPanel({ lines, mix }: { lines: StockLine[]; mix: FeeMix }
           return (
             <li key={l.product.id}>
               <p className="flex items-baseline justify-between gap-3 text-sm">
-                <span className="min-w-0 truncate font-medium">{l.product.name}</span>
+                <span className="min-w-0 truncate font-medium" title={l.product.name}>
+                  {l.product.name}
+                </span>
                 <span className={clsx("shrink-0 tabular-nums font-semibold", health === "loss" ? "text-alert" : health === "thin" ? "text-caution" : "text-growth")}>
                   {l.margin.profit < 0 ? `−${unit(-l.margin.profit)}` : unit(l.margin.profit)} each
                   <span className="font-normal text-muted"> · {Math.round(l.margin.margin * 100)}%</span>

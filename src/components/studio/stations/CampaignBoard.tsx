@@ -195,7 +195,7 @@ function CampaignActions({
       )}
       {done.missions ? (
         <Link href="/missions" className={`${cardButton} underline-offset-2 hover:underline`}>
-          <Check className="size-3.5" aria-hidden /> {done.missions} missions added
+          <Check className="size-3.5" aria-hidden /> {done.missions} {done.missions === 1 ? "mission" : "missions"} added
         </Link>
       ) : (
         <button type="button" onClick={toMissions} disabled={busy} className={cardButton}>

@@ -51,13 +51,15 @@ export function OverheadsSection() {
         <ul className="mt-4 divide-y divide-line">
           {overheads.map((o) => (
             <li key={o.id} className="flex items-center gap-3 py-2.5 text-sm">
-              <span className="min-w-0 flex-1 truncate font-medium">{o.name}</span>
+              <span className="min-w-0 flex-1 truncate font-medium" title={o.name}>
+                {o.name}
+              </span>
               <span className="tabular-nums text-muted">{formatMoney(o.amount, currency)}</span>
               <button
                 type="button"
                 onClick={() => removeOverhead(o.id)}
                 aria-label={`Remove ${o.name}`}
-                className="rounded-full p-1.5 text-faint hover:bg-fg/[0.06] hover:text-alert"
+                className="tap-target relative rounded-full p-1.5 text-faint transition-colors hover:bg-fg/[0.06] hover:text-alert"
               >
                 <Trash2 className="size-3.5" aria-hidden />
               </button>

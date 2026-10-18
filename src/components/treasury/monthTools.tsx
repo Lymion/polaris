@@ -22,7 +22,7 @@ export function MonthNav({ label, onPrev, onNext, canNext }: { label: string; on
         type="button"
         onClick={onPrev}
         aria-label="Previous month"
-        className="grid size-9 place-items-center rounded-full text-muted ring-1 ring-line hover:bg-fg/[0.06] hover:text-ink"
+        className="tap-target relative grid size-9 place-items-center rounded-full text-muted ring-1 ring-line transition-colors hover:bg-fg/[0.06] hover:text-ink"
       >
         <ChevronLeft className="size-4" aria-hidden />
       </button>
@@ -32,7 +32,7 @@ export function MonthNav({ label, onPrev, onNext, canNext }: { label: string; on
         onClick={onNext}
         disabled={!canNext}
         aria-label="Next month"
-        className="grid size-9 place-items-center rounded-full text-muted ring-1 ring-line hover:bg-fg/[0.06] hover:text-ink disabled:opacity-30"
+        className="tap-target relative grid size-9 place-items-center rounded-full text-muted ring-1 ring-line transition-colors not-disabled:hover:bg-fg/[0.06] not-disabled:hover:text-ink disabled:cursor-not-allowed disabled:opacity-30"
       >
         <ChevronRight className="size-4" aria-hidden />
       </button>
@@ -121,7 +121,12 @@ export function useSheetHelper(month: string, monthLabel: string) {
     preview,
     closePreview: (added: number) => {
       setPreview(null);
-      if (added) setMessage(`Added ${added} entries from your statement. Want me to check them for mistakes?`);
+      if (added)
+        setMessage(
+          added === 1
+            ? "Added 1 entry from your statement. Want me to check it for mistakes?"
+            : `Added ${added} entries from your statement. Want me to check them for mistakes?`,
+        );
     },
     importFile,
     categorise,

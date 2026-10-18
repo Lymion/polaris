@@ -55,7 +55,8 @@ export function WorldShell({ onAppearance, onData, children }: { onAppearance: (
         <span className="flex items-center gap-1.5 rounded-full bg-surface-900/75 px-3 py-1 text-xs font-semibold ring-1 ring-line backdrop-blur">
           <room.icon className="size-3.5 text-star-300" aria-hidden /> {room.place}
         </span>
-        <div className="ml-auto flex items-center gap-2">
+        {/* gap-3 so the buttons' enlarged touch areas don't overlap */}
+        <div className="ml-auto flex items-center gap-3">
           <LevelMenu />
           {[
             { label: "Your data", onClick: onData, icon: ShieldCheck },
@@ -67,7 +68,7 @@ export function WorldShell({ onAppearance, onData, children }: { onAppearance: (
               onClick={b.onClick}
               aria-label={b.label}
               title={b.label}
-              className="grid size-8 place-items-center rounded-full bg-surface-900/75 text-muted ring-1 ring-line backdrop-blur hover:text-ink"
+              className="tap-target relative grid size-8 place-items-center rounded-full bg-surface-900/75 text-muted ring-1 ring-line backdrop-blur transition-colors hover:text-ink"
             >
               <b.icon className="size-4" aria-hidden />
             </button>
@@ -75,7 +76,9 @@ export function WorldShell({ onAppearance, onData, children }: { onAppearance: (
         </div>
       </header>
 
-      <main className="world-main pt-14">{children}</main>
+      <main id="main" tabIndex={-1} className="world-main pt-14 outline-none">
+        {children}
+      </main>
 
       <nav aria-label="Rooms" className="pointer-events-none fixed inset-x-0 bottom-3 z-30 flex justify-center px-3 pb-[env(safe-area-inset-bottom)]">
         <ul className="pointer-events-auto flex gap-1 rounded-full bg-surface-900/85 p-1.5 shadow-2xl ring-1 ring-line backdrop-blur-xl">
@@ -87,7 +90,7 @@ export function WorldShell({ onAppearance, onData, children }: { onAppearance: (
                   href={r.href}
                   aria-current={here ? "page" : undefined}
                   className={clsx(
-                    "flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-semibold transition-colors sm:px-3.5",
+                    "tap-target relative flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-semibold transition-colors sm:px-3.5",
                     here ? "bg-star-400 text-on-accent" : "text-muted hover:bg-fg/[0.08] hover:text-ink",
                   )}
                 >
@@ -112,13 +115,20 @@ function LevelMenu() {
   const businessName = usePolaris((s) => s.profile.businessName);
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
     <div className="relative">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="flex items-center gap-1.5 rounded-full bg-surface-900/75 px-3 py-1 text-xs font-semibold ring-1 ring-line backdrop-blur hover:ring-star-400/60"
+        className="tap-target relative flex items-center gap-1.5 rounded-full bg-surface-900/75 px-3 py-1 text-xs font-semibold ring-1 ring-line backdrop-blur transition-shadow hover:ring-star-400/60"
       >
         <span className="text-star-300">Lv {lvl.level}</span>
         <span className="text-faint">·</span>
@@ -130,7 +140,9 @@ function LevelMenu() {
         <>
           <button type="button" aria-label="Close" className="fixed inset-0 z-0 cursor-default" onClick={() => setOpen(false)} />
           <div className="panel absolute right-0 top-10 z-10 w-72 p-4 shadow-2xl">
-            <p className="truncate text-sm font-semibold">{businessName || "Your business"}</p>
+            <p className="truncate text-sm font-semibold" title={businessName || undefined}>
+              {businessName || "Your business"}
+            </p>
             <p className="mt-0.5 text-xs text-muted">
               Level {lvl.level} · <span className="text-star-300">{lvl.title}</span>
             </p>

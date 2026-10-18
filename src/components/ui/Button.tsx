@@ -5,14 +5,15 @@ import type { ComponentProps, ReactNode } from "react";
 type Variant = "primary" | "secondary" | "ghost";
 type Size = "sm" | "md" | "lg";
 
+// Disabled buttons keep pointer events so a title explaining why still shows on hover.
 const base =
-  "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition-[transform,background-color,color,filter,box-shadow] duration-150 ease-out active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-star-400";
+  "tap-target relative inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition-[transform,background-color,color,filter,box-shadow] duration-150 ease-out active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-star-400";
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-linear-to-b from-star-300 to-star-500 text-on-accent shadow-[0_6px_20px_-6px_var(--accent-glow)] hover:brightness-105",
-  secondary: "bg-fg/[0.06] text-ink ring-1 ring-line hover:bg-fg/[0.1]",
-  ghost: "text-muted hover:bg-fg/[0.06] hover:text-ink",
+    "bg-linear-to-b from-star-300 to-star-500 text-on-accent shadow-[0_6px_20px_-6px_var(--accent-glow)] not-disabled:hover:brightness-105",
+  secondary: "bg-fg/[0.06] text-ink ring-1 ring-line not-disabled:hover:bg-fg/[0.1]",
+  ghost: "text-muted not-disabled:hover:bg-fg/[0.06] not-disabled:hover:text-ink",
 };
 
 const sizes: Record<Size, string> = {

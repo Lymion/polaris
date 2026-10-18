@@ -11,6 +11,7 @@ import {
 import { createPortal } from "react-dom";
 import clsx from "clsx";
 import { TrendingDown, TrendingUp, X } from "lucide-react";
+import { useDialogFocus } from "@/components/ui/a11y";
 
 // The tap-through story format that Month Wrapped and Your Week share: full screen, a progress
 // bar per slide, tap to move on, hold to pause, like Stories.
@@ -118,6 +119,8 @@ export function StoryPlayer({ label, slides: make, onClose }: { label: string; s
   const [paused, setPaused] = useState(false);
   const holdTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const held = useRef(false);
+  const dialog = useRef<HTMLDivElement>(null);
+  useDialogFocus(dialog);
 
   const slides = make(() => setIndex(0));
   const slide = slides[Math.min(index, slides.length - 1)];
@@ -129,7 +132,8 @@ export function StoryPlayer({ label, slides: make, onClose }: { label: string; s
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
-      else if (e.key === "ArrowRight" || e.key === " ") {
+      // Space on a focused button presses it (Close, Watch again) instead of turning the page.
+      else if (e.key === "ArrowRight" || (e.key === " " && !(e.target instanceof HTMLButtonElement))) {
         e.preventDefault();
         setIndex((i) => Math.min(count - 1, i + 1));
       } else if (e.key === "ArrowLeft") setIndex((i) => Math.max(0, i - 1));
@@ -165,11 +169,13 @@ export function StoryPlayer({ label, slides: make, onClose }: { label: string; s
 
   return createPortal(
     <div
+      ref={dialog}
       role="dialog"
       aria-modal="true"
       aria-roledescription="story"
       aria-label={`${label}, slide ${index + 1} of ${slides.length}`}
-      className={clsx("scope-dark fixed inset-0 z-[80] select-none overflow-hidden bg-linear-to-br text-white transition-colors duration-700", slide.bg, paused && "wrapped-paused")}
+      tabIndex={-1}
+      className={clsx("scope-dark fixed inset-0 z-[80] select-none overflow-hidden bg-linear-to-br text-white outline-none transition-colors duration-700", slide.bg, paused && "wrapped-paused")}
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}
       onPointerCancel={() => setPaused(false)}
@@ -200,7 +206,7 @@ export function StoryPlayer({ label, slides: make, onClose }: { label: string; s
         data-no-advance
         onClick={onClose}
         aria-label="Close"
-        className="absolute right-4 top-8 z-10 grid size-10 place-items-center rounded-full bg-black/20 hover:bg-black/40"
+        className="tap-target absolute right-4 top-8 z-10 grid size-10 place-items-center rounded-full bg-black/20 transition-colors hover:bg-black/40"
       >
         <X className="size-5" aria-hidden />
       </button>
@@ -210,7 +216,7 @@ export function StoryPlayer({ label, slides: make, onClose }: { label: string; s
       </div>
 
       {!last && (
-        <p className="pointer-events-none absolute inset-x-0 bottom-4 text-center text-xs text-fg/50">
+        <p className="pointer-events-none absolute inset-x-0 bottom-4 text-center text-xs text-fg/70">
           Tap to continue · hold to pause
         </p>
       )}

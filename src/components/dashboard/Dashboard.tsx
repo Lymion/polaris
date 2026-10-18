@@ -114,9 +114,9 @@ function DashboardSkeleton() {
         <div className="h-24 w-full max-w-md animate-pulse rounded-2xl bg-fg/[0.04]" />
         <div className="h-28 w-full animate-pulse rounded-[1.25rem] bg-fg/[0.04] xl:w-[600px]" />
       </div>
-      <div className="grid gap-6 lg:grid-cols-5">
-        <div className="h-72 animate-pulse rounded-[1.25rem] bg-fg/[0.04] lg:col-span-3" />
-        <div className="h-72 animate-pulse rounded-[1.25rem] bg-fg/[0.04] lg:col-span-2" />
+      <div className="grid gap-6 xl:grid-cols-5">
+        <div className="h-72 animate-pulse rounded-[1.25rem] bg-fg/[0.04] xl:col-span-3" />
+        <div className="h-72 animate-pulse rounded-[1.25rem] bg-fg/[0.04] xl:col-span-2" />
       </div>
       <div className="h-40 animate-pulse rounded-[1.25rem] bg-fg/[0.04]" />
     </div>

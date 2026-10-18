@@ -12,7 +12,7 @@ export function CardTitle({ icon: Icon, title, href }: { icon: LucideIcon; title
       {/* Padded out to a comfortable tap target; the negative margin keeps the text aligned to the card edge. */}
       <Link
         href={href}
-        className="-mr-2 inline-flex h-8 items-center gap-0.5 rounded-full px-2 text-xs font-medium text-muted transition-colors hover:bg-fg/[0.05] hover:text-ink"
+        className="tap-target relative -mr-2 inline-flex h-8 items-center gap-0.5 rounded-full px-2 text-xs font-medium text-muted transition-colors hover:bg-fg/[0.05] hover:text-ink"
       >
         Open <ChevronRight className="size-3.5" aria-hidden />
       </Link>

@@ -89,6 +89,14 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+  /* Things that move or turn change in place instead; fades and colour changes stay. */
+  .studio-station,
+  .studio-lumi,
+  .studio-book,
+  .world-door-leaf,
+  .world-gift-lid {
+    transition-duration: 0.01ms !important;
+  }
 }
 
 @theme inline {
@@ -131,6 +139,23 @@
   li,
   dd {
     text-wrap: pretty;
+  }
+}
+
+/* On touch screens, grows a small control's tap area to at least 44px without changing how it
+   looks. The control needs a position (relative or absolute); leave room between neighbours so the
+   areas don't overlap. */
+@utility tap-target {
+  @media (pointer: coarse) {
+    &::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: max(100%, 44px);
+      height: max(100%, 44px);
+      translate: -50% -50%;
+    }
   }
 }
 
@@ -734,9 +759,13 @@ body::before {
   writing-mode: vertical-rl;
   transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.3);
 }
-.studio-book:hover,
 .studio-book[aria-pressed="true"] {
   transform: translateY(-10px);
+}
+@media (hover: hover) and (pointer: fine) {
+  .studio-book:hover {
+    transform: translateY(-10px);
+  }
 }
 
 /* ---------- Month Wrapped ----------
@@ -1146,9 +1175,14 @@ body::before {
   outline: none;
   transition: filter 0.25s ease;
 }
-.world-object:hover,
+/* Hover only where there's a mouse: a tap would otherwise leave the glow stuck on. */
 .world-object:focus-visible {
   filter: drop-shadow(0 0 18px var(--accent-glow)) brightness(1.04);
+}
+@media (hover: hover) and (pointer: fine) {
+  .world-object:hover {
+    filter: drop-shadow(0 0 18px var(--accent-glow)) brightness(1.04);
+  }
 }
 
 /* The studio door swings away from you on hover, letting the studio's light out */
@@ -1156,9 +1190,13 @@ body::before {
   transform-origin: left center;
   transition: transform 0.5s cubic-bezier(0.3, 0.8, 0.3, 1);
 }
-.world-door:hover .world-door-leaf,
 .world-door:focus-visible .world-door-leaf {
   transform: perspective(700px) rotateY(38deg);
+}
+@media (hover: hover) and (pointer: fine) {
+  .world-door:hover .world-door-leaf {
+    transform: perspective(700px) rotateY(38deg);
+  }
 }
 
 /* Small signs of life at the desk: twinkling lights and stars, steam off the mug. */
@@ -1195,9 +1233,13 @@ body::before {
   transform-origin: 15% 100%;
   transition: transform 0.35s cubic-bezier(0.3, 0.8, 0.3, 1.4);
 }
-.world-gift:hover .world-gift-lid,
 .world-gift:focus-visible .world-gift-lid {
   transform: translateY(-9px) rotate(-7deg);
+}
+@media (hover: hover) and (pointer: fine) {
+  .world-gift:hover .world-gift-lid {
+    transform: translateY(-9px) rotate(-7deg);
+  }
 }
 .world-gift-wrapping {
   transform-origin: 50% 100%;

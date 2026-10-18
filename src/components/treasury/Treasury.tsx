@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import clsx from "clsx";
 import { BookOpen, Play, RefreshCw, Sparkles, Stethoscope, Wallet } from "lucide-react";
+import { rovingKeys } from "@/components/ui/a11y";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -141,15 +142,23 @@ function TreasuryBody() {
       />
 
       {/* Wraps onto two rows on phones instead of scrolling sideways */}
-      <div className="mb-6 flex flex-wrap gap-1 rounded-2xl bg-fg/[0.04] p-1 ring-1 ring-line sm:inline-flex sm:flex-nowrap sm:rounded-full" role="tablist">
+      <div
+        className="mb-6 flex flex-wrap gap-1 rounded-2xl bg-fg/[0.04] p-1 ring-1 ring-line sm:inline-flex sm:flex-nowrap sm:rounded-full"
+        role="tablist"
+        aria-label="Treasury"
+        onKeyDown={rovingKeys}
+      >
         {TABS.map((t) => (
           <button
             key={t.id}
+            id={`treasury-tab-${t.id}`}
             role="tab"
             aria-selected={tab === t.id}
+            aria-controls="treasury-panel"
+            tabIndex={tab === t.id ? 0 : -1}
             onClick={() => setTab(t.id)}
             className={clsx(
-              "flex-1 whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
+              "flex-1 whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-medium transition-colors pointer-coarse:py-3",
               tab === t.id ? "bg-fg/[0.1] text-ink" : "text-muted hover:text-ink",
             )}
           >
@@ -158,7 +167,7 @@ function TreasuryBody() {
         ))}
       </div>
 
-      <div role="tabpanel">
+      <div id="treasury-panel" role="tabpanel" aria-labelledby={`treasury-tab-${tab}`}>
         {tab === "overview" && (
           <OverviewTab
             selected={selected}

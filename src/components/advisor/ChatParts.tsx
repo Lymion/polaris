@@ -175,7 +175,7 @@ const AssistantMessage = memo(function AssistantMessage({
         <div className={clsx("flex flex-wrap items-center gap-3", compact ? "mt-3" : "mt-4")}>
           {message.missionsAdded ? (
             <p className="inline-flex items-center gap-2 rounded-full bg-growth/10 px-3.5 py-1.5 text-xs font-semibold text-growth ring-1 ring-growth/30">
-              {message.missionsAdded} missions added
+              {message.missionsAdded} {message.missionsAdded === 1 ? "mission" : "missions"} added
               <Link href="/missions" className="underline underline-offset-2">
                 View
               </Link>

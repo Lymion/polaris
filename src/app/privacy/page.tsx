@@ -68,7 +68,12 @@ export default function PrivacyPage() {
         <p>
           These requests go to <strong>Nebius Token Factory</strong>, which runs the NVIDIA Nemotron models (and an open Gemma
           model to read photos). Nebius handles the data under its own terms. Its{" "}
-          <a href="https://docs.tokenfactory.nebius.com/legal/privacy-policy" target="_blank" rel="noreferrer" className="font-medium text-star-300 underline-offset-4 hover:underline">
+          <a
+            href="https://docs.tokenfactory.nebius.com/legal/privacy-policy"
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium text-star-300 underline decoration-star-300/40 underline-offset-4 transition-colors hover:decoration-star-300"
+          >
             privacy policy
           </a>{" "}
           describes what it keeps, including some inputs and outputs used to make its models respond faster.
@@ -108,7 +113,7 @@ export default function PrivacyPage() {
       </Section>
 
       <p className="text-sm">
-        <Link href="/" className="font-medium text-star-300 underline-offset-4 hover:underline">
+        <Link href="/" className="inline-flex min-h-11 items-center font-medium text-star-300 underline-offset-4 hover:underline">
           Back to Polaris
         </Link>
       </p>
