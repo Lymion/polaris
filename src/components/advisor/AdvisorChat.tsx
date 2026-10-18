@@ -125,7 +125,7 @@ export function AdvisorChat() {
                   key={s.label}
                   type="button"
                   onClick={() => void sendAdvisorMessage(s.prompt, PAGE)}
-                  className="group flex items-center gap-3 rounded-2xl bg-fg/[0.03] px-4 py-3.5 ring-1 ring-line transition-all hover:bg-fg/[0.07] hover:ring-orbit-400/40 active:scale-[0.99]"
+                  className="group flex items-center gap-3 rounded-2xl bg-fg/[0.03] px-4 py-3.5 ring-1 ring-line transition-[transform,background-color,box-shadow] duration-150 ease-out hover:bg-fg/[0.07] hover:ring-orbit-400/40 active:scale-[0.99]"
                 >
                   <s.icon className="size-5 shrink-0 text-orbit-400 group-hover:text-star-300" aria-hidden />
                   <span className="text-sm font-medium">{s.label}</span>

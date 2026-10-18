@@ -75,7 +75,7 @@ export function ReportDialog({ mission, onClose }: { mission: Mission; onClose: 
           <div className="flex items-center gap-3">
             <Mascot size={64} greet />
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-star-400">Mission report</p>
+              <p className="eyebrow text-star-400">Mission report</p>
               <h2 id="report-title" className="text-lg font-bold leading-snug">
                 {mission.title}
               </h2>
@@ -162,7 +162,7 @@ export function ReportDialog({ mission, onClose }: { mission: Mission; onClose: 
 
           {review.insights.length > 0 && (
             <div className="mt-5 text-left">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-faint">I&apos;ll remember</p>
+              <p className="eyebrow text-faint">I&apos;ll remember</p>
               <ul className="mt-2 flex flex-wrap gap-2">
                 {review.insights.map((i) => (
                   <li key={i.label} className="rounded-full bg-fg/[0.06] px-3 py-1.5 text-xs ring-1 ring-line">

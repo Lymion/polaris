@@ -45,11 +45,11 @@ export function MissionCard({ mission, defaultOpen = false }: { mission: Mission
     <article className={clsx("panel overflow-hidden transition-colors", done && "opacity-85")}>
       <div className="p-5">
         <div className="flex flex-wrap items-center gap-2">
-          <span className={clsx("rounded-full px-2.5 py-0.5 text-[11px] font-semibold", CATEGORY_STYLES[mission.category])}>
+          <span className={clsx("rounded-full px-2.5 py-0.5 text-xs font-semibold", CATEGORY_STYLES[mission.category])}>
             {CATEGORY_LABELS[mission.category]}
           </span>
           {mission.source === "advisor" && (
-            <span className="rounded-full bg-fg/[0.06] px-2.5 py-0.5 text-[11px] font-medium text-muted">
+            <span className="rounded-full bg-fg/[0.06] px-2.5 py-0.5 text-xs font-medium text-muted">
               From {name}
             </span>
           )}
@@ -73,7 +73,7 @@ export function MissionCard({ mission, defaultOpen = false }: { mission: Mission
             onClick={() => setOpen(!open)}
             aria-expanded={open}
             aria-controls={stepsId}
-            className="group mt-4 flex w-full items-center gap-3 text-left"
+            className="group mt-2.5 flex w-full items-center gap-3 py-1.5 text-left"
           >
             <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-fg/[0.08]">
               <div
@@ -107,7 +107,7 @@ export function MissionCard({ mission, defaultOpen = false }: { mission: Mission
                 <span
                   aria-hidden
                   className={clsx(
-                    "mt-0.5 grid size-5 shrink-0 place-items-center rounded-md ring-1 transition-all peer-focus-visible:ring-2 peer-focus-visible:ring-star-400",
+                    "mt-0.5 grid size-5 shrink-0 place-items-center rounded-md ring-1 transition-[background-color,box-shadow] duration-150 peer-focus-visible:ring-2 peer-focus-visible:ring-star-400",
                     step.done ? "bg-star-400 ring-star-400" : "bg-fg/[0.04] ring-fg/20",
                   )}
                 >

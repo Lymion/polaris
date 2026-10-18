@@ -222,7 +222,7 @@ export function Onboarding() {
                         setError("");
                       }}
                       className={clsx(
-                        "rounded-xl px-4 py-3 text-left ring-1 transition-all active:scale-[0.98]",
+                        "rounded-xl px-4 py-3 text-left ring-1 transition-[transform,background-color,color,box-shadow] duration-150 ease-out active:scale-[0.98]",
                         stage === s.value
                           ? "bg-star-400/15 ring-star-400/60"
                           : "bg-fg/[0.04] ring-line hover:bg-fg/[0.08]",
@@ -354,7 +354,7 @@ function StepDots({ step }: { step: number }) {
         <span
           key={n}
           className={clsx(
-            "h-1.5 rounded-full transition-all duration-300",
+            "h-1.5 rounded-full transition-[width,background-color] duration-300 ease-out",
             n === step ? "w-8 bg-star-400" : n < step ? "w-4 bg-orbit-400" : "w-4 bg-fg/10",
           )}
         />

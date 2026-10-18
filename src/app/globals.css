@@ -34,7 +34,8 @@
 
   --color-ink: #eef2ff;
   --color-muted: #9aa8c7;
-  --color-faint: #64729a;
+  /* Every text colour clears 4.5:1 on the page and on cards, in every theme. */
+  --color-faint: #8290b4;
   --color-line: rgb(255 255 255 / 0.08);
   --color-panel: rgb(19 39 90 / 0.5);
 
@@ -95,6 +96,53 @@
   --font-brand: var(--font-berkshire), cursive;
 }
 
+/* Defaults every control shares. In @layer base so a component's own utilities still win. */
+@layer base {
+  /* Tailwind 4 leaves buttons with the arrow cursor. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  summary,
+  select,
+  label:has(> input[type="checkbox"], > input[type="radio"], > input[type="file"]) {
+    cursor: pointer;
+  }
+  /* No double-tap-to-zoom delay on taps. */
+  a,
+  button,
+  [role="button"],
+  input,
+  select,
+  textarea,
+  label {
+    touch-action: manipulation;
+  }
+  /* One keyboard focus ring everywhere, in the theme's accent. */
+  :focus-visible {
+    outline: 2px solid var(--color-star-400);
+    outline-offset: 2px;
+  }
+  /* Headings break into even lines; paragraphs avoid a lone last word. */
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p,
+  li,
+  dd {
+    text-wrap: pretty;
+  }
+}
+
+/* Small uppercase label above a heading or a group. */
+@utility eyebrow {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
 /* ---------- Themes ----------
    Set on <html data-theme="…">. Each theme redefines the colour tokens above, so every
    utility (bg-surface-900, text-ink, bg-fg/[0.04]…) follows it. The --room-* colours paint
@@ -144,7 +192,7 @@
   --color-fg: #0f1b3d;
   --color-ink: #0f1b3d;
   --color-muted: #4a5778;
-  --color-faint: #7d89a6;
+  --color-faint: #5f6b8a;
   --color-line: rgb(15 27 61 / 0.1);
   --color-panel: rgb(255 255 255 / 0.92);
   --color-star-50: #5c3b00;
@@ -158,7 +206,7 @@
   --color-orbit-400: #2563eb;
   --color-growth: #15803d;
   --color-caution: #b45309;
-  --color-alert: #dc2626;
+  --color-alert: #c81e1e;
   --accent-glow: rgb(226 162 48 / 0.45);
   --panel-shadow: 0 1px 2px rgb(15 27 61 / 0.05), 0 10px 28px -16px rgb(15 27 61 / 0.25);
   --page-backdrop: radial-gradient(ellipse 80% 50% at 50% -10%, rgb(59 111 224 / 0.16), transparent 70%);
@@ -192,7 +240,7 @@
   --color-fg: #7a2962;
   --color-ink: #4a1d3f;
   --color-muted: #84536f;
-  --color-faint: #b08aa3;
+  --color-faint: #8f6580;
   --color-line: rgb(122 41 98 / 0.13);
   --color-panel: rgb(255 255 255 / 0.9);
   --color-star-50: #6d1d4f;
@@ -206,9 +254,9 @@
   --color-orbit-400: #9b6bff;
   --color-orbit-500: #b28dff;
   --color-orbit-600: #8b5cf6;
-  --color-growth: #16a34a;
+  --color-growth: #15803d;
   --color-caution: #c2410c;
-  --color-alert: #e11d48;
+  --color-alert: #be123c;
   --color-on-accent: #4a1d3f;
   --accent-glow: rgb(255 126 182 / 0.5);
   --panel-radius: 1.6rem;
@@ -247,7 +295,7 @@
   --color-fg: #d8fbff;
   --color-ink: #e6fffb;
   --color-muted: #8bb4b8;
-  --color-faint: #5b7d85;
+  --color-faint: #6f939b;
   --color-line: rgb(34 211 238 / 0.14);
   --color-panel: rgb(14 22 38 / 0.78);
   --color-star-50: #ecfeff;
@@ -302,7 +350,7 @@
   --color-fg: #1f1f1f;
   --color-ink: #1f1f1f;
   --color-muted: #444746;
-  --color-faint: #747775;
+  --color-faint: #6b6e6c;
   --color-line: #e1e3e1;
   --color-panel: #ffffff;
   --color-star-50: #041e49;
@@ -312,13 +360,13 @@
   --color-star-500: #0b57d0;
   --color-star-600: #0842a0;
   --color-orbit-200: #174ea6;
-  --color-orbit-300: #1a73e8;
-  --color-orbit-400: #1a73e8;
+  --color-orbit-300: #1967d2;
+  --color-orbit-400: #1967d2;
   --color-orbit-500: #1a73e8;
   --color-orbit-600: #1967d2;
   --color-growth: #188038;
-  --color-caution: #b06000;
-  --color-alert: #d93025;
+  --color-caution: #a15800;
+  --color-alert: #c5221f;
   --color-on-accent: #ffffff;
   --accent-glow: transparent;
   --panel-radius: 0.75rem;
@@ -360,13 +408,25 @@
   --color-fuchsia-300: #a21caf;
 }
 
+/* The bright accents stay bright as fills (buttons, bars, badges), but as text on a light page
+   they're too pale to read. Text in them takes the deeper shade of the same colour. */
+:root:is([data-theme="light"], [data-theme="cutesy"]) {
+  & .text-star-400,
+  & .text-star-300 {
+    color: var(--color-star-200);
+  }
+}
+:root[data-theme="cutesy"] .text-orbit-400 {
+  color: var(--color-orbit-300);
+}
+
 /* Islands that stay dark whatever the theme (the studio monitor, the video stage, Wrapped). */
 .scope-dark {
   color-scheme: dark;
   --color-fg: #ffffff;
   --color-ink: #eef2ff;
   --color-muted: #9aa8c7;
-  --color-faint: #64729a;
+  --color-faint: #8290b4;
   --color-line: rgb(255 255 255 / 0.08);
   --color-panel: rgb(19 39 90 / 0.5);
   --color-star-50: #fff8e6;
@@ -414,6 +474,15 @@ body::before {
 
 ::selection {
   background: var(--selection);
+}
+
+/* Phones zoom the whole page in when you tap a field set smaller than 16px, and don't zoom back. */
+@media (pointer: coarse) {
+  input:not([type="checkbox"], [type="radio"], [type="range"]),
+  select,
+  textarea {
+    font-size: max(16px, 1em);
+  }
 }
 
 /* iPhone Safari draws date fields at a fixed native width that ignores width: 100%, so they

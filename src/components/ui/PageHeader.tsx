@@ -21,7 +21,7 @@ export function PageHeader({
           <Icon className="size-6 text-star-300" aria-hidden />
         </div>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-star-400">{eyebrow}</p>
+          <p className="eyebrow text-star-400">{eyebrow}</p>
           <h1 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">{title}</h1>
           <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-muted">{description}</p>
         </div>

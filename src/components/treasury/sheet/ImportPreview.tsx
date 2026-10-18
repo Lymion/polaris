@@ -60,7 +60,7 @@ export function ImportPreview({
           <h2 id="import-title" className="text-lg font-bold">
             I found {transactions.length} transactions
           </h2>
-          <p className="text-sm text-muted">Check them before {mascotName(profile)} adds them to your sheet.</p>
+          <p className="mt-1 text-sm text-muted">Check them before {mascotName(profile)} adds them to your sheet.</p>
         </div>
       </div>
 

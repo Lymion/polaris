@@ -72,7 +72,7 @@ export function LessonsTour({ firstVisit, onClose }: { firstVisit: boolean; onCl
       {lesson && (
         <>
           <div className="flex flex-wrap items-center justify-between gap-3 pr-8">
-            <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-star-400">
+            <p className="flex items-center gap-1.5 eyebrow text-star-400">
               <BookOpen className="size-3.5" aria-hidden /> Lesson {step + 1} of {LESSONS.length}
             </p>
             <Progress current={step} done={done} onPick={setStep} />
@@ -139,7 +139,7 @@ function Progress({ current, done, onPick }: { current: number; done: string[]; 
             aria-label={`Lesson ${i + 1}: ${l.title}${passed ? " (passed)" : ""}`}
             aria-current={i === current ? "step" : undefined}
             className={clsx(
-              "grid h-2.5 place-items-center rounded-full transition-all",
+              "grid h-2.5 place-items-center rounded-full transition-[width,background-color] duration-200 ease-out",
               i === current ? "w-6 bg-star-400" : passed ? "w-2.5 bg-growth" : "w-2.5 bg-fg/20 hover:bg-fg/40",
             )}
           />
@@ -178,13 +178,13 @@ function LessonContent({ lesson, onAsk }: { lesson: Lesson; onAsk: () => void })
 
       {yours && (
         <div className="mt-5 rounded-xl bg-star-400/10 p-4 text-sm ring-1 ring-star-400/30">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-star-300">Your numbers</p>
+          <p className="eyebrow text-star-300">Your numbers</p>
           <p className="mt-1 text-ink">{yours}</p>
         </div>
       )}
 
       <div className="mt-5 rounded-xl bg-fg/[0.03] p-4 ring-1 ring-line">
-        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-faint">
+        <p className="eyebrow text-faint">
           Quick check {passed ? "· passed" : `· +${LESSON_XP} XP`}
         </p>
         <p className="mt-1.5 text-sm font-semibold">{lesson.quiz.question(currency)}</p>

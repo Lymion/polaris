@@ -82,7 +82,7 @@ export function WorkspaceFrame({
             <Icon className="size-6 text-star-300" aria-hidden />
           </div>
           <div className="min-w-0">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-star-400">Creative Studio</p>
+            <p className="eyebrow text-star-400">Creative Studio</p>
             <h1 id="station-title" className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
               {meta.name}
             </h1>

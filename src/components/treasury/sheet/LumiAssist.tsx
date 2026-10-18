@@ -62,7 +62,7 @@ export function LumiAssist({
       </div>
 
       <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-faint">Excel template</p>
+        <p className="eyebrow text-faint">Excel template</p>
         <div className="mt-2 grid grid-cols-2 gap-2">
           <button
             type="button"
@@ -84,7 +84,7 @@ export function LumiAssist({
 
       {flags.length > 0 && (
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-caution">{flags.length} to look at</p>
+          <p className="eyebrow text-caution">{flags.length} to look at</p>
           <ul className="mt-2 space-y-1.5 text-xs text-muted">
             {flags.slice(0, 6).map((f) => (
               <li key={f.id} className="rounded-lg bg-caution/[0.07] px-3 py-2 ring-1 ring-caution/25">
@@ -126,7 +126,7 @@ export function LumiAssist({
         </button>
       </form>
 
-      <p className="flex gap-2 text-[11px] leading-relaxed text-faint">
+      <p className="flex gap-2 text-xs leading-relaxed text-faint">
         <ShieldCheck className="size-3.5 shrink-0" aria-hidden />
         Statements aren&apos;t stored. Account and card numbers are hidden before {name} reads the transactions.
       </p>

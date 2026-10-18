@@ -9,7 +9,11 @@ export function CardTitle({ icon: Icon, title, href }: { icon: LucideIcon; title
         <Icon className="size-[18px] text-star-300" aria-hidden />
         {title}
       </h2>
-      <Link href={href} className="flex items-center text-xs font-medium text-muted hover:text-ink">
+      {/* Padded out to a comfortable tap target; the negative margin keeps the text aligned to the card edge. */}
+      <Link
+        href={href}
+        className="-mr-2 inline-flex h-8 items-center gap-0.5 rounded-full px-2 text-xs font-medium text-muted transition-colors hover:bg-fg/[0.05] hover:text-ink"
+      >
         Open <ChevronRight className="size-3.5" aria-hidden />
       </Link>
     </div>
@@ -18,8 +22,9 @@ export function CardTitle({ icon: Icon, title, href }: { icon: LucideIcon; title
 
 export function Stat({ label, value, tone, note }: { label: string; value: string; tone?: "good" | "bad" | "gold"; note?: string }) {
   return (
-    <div className="min-w-0">
-      <dt className="text-[11px] font-medium uppercase tracking-wider text-faint">{label}</dt>
+    // A column whose label grows: when one label wraps to two lines, the values in a row still line up.
+    <div className="flex min-w-0 flex-col">
+      <dt className="eyebrow flex-1 text-faint">{label}</dt>
       <dd
         className={clsx(
           "mt-1 text-lg font-bold tabular-nums sm:text-xl",
@@ -30,7 +35,7 @@ export function Stat({ label, value, tone, note }: { label: string; value: strin
       >
         {value}
       </dd>
-      {note && <dd className="mt-0.5 truncate text-[11px] text-faint">{note}</dd>}
+      {note && <dd className="mt-1 text-xs leading-snug text-faint">{note}</dd>}
     </div>
   );
 }

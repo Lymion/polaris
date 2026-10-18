@@ -324,7 +324,7 @@ function RowCard({
 function Total({ label, value, alert = false }: { label: string; value: string; alert?: boolean }) {
   return (
     <div className="min-w-0">
-      <dt className="text-[11px] text-faint">{label}</dt>
+      <dt className="text-xs text-faint">{label}</dt>
       <dd className={clsx("mt-0.5 truncate text-sm font-semibold", alert && "text-alert")}>{value}</dd>
     </div>
   );

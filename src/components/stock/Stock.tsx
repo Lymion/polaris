@@ -90,7 +90,7 @@ function StockBody() {
         <section className="panel flex flex-col items-center gap-3 p-8 text-center">
           <PackageOpen className="size-9 text-star-300" aria-hidden />
           <h2 className="text-lg font-semibold">Track your stock</h2>
-          <p className="max-w-md text-sm text-muted">
+          <p className="mt-1 max-w-md text-sm text-muted">
             Add the products you sell, with their price and what one costs you, in Treasury under Margins &amp; overheads. Then
             count what&apos;s on your shelf here: Polaris keeps track as you restock and sell, and shows what each one earns you.
           </p>
@@ -104,7 +104,8 @@ function StockBody() {
     <>
       {header}
       <div className="space-y-6">
-        <dl className="grid grid-cols-2 gap-3 lg:grid-cols-5">
+        {/* Five tiles in two columns leave one alone on the last row; it takes the full width there. */}
+        <dl className="grid grid-cols-2 gap-3 *:last:odd:col-span-2 lg:grid-cols-5 lg:*:last:odd:col-span-1">
           <Tile label="Money in stock" value={fmt(sum.value)} note="What the shelf cost you" />
           <Tile
             label="Profit on the shelf"
@@ -139,7 +140,7 @@ function ProductsPanel({ lines, tracked, total, currency, onOpen }: { lines: Sto
     <section className="panel @container overflow-hidden">
       <div className="px-5 pt-5 sm:px-6">
         <h2 className="font-semibold">Products</h2>
-        <p className="text-xs text-muted">
+        <p className="mt-1 text-xs leading-relaxed text-muted">
           {tracked ? `${tracked} of ${total} tracked. Days left use the last 30 days of sales; profit each is after the cost and platform fees.` : "Count what's on your shelf to start tracking."}
         </p>
       </div>
@@ -326,7 +327,7 @@ function Tile({ label, value, note, tone }: { label: string; value: string; note
     <div className="panel min-w-0 p-4">
       <dt className="text-xs font-medium text-muted">{label}</dt>
       <dd className={clsx("mt-1.5 text-xl font-bold tabular-nums", tone === "growth" && "text-growth", tone === "caution" && "text-caution", tone === "alert" && "text-alert")}>{value}</dd>
-      <dd className="mt-1 truncate text-xs text-faint" title={note}>
+      <dd className="mt-1 line-clamp-2 text-xs leading-snug text-faint" title={note}>
         {note}
       </dd>
     </div>

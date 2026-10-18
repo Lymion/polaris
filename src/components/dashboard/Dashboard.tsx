@@ -31,10 +31,12 @@ export function Dashboard() {
     <div className="space-y-6">
       <div className="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
         <section className="min-w-0">
-          <p className="text-sm text-muted">{greeting()},</p>
-          <h1 className="mt-0.5 text-3xl font-bold tracking-tight sm:text-4xl">
-            {profile.ownerName} <span className="text-faint">·</span> <span className="text-starlight">{profile.businessName}</span>
-          </h1>
+          {/* The owner's name in the greeting and the business as the heading, so two long names
+              don't stack into one five-line headline on a phone. */}
+          <p className="text-sm text-muted">
+            {greeting()}, <span className="font-medium text-ink">{profile.ownerName}</span>
+          </p>
+          <h1 className="text-starlight mt-1 text-[1.75rem] leading-tight font-bold tracking-tight sm:text-4xl">{profile.businessName}</h1>
           <p className="mt-2 text-sm text-muted">
             Current goal: <span className="font-medium text-ink">{profile.goal}</span>
           </p>
@@ -62,7 +64,7 @@ function LevelCard() {
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-baseline justify-between gap-x-3">
             <p className="min-w-0">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-star-400">
+              <span className="eyebrow text-star-400">
                 Level {lvl.level} of {MAX_LEVEL}
               </span>{" "}
               <span className="font-bold">{lvl.title}</span>
@@ -82,9 +84,10 @@ function LevelCard() {
       </div>
 
       {lvl.next && (
-        <div className="relative mt-3 flex items-center gap-3">
+        // Wraps: on a phone the button drops under the sentence instead of squeezing it into a column.
+        <div className="relative mt-3 flex flex-wrap items-center gap-x-3 gap-y-2.5">
           <Lock className={clsx("size-4 shrink-0", lvl.blockedByGate ? "text-star-300" : "text-faint")} aria-hidden />
-          <p className="min-w-0 flex-1 text-xs leading-snug text-muted">
+          <p className="min-w-[13rem] flex-1 text-xs leading-snug text-muted">
             {lvl.blockedByGate ? (
               <>
                 You have the XP for <span className="font-semibold text-ink">Level {lvl.next.level}</span>. Unlock it by reaching{" "}

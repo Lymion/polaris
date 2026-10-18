@@ -83,12 +83,12 @@ export function BusinessStory() {
 
   return (
     <section aria-labelledby="story-title" className="space-y-6">
-      <h2 id="story-title" className="text-xs font-semibold uppercase tracking-[0.18em] text-star-400">
+      <h2 id="story-title" className="eyebrow text-star-400">
         Your business right now
       </h2>
 
-      <div className="panel flex flex-col gap-5 p-6 sm:flex-row sm:items-start">
-        <Mascot size={72} className="shrink-0" />
+      <div className="panel flex items-start gap-4 p-5 sm:gap-5 sm:p-6">
+        <Mascot size={52} className="shrink-0 sm:size-[72px]" />
         <div className="min-w-0 flex-1">
           <p className="text-sm font-semibold text-star-200">{name}&apos;s take on the month</p>
           <p className="mt-1.5 text-[15px] leading-relaxed">{storyOf({ entries, activities, currency })}</p>
@@ -132,7 +132,7 @@ function MoneyCard() {
   const fixed = totalOverheads(overheads);
 
   return (
-    <section className="panel p-6">
+    <section className="panel p-5 sm:p-6">
       <CardTitle icon={Wallet} title="Money this month" href="/treasury" />
       <dl className="mt-4">
         <Stat
@@ -165,7 +165,7 @@ function StockCard() {
   const attention = [...sum.out, ...sum.low.sort((a, b) => (a.daysLeft ?? 1e9) - (b.daysLeft ?? 1e9)), ...sum.slow].slice(0, 4);
 
   return (
-    <section className="panel p-6">
+    <section className="panel p-5 sm:p-6">
       <CardTitle icon={Package} title="Stock" href="/stock" />
       {sum.tracked === 0 ? (
         <p className="mt-4 text-sm leading-relaxed text-muted">
@@ -272,7 +272,7 @@ function RecentActivity() {
   const feed = useActivityFeed(5);
 
   return (
-    <section className="panel p-6">
+    <section className="panel p-5 sm:p-6">
       <CardTitle icon={History} title="Recent activity" href="/treasury" />
       {feed.length === 0 ? (
         <p className="mt-4 text-sm leading-relaxed text-muted">
@@ -306,7 +306,7 @@ function StudioCard() {
   const latest = items[0];
 
   return (
-    <section className="panel relative overflow-hidden p-6">
+    <section className="panel relative overflow-hidden p-5 sm:p-6">
       <div aria-hidden className="pointer-events-none absolute -bottom-24 -right-10 size-64 rounded-full bg-fuchsia-500/15 blur-3xl" />
       <CardTitle icon={Palette} title="Creative Studio" href="/studio" />
       {items.length === 0 ? (

@@ -297,7 +297,7 @@ function Computer({ className, stand = false, onOpen }: { className?: string; st
           </div>
           <div className="grid grid-cols-[1fr_auto] gap-4 p-4 sm:gap-5 sm:p-5">
             <div className="min-w-0">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-faint">{cur.label} so far</p>
+              <p className="eyebrow text-faint">{cur.label} so far</p>
               <p className={clsx("mt-0.5 whitespace-nowrap text-2xl font-extrabold tabular-nums sm:text-3xl", cur.net < 0 ? "text-alert" : "text-growth")}>{fmt(cur.net)}</p>
               <p className="mt-2 flex flex-wrap gap-x-4 gap-y-0.5 text-[13px] tabular-nums">
                 <span className="whitespace-nowrap text-growth">In {fmt(cur.income)}</span>
@@ -514,8 +514,8 @@ function StockBoxes({ className, card = false, onOpen }: { className?: string; c
     <div className={clsx("world-object h-[128px] w-[96px]", className)} aria-label={`Stock boxes: ${status}. Open your stock`} {...activate(onOpen)}>
       <StockBoxesArt />
       <div className="absolute left-[8px] top-[84px] w-[80px] rounded-sm bg-[#fffdf6] px-1 py-1 text-center leading-tight shadow-[0_4px_8px_-4px_rgb(0_0_0/0.5)]">
-        <p className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-[#2b2118]">Stock</p>
-        <p className={clsx("whitespace-nowrap text-[10px] font-bold", tone)}>{status}</p>
+        <p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-[#2b2118]">Stock</p>
+        <p className={clsx("whitespace-nowrap text-[11px] font-bold", tone)}>{status}</p>
       </div>
     </div>
   );
@@ -559,7 +559,7 @@ function LumiDesk({ className }: { className?: string }) {
       <BookStack className="absolute left-[142px] top-[62px] h-[24px] w-[50px]" />
       <div className="world-wood absolute left-0 top-[86px] h-[13px] w-[200px] rounded-[3px] shadow-[0_6px_10px_-4px_rgb(0_0_0/0.5)]" aria-hidden />
       <div className="absolute left-[10px] top-[99px] flex h-[24px] w-[180px] items-center justify-center shadow-[inset_0_7px_8px_-6px_rgb(0_0_0/0.55)]" style={{ background: "var(--room-wood)" }}>
-        <span className="rounded-sm bg-[#f5d27a] px-2 py-px text-[9.5px] font-extrabold uppercase tracking-[0.14em] text-[#5b3a12] shadow-sm">
+        <span className="rounded-sm bg-[#f5d27a] px-2 py-px text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#5b3a12] shadow-sm">
           {name} · Advisor
         </span>
       </div>
@@ -615,7 +615,7 @@ function MonthPlanner({ className, onOpen }: { className?: string; onOpen: () =>
               <li key={i} className="flex h-6 items-center gap-1.5 text-[12px]">
                 <f.icon className="size-3.5 shrink-0 text-[#b45309]" aria-hidden />
                 <span className="min-w-0 flex-1 truncate font-medium">{f.text}</span>
-                <span className="shrink-0 text-[10.5px] font-semibold text-[#6b7280]">{when(f.at)}</span>
+                <span className="shrink-0 text-[11px] font-semibold text-[#6b7280]">{when(f.at)}</span>
               </li>
             ))}
           </ul>
@@ -669,7 +669,7 @@ function WrappedGift({ className, card = false }: { className?: string; card?: b
           <div className="absolute left-[64px] top-[60px] w-[104px] rotate-[-5deg] rounded-md bg-[#fffdf6] px-2.5 py-1.5 text-[#2b2118] shadow-[0_8px_14px_-6px_rgb(0_0_0/0.55)]">
             <span className="absolute -top-1 left-3 size-2 rounded-full bg-[#2b2118]/30" aria-hidden />
             <p className="text-[12px] font-extrabold leading-tight">{monthName} Wrapped</p>
-            <p className="mt-0.5 flex items-center gap-1 text-[10.5px] font-semibold text-[#b45309]">
+            <p className="mt-0.5 flex items-center gap-1 text-[11px] font-semibold text-[#b45309]">
               {report && <Play className="size-3" aria-hidden />}
               {status}
             </p>

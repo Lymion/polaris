@@ -20,11 +20,11 @@ export default function PrivacyPage() {
   return (
     <main className="mx-auto w-full max-w-2xl space-y-8 px-4 py-10 sm:px-6">
       <header className="space-y-3">
-        <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-star-400">
+        <p className="flex items-center gap-2 eyebrow text-star-400">
           <ShieldCheck className="size-4" aria-hidden /> Privacy notice
         </p>
         <h1 className="text-3xl font-bold tracking-tight text-balance">Privacy and your data</h1>
-        <p className="text-sm text-faint">Last updated {UPDATED}</p>
+        <p className="mt-2 text-sm text-faint">Last updated {UPDATED}</p>
       </header>
 
       <div className="panel space-y-2 p-5 text-[15px] leading-relaxed">

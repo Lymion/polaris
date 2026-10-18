@@ -110,7 +110,7 @@ function ClassicShell({ pathname, onAppearance, onData, children }: ShellProps) 
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={clsx(
-                    "flex flex-col items-center gap-1 py-2.5 text-[11px] font-medium transition-colors",
+                    "flex flex-col items-center gap-1 py-2.5 text-xs font-medium transition-colors",
                     active ? "text-star-300" : "text-faint hover:text-muted",
                   )}
                 >

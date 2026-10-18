@@ -20,5 +20,5 @@ export function MarginsOverheadsTab() {
 }
 
 function Heading({ children }: { children: ReactNode }) {
-  return <h2 className="pt-2 text-xs font-semibold uppercase tracking-[0.18em] text-star-400 first:pt-0">{children}</h2>;
+  return <h2 className="pt-2 eyebrow text-star-400 first:pt-0">{children}</h2>;
 }

@@ -47,7 +47,7 @@ export function CashflowChart({ months, currency }: { months: MonthSummary[]; cu
         <button
           type="button"
           onClick={() => setAsTable(!asTable)}
-          className="text-xs font-medium text-muted underline-offset-2 hover:text-ink hover:underline"
+          className="-my-1.5 py-1.5 text-xs font-medium text-muted underline-offset-2 hover:text-ink hover:underline"
         >
           {asTable ? "Show as chart" : "Show as table"}
         </button>
@@ -79,7 +79,7 @@ export function CashflowChart({ months, currency }: { months: MonthSummary[]; cu
       ) : (
         <div className="mt-4 flex gap-3">
           {/* Y axis */}
-          <div className="relative h-56 w-12 shrink-0 text-right text-[11px] tabular-nums text-faint">
+          <div className="relative h-56 w-12 shrink-0 text-right text-xs tabular-nums text-faint">
             {ticks.map((t) => (
               <span key={t} className="absolute right-0 -translate-y-1/2" style={{ top: `${(1 - t / top) * 100}%` }}>
                 {fmt(t)}
@@ -143,7 +143,7 @@ export function CashflowChart({ months, currency }: { months: MonthSummary[]; cu
               ))}
             </div>
 
-            <div className="flex justify-around pt-2 text-[11px] text-faint">
+            <div className="flex justify-around pt-2 text-xs text-faint">
               {months.map((m) => (
                 <span key={m.key} className="flex-1 text-center">
                   {m.label}

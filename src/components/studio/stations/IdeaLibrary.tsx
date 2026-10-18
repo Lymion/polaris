@@ -121,7 +121,7 @@ export function IdeaLibrary({ nav }: { nav: StationNav }) {
         <div ref={bookRef} className="panel studio-enter mt-10 scroll-mt-24 p-5 sm:p-7">
           <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
             <div className="min-w-0">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em]" style={{ color: KINDS[open.output.tool].spine }}>
+              <p className="eyebrow" style={{ color: KINDS[open.output.tool].spine }}>
                 {KINDS[open.output.tool].label}
               </p>
               <h2 className="mt-1 text-xl font-bold tracking-tight">{open.title}</h2>

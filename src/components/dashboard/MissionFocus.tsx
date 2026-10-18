@@ -40,7 +40,7 @@ export function MissionFocus() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-5">
-      <section className="panel relative overflow-hidden p-6 lg:col-span-3">
+      <section className="panel relative overflow-hidden p-5 sm:p-6 lg:col-span-3">
         <div aria-hidden className="pointer-events-none absolute -left-20 -top-24 size-72 rounded-full bg-star-400/10 blur-3xl" />
         <CardTitle icon={Target} title="Up next" href="/missions" />
         {featured ? (
@@ -48,7 +48,7 @@ export function MissionFocus() {
             <FeaturedMission mission={featured} />
             {queue.length > 0 && (
               <>
-                <p className="relative mt-6 text-[11px] font-semibold uppercase tracking-[0.16em] text-faint">Then</p>
+                <p className="relative mt-6 eyebrow text-faint">Then</p>
                 <ul className="relative mt-2 space-y-2">
                   {queue.map((m) => (
                     <li key={m.id}>
@@ -56,7 +56,7 @@ export function MissionFocus() {
                         href="/missions"
                         className="flex items-center gap-3 rounded-xl bg-fg/[0.03] px-4 py-2.5 ring-1 ring-line transition-colors hover:bg-fg/[0.06]"
                       >
-                        <span className={clsx("shrink-0 rounded-full px-2 py-0.5 text-[11px] font-semibold", CATEGORY_STYLES[m.category])}>
+                        <span className={clsx("shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold", CATEGORY_STYLES[m.category])}>
                           {CATEGORY_LABELS[m.category]}
                         </span>
                         <span className="min-w-0 flex-1 truncate text-sm font-medium">{m.title}</span>
@@ -85,7 +85,7 @@ export function MissionFocus() {
         )}
       </section>
 
-      <section className="panel p-6 lg:col-span-2">
+      <section className="panel p-5 sm:p-6 lg:col-span-2">
         <CardTitle icon={Trophy} title="Mission progress" href="/missions" />
         <dl className="mt-4 grid grid-cols-3 gap-3">
           <Stat label="Done" value={String(done.length)} />
@@ -187,10 +187,10 @@ function FeaturedMission({ mission: m }: { mission: Mission }) {
   return (
     <div className="relative mt-4 rounded-2xl bg-linear-to-br from-fg/[0.07] to-fg/[0.02] p-5 ring-1 ring-fg/10">
       <div className="flex flex-wrap items-center gap-2">
-        <span className={clsx("rounded-full px-2 py-0.5 text-[11px] font-semibold", CATEGORY_STYLES[m.category])}>{CATEGORY_LABELS[m.category]}</span>
+        <span className={clsx("rounded-full px-2 py-0.5 text-xs font-semibold", CATEGORY_STYLES[m.category])}>{CATEGORY_LABELS[m.category]}</span>
         <span className="text-xs font-semibold text-star-300">+{m.xp} XP</span>
         {ready && (
-          <span className="rounded-full bg-growth/15 px-2 py-0.5 text-[11px] font-semibold text-growth ring-1 ring-growth/40">Ready to report</span>
+          <span className="rounded-full bg-growth/15 px-2 py-0.5 text-xs font-semibold text-growth ring-1 ring-growth/40">Ready to report</span>
         )}
       </div>
       <h3 className="mt-2.5 text-xl font-bold leading-tight">{m.title}</h3>

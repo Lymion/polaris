@@ -68,7 +68,7 @@ export function BusinessBasics({ className }: { className?: string }) {
                 aria-pressed={on}
                 onClick={() => toggle(f.id)}
                 className={clsx(
-                  "inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-sm font-medium ring-1 transition-all active:scale-[0.97]",
+                  "inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-sm font-medium ring-1 transition-[transform,background-color,color,box-shadow] duration-150 ease-out active:scale-[0.97]",
                   on
                     ? "bg-growth/10 text-growth ring-growth/40"
                     : "bg-fg/[0.04] text-muted ring-line hover:bg-fg/[0.08] hover:text-ink",

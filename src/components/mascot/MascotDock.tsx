@@ -86,9 +86,9 @@ export function MascotDock() {
                 type="button"
                 onClick={() => setBubble(null)}
                 aria-label="Dismiss tip"
-                className="absolute -right-1.5 -top-1.5 grid size-5 place-items-center rounded-full bg-surface-700 text-ink ring-2 ring-surface-950"
+                className="absolute -right-2 -top-2 grid size-6 place-items-center rounded-full bg-surface-700 text-ink ring-2 ring-surface-950 transition-colors before:absolute before:-inset-2 before:content-[''] hover:bg-surface-600"
               >
-                <X className="size-3" aria-hidden />
+                <X className="size-3.5" aria-hidden />
               </button>
               <p>{bubble.text}</p>
               {bubble.action && (
@@ -98,7 +98,7 @@ export function MascotDock() {
                     openMascot(bubble.action?.prompt);
                     setBubble(null);
                   }}
-                  className="mt-2 rounded-full bg-space-800 px-3 py-1.5 text-xs font-semibold text-star-200"
+                  className="mt-2 rounded-full bg-space-800 px-3 py-1.5 text-xs font-semibold text-white transition-[transform,background-color] duration-150 ease-out hover:bg-space-700 active:scale-[0.97]"
                 >
                   {bubble.action.label}
                 </button>

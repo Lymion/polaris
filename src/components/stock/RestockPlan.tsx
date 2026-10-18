@@ -73,7 +73,7 @@ export function RestockPlanPanel({ lines }: { lines: StockLine[] }) {
         <Mascot size={44} className="shrink-0" mood={state === "planning" ? "thinking" : "idle"} />
         <div className="min-w-0">
           <h2 className="font-semibold">{name}&apos;s restock plan</h2>
-          <p className="text-sm text-muted">What to order now, from your sales pace, the weeks ahead and what each product earns.</p>
+          <p className="mt-1 text-sm text-muted">What to order now, from your sales pace, the weeks ahead and what each product earns.</p>
         </div>
       </div>
 

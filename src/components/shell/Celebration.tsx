@@ -34,7 +34,7 @@ export function Celebration() {
         >
           <div aria-hidden className="pointer-events-none absolute inset-x-0 -top-24 mx-auto size-64 rounded-full bg-star-400/25 blur-3xl" />
           <Mascot size={140} mood="happy" className="relative mx-auto animate-star-pop" />
-          <p className="relative mt-3 text-xs font-semibold uppercase tracking-[0.2em] text-star-400">Level up</p>
+          <p className="relative mt-3 eyebrow text-star-400">Level up</p>
           <h2 id="levelup-title" className="relative mt-1 text-3xl font-bold">
             Level {celebration.levelUp.level}
           </h2>

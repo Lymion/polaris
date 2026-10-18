@@ -84,7 +84,7 @@ export function MoneyCheckup({ onClose }: { onClose: () => void }) {
           <div className="flex items-center gap-4">
             <Mascot size={72} mood={review.score >= 60 ? "happy" : "idle"} className="shrink-0" />
             <div className="min-w-0">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-star-400">Money check-up</p>
+              <p className="eyebrow text-star-400">Money check-up</p>
               <h2 id="checkup-title" className="text-lg font-bold leading-snug">
                 {review.headline}
               </h2>
@@ -127,7 +127,7 @@ export function MoneyCheckup({ onClose }: { onClose: () => void }) {
                   {i.title}
                   <span
                     className={clsx(
-                      "ml-auto shrink-0 rounded-full px-2 py-0.5 text-[11px]",
+                      "ml-auto shrink-0 rounded-full px-2 py-0.5 text-xs",
                       i.severity === "fix" ? "bg-alert/15 text-alert" : "bg-caution/15 text-caution",
                     )}
                   >

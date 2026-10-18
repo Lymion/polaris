@@ -100,7 +100,7 @@ export function Columns({ values, labels, color, format }: { values: number[]; l
               className="w-6 origin-bottom rounded-t-[4px] wrapped-pop"
               style={{ height: `${Math.max(3, (Math.abs(v) / max) * 100)}px`, background: v < 0 ? "#F87171" : color, opacity: last ? 1 : 0.45, animationDelay: `${400 + i * 90}ms` }}
             />
-            <span className={clsx("whitespace-nowrap text-[11px]", last ? "font-semibold text-ink" : "text-fg/60")}>{labels[i]}</span>
+            <span className={clsx("whitespace-nowrap text-xs", last ? "font-semibold text-ink" : "text-fg/60")}>{labels[i]}</span>
           </div>
         );
       })}

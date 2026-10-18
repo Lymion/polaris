@@ -16,7 +16,7 @@ export function Chip({
       aria-pressed={selected}
       onClick={onClick}
       className={clsx(
-        "rounded-full px-4 py-2 text-sm font-medium ring-1 transition-all duration-150 active:scale-[0.97]",
+        "rounded-full px-4 py-2 text-sm font-medium ring-1 transition-[transform,background-color,color,box-shadow] duration-150 ease-out active:scale-[0.97]",
         selected
           ? "bg-star-400/15 text-star-200 ring-star-400/60"
           : "bg-fg/[0.04] text-muted ring-line hover:bg-fg/[0.08] hover:text-ink",

@@ -12,7 +12,7 @@ function Section({ title, action, children }: { title: string; action?: ReactNod
   return (
     <section>
       <div className="mb-3 flex items-center justify-between gap-3">
-        <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-star-300">{title}</h3>
+        <h3 className="eyebrow text-star-300">{title}</h3>
         {action}
       </div>
       {children}
@@ -117,8 +117,8 @@ function PaintChip({ name, hex, use }: { name: string; hex: string; use: string 
       </span>
       <span className="block p-2.5">
         <span className="block text-sm font-bold leading-tight">{name}</span>
-        <span className="block font-mono text-[11px] text-space-600">{hex}</span>
-        <span className="mt-1 block text-[11px] leading-snug text-space-700">{use}</span>
+        <span className="block font-mono text-xs text-space-600">{hex}</span>
+        <span className="mt-1 block text-xs leading-snug text-space-700">{use}</span>
       </span>
     </button>
   );
@@ -149,20 +149,20 @@ export function CampaignCard({ campaign: c, index, actions }: { campaign: Campai
       style={{ transform: `rotate(${index % 2 ? 0.5 : -0.4}deg)` }}
     >
       <span className="studio-pin" aria-hidden />
-      <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#B45309]">Plan {String.fromCharCode(65 + index)}</p>
+      <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#B45309]">Plan {String.fromCharCode(65 + index)}</p>
       <h3 className="mt-1 text-xl font-bold leading-tight">{c.name}</h3>
       <p className="mt-2 text-sm leading-relaxed text-space-700">{c.bigIdea}</p>
 
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         {c.hook && (
           <div className="rounded-lg bg-[#FDE68A]/60 p-3">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-[#92400E]">The hook</p>
+            <p className="text-xs font-bold uppercase tracking-wider text-[#92400E]">The hook</p>
             <p className="mt-1 text-sm font-semibold leading-snug">&ldquo;{c.hook}&rdquo;</p>
           </div>
         )}
         {c.offer && (
           <div className="rounded-lg bg-[#BBF7D0]/60 p-3">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-[#166534]">The offer</p>
+            <p className="text-xs font-bold uppercase tracking-wider text-[#166534]">The offer</p>
             <p className="mt-1 text-sm font-semibold leading-snug">{c.offer}</p>
           </div>
         )}
@@ -170,7 +170,7 @@ export function CampaignCard({ campaign: c, index, actions }: { campaign: Campai
 
       {c.channels.length > 0 && (
         <div className="mt-4">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-space-600">Where</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-space-600">Where</p>
           <ul className="mt-1.5 space-y-1.5">
             {c.channels.map((ch) => (
               <li key={ch.channel} className="text-sm leading-snug">
@@ -183,7 +183,7 @@ export function CampaignCard({ campaign: c, index, actions }: { campaign: Campai
 
       {c.timeline.length > 0 && (
         <div className="mt-4">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-space-600">When</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-space-600">When</p>
           {/* Steps hang on a red string, like the board in the room. */}
           <ol className="relative mt-2 space-y-2.5 border-l-2 border-[#EF4444] pl-4">
             {c.timeline.map((t, k) => (
@@ -200,13 +200,13 @@ export function CampaignCard({ campaign: c, index, actions }: { campaign: Campai
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           {c.budget && (
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-wider text-space-600">Budget</p>
+              <p className="text-xs font-bold uppercase tracking-wider text-space-600">Budget</p>
               <p className="mt-1 text-sm leading-snug">{c.budget}</p>
             </div>
           )}
           {c.watch.length > 0 && (
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-wider text-space-600">How you&apos;ll know it worked</p>
+              <p className="text-xs font-bold uppercase tracking-wider text-space-600">How you&apos;ll know it worked</p>
               <ul className="mt-1 list-disc space-y-1 pl-4 text-sm leading-snug">
                 {c.watch.map((w) => (
                   <li key={w}>{w}</li>
@@ -237,14 +237,14 @@ export function VideoIdeaCard({ idea, index, actions }: { idea: VideoIdea; index
         </div>
         <h3 className="mt-3 text-xl font-bold leading-tight">{idea.title}</h3>
         <div className="mt-3 rounded-xl bg-star-400/10 p-3 ring-1 ring-star-400/30">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-star-300">First 2 seconds</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-star-300">First 2 seconds</p>
           <p className="mt-1 text-sm font-semibold leading-snug text-star-50">{idea.hook}</p>
         </div>
         {idea.concept && <p className="mt-3 text-sm leading-relaxed text-muted">{idea.concept}</p>}
 
         {idea.shots.length > 0 && (
           <div className="mt-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-faint">Shot list</p>
+            <p className="eyebrow text-faint">Shot list</p>
             {/* Frames wrap onto more rows rather than scrolling sideways */}
             <ol className="studio-film mt-2 grid grid-cols-2 gap-2 rounded-lg sm:grid-cols-3">
               {idea.shots.map((s, k) => (
@@ -263,7 +263,7 @@ export function VideoIdeaCard({ idea, index, actions }: { idea: VideoIdea; index
               type="button"
               onClick={() => setShowScript((v) => !v)}
               aria-expanded={showScript}
-              className="text-xs font-semibold uppercase tracking-[0.16em] text-faint hover:text-ink"
+              className="eyebrow text-faint hover:text-ink"
             >
               Script {showScript ? "▾" : "▸"}
             </button>
@@ -279,7 +279,7 @@ export function VideoIdeaCard({ idea, index, actions }: { idea: VideoIdea; index
         {idea.caption && (
           <div className="mt-4 rounded-xl bg-fg/[0.04] p-4 ring-1 ring-line">
             <div className="flex items-center justify-between gap-2">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-faint">Caption</p>
+              <p className="eyebrow text-faint">Caption</p>
               <CopyButton text={[idea.caption, idea.hashtags.join(" ")].filter(Boolean).join("\n\n")} />
             </div>
             <p className="mt-2 whitespace-pre-line text-sm leading-relaxed">{idea.caption}</p>
@@ -365,7 +365,7 @@ function StickyNote({ post, tilt }: { post: PlannedPost; tilt: number }) {
       className="rounded-sm p-2.5 shadow-[0_6px_10px_-6px_rgb(0_0_0/0.5)]"
       style={{ backgroundColor: noteColor(post.platform), transform: `rotate(${tilt * 0.8}deg)` }}
     >
-      <p className="text-[10px] font-bold uppercase tracking-wider text-space-700">
+      <p className="text-xs font-bold uppercase tracking-wider text-space-700">
         {post.platform} · {post.format}
       </p>
       <p className="mt-1 text-[13px] font-semibold leading-snug">{post.idea}</p>
@@ -375,7 +375,7 @@ function StickyNote({ post, tilt }: { post: PlannedPost; tilt: number }) {
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
-            className="mt-1.5 text-[11px] font-semibold text-space-700 underline decoration-dotted underline-offset-2"
+            className="mt-1.5 text-xs font-semibold text-space-700 underline decoration-dotted underline-offset-2"
           >
             {open ? "Hide caption" : "Caption"}
           </button>

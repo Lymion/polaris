@@ -118,7 +118,7 @@ function MarginFigure({ product, channel, currency }: { product: Product; channe
       <span className="block font-semibold">{formatMoney(profit, currency)}</span>
       <span className="block text-xs text-muted">{Math.round(margin * 100)}% margin</span>
       {status && (
-        <span className={clsx("mt-1 inline-flex items-center gap-1 text-[11px] font-semibold", status === "loss" ? "text-alert" : "text-caution")}>
+        <span className={clsx("mt-1 inline-flex items-center gap-1 text-xs font-semibold", status === "loss" ? "text-alert" : "text-caution")}>
           {status === "loss" ? <TrendingDown className="size-3" aria-hidden /> : <AlertTriangle className="size-3" aria-hidden />}
           {status === "loss" ? "Loss" : "Thin"}
         </span>

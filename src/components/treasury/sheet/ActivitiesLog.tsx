@@ -50,7 +50,7 @@ export function ActivitiesLog({ month }: { month: string }) {
               <span className="w-14 shrink-0 text-xs tabular-nums text-faint">
                 {new Date(`${a.date}T00:00`).toLocaleDateString(undefined, { day: "numeric", month: "short" })}
               </span>
-              <span className="shrink-0 rounded-full bg-fg/[0.06] px-2 py-0.5 text-[11px] text-muted">
+              <span className="shrink-0 rounded-full bg-fg/[0.06] px-2 py-0.5 text-xs text-muted">
                 {ACTIVITY_KINDS.find((k) => k.id === a.kind)?.label}
               </span>
               <span className="min-w-0 flex-1 truncate">{a.title}</span>

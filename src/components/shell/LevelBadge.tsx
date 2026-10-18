@@ -39,7 +39,7 @@ export function LevelBadge({ compact = false }: { compact?: boolean }) {
           style={{ width: `${Math.round(lvl.progress * 100)}%` }}
         />
       </div>
-      <p className="mt-1.5 flex items-center gap-1 text-[11px] text-faint">
+      <p className="mt-1.5 flex items-center gap-1 text-xs text-faint">
         {lvl.blockedByGate ? (
           <>
             <Lock className="size-3 shrink-0 text-star-300" aria-hidden /> Needs {lvl.nextGate}

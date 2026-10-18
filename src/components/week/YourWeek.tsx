@@ -367,7 +367,7 @@ export function YourWeekCard() {
       <div aria-hidden className="pointer-events-none absolute -right-20 -top-24 size-64 rounded-full bg-[#0E7490]/25 blur-3xl" />
       <div className="relative flex flex-col gap-5 lg:flex-row lg:items-center lg:gap-8">
         <div className="min-w-0 flex-1">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-star-400">Your Week · {week.label}</p>
+          <p className="eyebrow text-star-400">Your Week · {week.label}</p>
           <h2 id="week-title" className="mt-1.5 text-lg font-semibold leading-snug sm:text-xl">
             {week.headline}
           </h2>
@@ -377,7 +377,7 @@ export function YourWeekCard() {
             </p>
           )}
           {/* On a phone the button sits under the headline, where it's on screen. */}
-          <PlayButton onClick={() => setPlaying(true)} className="mt-4 lg:hidden" />
+          <PlayButton onClick={() => setPlaying(true)} className="mt-4 inline-flex lg:hidden" />
           {week.priorities.length > 0 && (
             <ol className="mt-4 grid gap-2.5 md:grid-cols-3">
               {week.priorities.map((p, i) => {
@@ -404,13 +404,14 @@ export function YourWeekCard() {
   );
 }
 
-function PlayButton({ onClick, className }: { onClick: () => void; className?: string }) {
+/** The display class comes from the caller: a base `inline-flex` here would beat a caller's `hidden`. */
+function PlayButton({ onClick, className }: { onClick: () => void; className: string }) {
   return (
     <button
       type="button"
       onClick={onClick}
       className={clsx(
-        "inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-star-400 px-5 py-3 text-sm font-semibold text-on-accent shadow-[0_8px_24px_-8px_var(--accent-glow)] hover:brightness-105",
+        "shrink-0 items-center justify-center gap-2 rounded-full bg-star-400 px-5 py-3 text-sm font-semibold text-on-accent shadow-[0_8px_24px_-8px_var(--accent-glow)] transition-[transform,filter] duration-150 ease-out hover:brightness-105 active:scale-[0.97]",
         className,
       )}
     >
@@ -457,9 +458,9 @@ export function WeekNote({ className, card = false }: { className?: string; card
           {/* the sticky strip along the top */}
           <span className="absolute inset-x-0 top-0 h-3 bg-[#fcd34d]" aria-hidden />
           <span className="relative mt-1.5 block text-[13px] font-extrabold leading-tight">Your Week</span>
-          <span className="relative mt-0.5 block text-[10.5px] font-semibold leading-tight text-[#7c4a03]">{week.label}</span>
+          <span className="relative mt-0.5 block text-[11px] font-semibold leading-tight text-[#7c4a03]">{week.label}</span>
           <span className="relative mt-1.5 block text-[11px] font-bold leading-tight">{status}</span>
-          <span className="relative mt-1 flex items-center gap-1 text-[10.5px] font-extrabold uppercase tracking-wide text-[#b45309]">
+          <span className="relative mt-1 flex items-center gap-1 text-[11px] font-extrabold uppercase tracking-wide text-[#b45309]">
             <Play className="size-3" aria-hidden /> Play
           </span>
         </button>

@@ -221,7 +221,7 @@ function EmptyBoard() {
           style={{ transform: `rotate(${tilt}deg)` }}
         >
           <span className="studio-pin" aria-hidden />
-          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#B45309]">Plan {i ? "B" : "A"}</p>
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#B45309]">Plan {i ? "B" : "A"}</p>
           <div className="mt-3 space-y-2.5" aria-hidden>
             {[80, 95, 60, 70].map((w) => (
               <div key={w} className="h-2.5 rounded-full bg-space-900/10" style={{ width: `${w}%` }} />

@@ -38,7 +38,7 @@ export function applyPrefs(prefs: Prefs) {
 }
 
 /**
- * Inline script for <head>: applies the saved look before the page paints, so a light theme
+ * Inline script, first in <body>: applies the saved look before the page paints, so a light theme
  * doesn't flash dark first. Reads the persisted store directly.
  */
 export const PREFS_BOOT_SCRIPT = `try{var s=JSON.parse(localStorage.getItem("polaris")||"{}").state,p=s&&s.prefs;if(p){var d=document.documentElement;if(p.theme)d.dataset.theme=p.theme;d.dataset.experience=p.theme==="professional"?"classic":p.experience||"classic"}}catch(e){}`;

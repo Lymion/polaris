@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Berkshire_Swash, Fredoka, Plus_Jakarta_Sans } from "next/font/google";
-import Script from "next/script";
 import { AppShell } from "@/components/shell/AppShell";
 import { PREFS_BOOT_SCRIPT } from "@/lib/appearance";
 import "./globals.css";
@@ -40,9 +39,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     // The prefs script sets data-theme before React hydrates, hence suppressHydrationWarning.
     <html lang="en" className={`${jakarta.variable} ${berkshire.variable} ${fredoka.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="min-h-full font-sans">
+        {/* Applies the saved theme before anything below it is drawn. A plain inline script, first in
+            <body>: next/script sends inline beforeInteractive code at the end of the stream, after the
+            page content, so a light theme flashed dark first. */}
+        <script dangerouslySetInnerHTML={{ __html: PREFS_BOOT_SCRIPT }} />
         <AppShell>{children}</AppShell>
-        {/* Applies the saved theme before the page paints (injected into <head>). */}
-        <Script id="polaris-prefs" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: PREFS_BOOT_SCRIPT }} />
       </body>
     </html>
   );
