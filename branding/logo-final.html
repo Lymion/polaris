@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Polaris Logo</title>
+<link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; background:transparent; }
+  .lockup { width:1200px; height:400px; display:flex; align-items:center; justify-content:center; gap:36px; box-sizing:border-box; }
+  .lockup img { width:240px; height:240px; }
+  .word { font-family:'Berkshire Swash', cursive; font-size:150px; line-height:1; padding-bottom:20px; -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .dark { background:radial-gradient(120% 120% at 30% 20%, #16295a 0%, #0B1B3F 55%, #060f26 100%); }
+  .dark .word { background-image:linear-gradient(180deg, #FFFFFF 10%, #FFE2A6 60%, #F5B942 100%); }
+  .light { background:#FFFDF8; }
+  .light .word { background-image:linear-gradient(180deg, #2450B8, #0B1B3F); }
+  .stacked { width:800px; height:800px; flex-direction:column; gap:10px; }
+  .stacked img { width:400px; height:400px; }
+  .stacked .word { font-size:140px; }
+</style>
+</head>
+<body>
+<script>
+  const v = new URLSearchParams(location.search).get('v') || 'all';
+  const block = (cls) => `<div class="lockup ${cls}"><img src="polaris-mark.svg" alt=""><span class="word">Polaris</span></div>`;
+  const views = {
+    dark: block('dark'),
+    light: block('light'),
+    stacked: block('dark stacked'),
+  };
+  document.body.innerHTML = v === 'all' ? Object.values(views).join('') : views[v];
+</script>
+</body>
+</html>

@@ -1,0 +1,1243 @@
+@import "tailwindcss";
+
+@theme {
+  /* Fixed navy: text and tints on light surfaces (gold buttons, paper, white bubbles) in every theme. */
+  --color-space-950: #050b1c;
+  --color-space-900: #08132e;
+  --color-space-800: #0b1b3f;
+  --color-space-700: #13275a;
+  --color-space-600: #1c3570;
+
+  /* Themed: page, bars, panels and dialogs. The values here are the dark (Midnight) theme. */
+  --color-surface-950: #050b1c;
+  --color-surface-900: #08132e;
+  --color-surface-800: #0b1b3f;
+  --color-surface-700: #13275a;
+  --color-surface-600: #1c3570;
+  /* Base for subtle tints and hairlines (bg-fg/[0.04]): white on dark themes, ink on light ones. */
+  --color-fg: #ffffff;
+  /* Text on accent-coloured buttons and chips. */
+  --color-on-accent: #0b1b3f;
+
+  --color-star-50: #fff8e6;
+  --color-star-200: #ffe2a6;
+  --color-star-300: #ffd27a;
+  --color-star-400: #f5b942;
+  --color-star-500: #f7a531;
+  --color-star-600: #e0661f;
+
+  --color-orbit-200: #bfd4ff;
+  --color-orbit-300: #9fb6e0;
+  --color-orbit-400: #7fb4ff;
+  --color-orbit-500: #3b6fe0;
+  --color-orbit-600: #2450b8;
+
+  --color-ink: #eef2ff;
+  --color-muted: #9aa8c7;
+  --color-faint: #64729a;
+  --color-line: rgb(255 255 255 / 0.08);
+  --color-panel: rgb(19 39 90 / 0.5);
+
+  --color-growth: #4ade80;
+  --color-caution: #fbbf24;
+  --color-alert: #f87171;
+
+  --animate-rise-in: rise-in 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.15) both;
+  --animate-star-pop: star-pop 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+  --animate-twinkle: twinkle 1.6s ease-in-out infinite;
+
+  @keyframes rise-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes star-pop {
+    from {
+      opacity: 0;
+      transform: rotate(-35deg) scale(0.3);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes twinkle {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: scale(0.85);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@theme inline {
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-brand: var(--font-berkshire), cursive;
+}
+
+/* ---------- Themes ----------
+   Set on <html data-theme="…">. Each theme redefines the colour tokens above, so every
+   utility (bg-surface-900, text-ink, bg-fg/[0.04]…) follows it. The --room-* colours paint
+   the walls, floor and sky of the illustrated scenes (studio and the interactive world). */
+:root {
+  color-scheme: dark;
+  --accent-glow: rgb(245 185 66 / 0.6);
+  --panel-radius: 1.25rem;
+  --panel-shadow: none;
+  --page-backdrop:
+    radial-gradient(1px 1px at 12% 18%, rgb(255 255 255 / 0.35), transparent),
+    radial-gradient(1px 1px at 68% 8%, rgb(255 255 255 / 0.25), transparent),
+    radial-gradient(1.5px 1.5px at 85% 42%, rgb(255 255 255 / 0.3), transparent),
+    radial-gradient(1px 1px at 32% 72%, rgb(255 255 255 / 0.2), transparent),
+    radial-gradient(1px 1px at 52% 38%, rgb(255 255 255 / 0.18), transparent),
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgb(36 80 184 / 0.35), transparent 70%);
+  --starlight: linear-gradient(180deg, #ffffff 10%, #ffe2a6 60%, #f5b942 100%);
+  --selection: rgb(245 185 66 / 0.35);
+
+  --room-wall-l-a: #1b3170;
+  --room-wall-l-b: #14265a;
+  --room-wall-r-a: #152a63;
+  --room-wall-r-b: #0f2050;
+  --room-floor-a: #13244f;
+  --room-floor-b: #0a1532;
+  --room-base-l: #0b1736;
+  --room-base-r: #091431;
+  --room-trim: #3b6fe0;
+  --room-sky-a: #0b1b3f;
+  --room-sky-b: #2450b8;
+  --room-rug: #2450b8;
+  --room-wood: #6b4a2c;
+  --room-wood-light: #8a6a4a;
+  --desk-top-a: #26387a;
+  --desk-top-b: #1d2c63;
+  --desk-edge: #111b45;
+}
+
+/* Daylight: a bright, airy version of the same app. */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-surface-950: #f3f6fc;
+  --color-surface-900: #ffffff;
+  --color-surface-800: #ffffff;
+  --color-surface-700: #e8edf7;
+  --color-surface-600: #d9e1f0;
+  --color-fg: #0f1b3d;
+  --color-ink: #0f1b3d;
+  --color-muted: #4a5778;
+  --color-faint: #7d89a6;
+  --color-line: rgb(15 27 61 / 0.1);
+  --color-panel: rgb(255 255 255 / 0.92);
+  --color-star-50: #5c3b00;
+  --color-star-200: #8a5a00;
+  --color-star-300: #b7770f;
+  --color-star-400: #e2a230;
+  --color-star-500: #ee9a1c;
+  --color-star-600: #c2410c;
+  --color-orbit-200: #1e3a8a;
+  --color-orbit-300: #1d4ed8;
+  --color-orbit-400: #2563eb;
+  --color-growth: #15803d;
+  --color-caution: #b45309;
+  --color-alert: #dc2626;
+  --accent-glow: rgb(226 162 48 / 0.45);
+  --panel-shadow: 0 1px 2px rgb(15 27 61 / 0.05), 0 10px 28px -16px rgb(15 27 61 / 0.25);
+  --page-backdrop: radial-gradient(ellipse 80% 50% at 50% -10%, rgb(59 111 224 / 0.16), transparent 70%);
+  --starlight: linear-gradient(180deg, #13275a 10%, #2450b8 55%, #c27c0e 100%);
+  --room-wall-l-a: #e4ecfc;
+  --room-wall-l-b: #d3def6;
+  --room-wall-r-a: #d6e1f8;
+  --room-wall-r-b: #c4d3f0;
+  --room-floor-a: #cdd8ee;
+  --room-floor-b: #b7c6e3;
+  --room-base-l: #b3c2e2;
+  --room-base-r: #a5b6da;
+  --room-trim: #8ea7e0;
+  --room-sky-a: #6fb3ff;
+  --room-sky-b: #d9efff;
+  --room-rug: #7fa6f0;
+  --desk-top-a: #ffffff;
+  --desk-top-b: #eef2fa;
+  --desk-edge: #c5d0e6;
+}
+
+/* Candy: soft pinks and lilacs, rounder type. */
+:root[data-theme="cutesy"] {
+  color-scheme: light;
+  --font-jakarta: var(--font-fredoka);
+  --color-surface-950: #fff4f9;
+  --color-surface-900: #ffffff;
+  --color-surface-800: #ffffff;
+  --color-surface-700: #ffe4f0;
+  --color-surface-600: #fbd2e5;
+  --color-fg: #7a2962;
+  --color-ink: #4a1d3f;
+  --color-muted: #84536f;
+  --color-faint: #b08aa3;
+  --color-line: rgb(122 41 98 / 0.13);
+  --color-panel: rgb(255 255 255 / 0.9);
+  --color-star-50: #6d1d4f;
+  --color-star-200: #a4256f;
+  --color-star-300: #e0569b;
+  --color-star-400: #ff7eb6;
+  --color-star-500: #ff5fa2;
+  --color-star-600: #e11d74;
+  --color-orbit-200: #5b2e91;
+  --color-orbit-300: #7c4dbd;
+  --color-orbit-400: #9b6bff;
+  --color-orbit-500: #b28dff;
+  --color-orbit-600: #8b5cf6;
+  --color-growth: #16a34a;
+  --color-caution: #c2410c;
+  --color-alert: #e11d48;
+  --color-on-accent: #4a1d3f;
+  --accent-glow: rgb(255 126 182 / 0.5);
+  --panel-radius: 1.6rem;
+  --panel-shadow: 0 10px 30px -18px rgb(224 86 155 / 0.45);
+  --page-backdrop:
+    radial-gradient(circle at 1px 1px, rgb(255 126 182 / 0.22) 1.5px, transparent 2px) 0 0 / 26px 26px,
+    radial-gradient(ellipse 80% 55% at 50% -10%, rgb(178 141 255 / 0.25), transparent 70%);
+  --starlight: linear-gradient(180deg, #e0569b 10%, #9b6bff 100%);
+  --selection: rgb(255 126 182 / 0.35);
+  --room-wall-l-a: #ffd9ea;
+  --room-wall-l-b: #ffc9e0;
+  --room-wall-r-a: #ffe3ef;
+  --room-wall-r-b: #ffd1e4;
+  --room-floor-a: #f6c4dc;
+  --room-floor-b: #ebb0cd;
+  --room-base-l: #e79bc0;
+  --room-base-r: #df8db6;
+  --room-trim: #ff7eb6;
+  --room-sky-a: #ffb3d6;
+  --room-sky-b: #cdb8ff;
+  --room-rug: #b28dff;
+  --room-wood: #d98bb0;
+  --room-wood-light: #f0b3cf;
+  --desk-top-a: #ffffff;
+  --desk-top-b: #fff0f7;
+  --desk-edge: #f5bdd7;
+}
+
+/* Neon: dark with cyan and magenta light, a grid instead of stars. */
+:root[data-theme="cool"] {
+  --color-surface-950: #04060c;
+  --color-surface-900: #0a0f1c;
+  --color-surface-800: #0e1526;
+  --color-surface-700: #142033;
+  --color-surface-600: #1b2b44;
+  --color-fg: #d8fbff;
+  --color-ink: #e6fffb;
+  --color-muted: #8bb4b8;
+  --color-faint: #5b7d85;
+  --color-line: rgb(34 211 238 / 0.14);
+  --color-panel: rgb(14 22 38 / 0.78);
+  --color-star-50: #ecfeff;
+  --color-star-200: #a5f3fc;
+  --color-star-300: #67e8f9;
+  --color-star-400: #22d3ee;
+  --color-star-500: #06b6d4;
+  --color-star-600: #0891b2;
+  --color-orbit-200: #f5d0fe;
+  --color-orbit-300: #f0abfc;
+  --color-orbit-400: #e879f9;
+  --color-orbit-500: #c026d3;
+  --color-orbit-600: #a21caf;
+  --color-growth: #34d399;
+  --color-alert: #fb7185;
+  --color-on-accent: #04060c;
+  --accent-glow: rgb(34 211 238 / 0.55);
+  --panel-shadow: 0 0 0 1px rgb(34 211 238 / 0.04), 0 12px 32px -18px rgb(34 211 238 / 0.35);
+  --page-backdrop:
+    linear-gradient(rgb(34 211 238 / 0.05) 1px, transparent 1px) 0 0 / 44px 44px,
+    linear-gradient(90deg, rgb(34 211 238 / 0.05) 1px, transparent 1px) 0 0 / 44px 44px,
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgb(192 38 211 / 0.28), transparent 70%);
+  --starlight: linear-gradient(180deg, #e6fffb 10%, #67e8f9 55%, #e879f9 100%);
+  --selection: rgb(34 211 238 / 0.3);
+  --room-wall-l-a: #0f1a30;
+  --room-wall-l-b: #0a1326;
+  --room-wall-r-a: #0d172b;
+  --room-wall-r-b: #08101f;
+  --room-floor-a: #0a1222;
+  --room-floor-b: #050a15;
+  --room-base-l: #22d3ee;
+  --room-base-r: #c026d3;
+  --room-trim: #22d3ee;
+  --room-sky-a: #0b1026;
+  --room-sky-b: #6d1a8a;
+  --room-rug: #c026d3;
+  --desk-top-a: #142033;
+  --desk-top-b: #0e1526;
+  --desk-edge: #22d3ee;
+}
+
+/* Workspace: a plain, professional look, like a productivity suite. No starfield, no swashes,
+   no cartoon mascot (the guide becomes a simple assistant badge). */
+:root[data-theme="professional"] {
+  color-scheme: light;
+  --font-berkshire: var(--font-jakarta);
+  --color-surface-950: #f6f8fc;
+  --color-surface-900: #ffffff;
+  --color-surface-800: #ffffff;
+  --color-surface-700: #eef2f9;
+  --color-surface-600: #e3e8f1;
+  --color-fg: #1f1f1f;
+  --color-ink: #1f1f1f;
+  --color-muted: #444746;
+  --color-faint: #747775;
+  --color-line: #e1e3e1;
+  --color-panel: #ffffff;
+  --color-star-50: #041e49;
+  --color-star-200: #0842a0;
+  --color-star-300: #0b57d0;
+  --color-star-400: #0b57d0;
+  --color-star-500: #0b57d0;
+  --color-star-600: #0842a0;
+  --color-orbit-200: #174ea6;
+  --color-orbit-300: #1a73e8;
+  --color-orbit-400: #1a73e8;
+  --color-orbit-500: #1a73e8;
+  --color-orbit-600: #1967d2;
+  --color-growth: #188038;
+  --color-caution: #b06000;
+  --color-alert: #d93025;
+  --color-on-accent: #ffffff;
+  --accent-glow: transparent;
+  --panel-radius: 0.75rem;
+  --radius-3xl: 1rem;
+  --radius-2xl: 0.75rem;
+  --panel-shadow: 0 1px 2px rgb(60 64 67 / 0.12);
+  --page-backdrop: none;
+  --starlight: linear-gradient(#1f1f1f, #1f1f1f);
+  --selection: rgb(11 87 208 / 0.2);
+}
+
+/* The studio's neon sign, and the moon in its window, per theme. */
+:root {
+  --room-neon: #ffe2a6;
+  --room-neon-glow: #f5b942;
+}
+:root[data-theme="light"] {
+  --room-neon: #b45309;
+  --room-neon-glow: #f59e0b;
+}
+:root[data-theme="cutesy"] {
+  --room-neon: #e0569b;
+  --room-neon-glow: #ff7eb6;
+}
+:root[data-theme="cool"] {
+  --room-neon: #a5f3fc;
+  --room-neon-glow: #22d3ee;
+}
+.room-moon-cut {
+  fill: var(--room-sky-a);
+}
+:root:is([data-theme="light"], [data-theme="cutesy"]) .room-moon-cut {
+  display: none;
+}
+
+/* Category chips use light tints of sky and fuchsia; deepen them on light backgrounds. */
+:root:is([data-theme="light"], [data-theme="cutesy"], [data-theme="professional"]) {
+  --color-sky-300: #0369a1;
+  --color-fuchsia-300: #a21caf;
+}
+
+/* Islands that stay dark whatever the theme (the studio monitor, the video stage, Wrapped). */
+.scope-dark {
+  color-scheme: dark;
+  --color-fg: #ffffff;
+  --color-ink: #eef2ff;
+  --color-muted: #9aa8c7;
+  --color-faint: #64729a;
+  --color-line: rgb(255 255 255 / 0.08);
+  --color-panel: rgb(19 39 90 / 0.5);
+  --color-star-50: #fff8e6;
+  --color-star-200: #ffe2a6;
+  --color-star-300: #ffd27a;
+  --color-orbit-200: #bfd4ff;
+  --color-orbit-300: #9fb6e0;
+  --color-orbit-400: #7fb4ff;
+  --color-growth: #4ade80;
+  --color-alert: #f87171;
+}
+
+body {
+  background-color: var(--color-surface-950);
+  color: var(--color-ink);
+}
+
+/* The backdrop lives on its own fixed layer instead of `background-attachment: fixed`,
+   which makes the browser repaint the whole background on every scroll frame. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--page-backdrop);
+}
+
+/* Gradient text used by the Polaris wordmark and hero numbers */
+.text-starlight {
+  background-image: var(--starlight);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* No backdrop-filter: cards sit on a near-solid background where blur is invisible, yet it
+   cost a frame on every update inside a card. Blur stays on the bars content scrolls under. */
+.panel {
+  background-color: var(--color-panel);
+  border: 1px solid var(--color-line);
+  border-radius: var(--panel-radius);
+  box-shadow: var(--panel-shadow);
+}
+
+::selection {
+  background: var(--selection);
+}
+
+/* iPhone Safari draws date fields at a fixed native width that ignores width: 100%, so they
+   spill out of their box and over the field beside them. Drop the native look (the date
+   picker still opens on tap) and let them size like every other field. */
+@supports (-webkit-touch-callout: none) {
+  input[type="date"] {
+    -webkit-appearance: none;
+    appearance: none;
+    display: block;
+    min-width: 0;
+    min-height: 2.5rem;
+  }
+  input[type="date"]::-webkit-date-and-time-value {
+    text-align: left;
+  }
+}
+
+/* ---------- Creative Studio room ---------- */
+.studio-station {
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+.studio-station[data-active="true"] {
+  transform: translateY(-7px);
+}
+.studio-station .station-glow,
+.studio-station .station-ring {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.studio-station[data-active="true"] .station-glow,
+.studio-station[data-active="true"] .station-ring {
+  opacity: 1;
+}
+.studio-lumi {
+  transition: transform 0.75s cubic-bezier(0.45, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+/* Walking into a station: the camera pushes into it (origin set inline), then the workspace
+   rises in. Walking out plays it backwards. */
+.studio-zoom-in {
+  animation: studio-zoom-in 0.6s cubic-bezier(0.55, 0, 0.35, 1) forwards;
+  pointer-events: none;
+}
+.studio-zoom-back {
+  animation: studio-zoom-back 0.55s cubic-bezier(0.2, 0.75, 0.3, 1) both;
+}
+.studio-enter {
+  animation: studio-enter 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.05) both;
+}
+@keyframes studio-zoom-in {
+  60% {
+    opacity: 1;
+  }
+  to {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+@keyframes studio-zoom-back {
+  from {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+  45% {
+    opacity: 1;
+  }
+}
+@keyframes studio-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(18px);
+  }
+}
+
+/* A station up close: back wall on top, a floor in perspective underneath. */
+.studio-set {
+  position: relative;
+  isolation: isolate;
+  /* clip, not hidden: the floor is wider than the set, and a hidden overflow can still be
+     scrolled sideways when a clicked or focused button is scrolled into view. */
+  overflow: clip;
+  border-radius: 1.75rem;
+  border: 1px solid var(--color-line);
+  background: linear-gradient(180deg, var(--set-wall-top) 0%, var(--set-wall) 420px, var(--set-wall-low) 100%);
+}
+/* A warm ceiling light falling on the wall */
+.studio-set::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 520px;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 55% 70% at 50% 0%, var(--set-light, rgb(255 226 166 / 0.09)), transparent 70%);
+}
+.studio-set::after {
+  content: "";
+  position: absolute;
+  left: -40%;
+  right: -40%;
+  bottom: 0;
+  height: 260px;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, var(--set-wall-low), transparent 30%),
+    repeating-linear-gradient(90deg, rgb(255 255 255 / 0.06) 0 1px, transparent 1px 72px),
+    repeating-linear-gradient(0deg, rgb(255 255 255 / 0.06) 0 1px, transparent 1px 72px),
+    var(--set-floor);
+  transform: perspective(420px) rotateX(55deg);
+  transform-origin: 50% 100%;
+}
+.studio-set[data-station="brand"] {
+  --set-wall-top: #1e3577;
+  --set-wall: #172b66;
+  --set-wall-low: #12224f;
+  --set-floor: #0e1b42;
+}
+.studio-set[data-station="campaign"] {
+  --set-wall-top: #1a3270;
+  --set-wall: #152a63;
+  --set-wall-low: #10204e;
+  --set-floor: #0d1a40;
+}
+.studio-set[data-station="video"] {
+  --set-light: rgb(254 243 199 / 0.15);
+  --set-wall-top: #141c3d;
+  --set-wall: #0f1633;
+  --set-wall-low: #0b1129;
+  --set-floor: #080d22;
+}
+.studio-set[data-station="calendar"],
+.studio-set[data-station="library"] {
+  --set-wall-top: #1e3577;
+  --set-wall: #182d68;
+  --set-wall-low: #12224f;
+  --set-floor: #0e1b42;
+}
+/* Other themes paint every set with their own room colours. */
+:root:is([data-theme="light"], [data-theme="cutesy"], [data-theme="cool"]) .studio-set {
+  --set-wall-top: var(--room-wall-l-a);
+  --set-wall: var(--room-wall-l-b);
+  --set-wall-low: var(--room-wall-r-b);
+  --set-floor: var(--room-floor-b);
+}
+
+/* A desk slab: lit top surface with a visible front edge. */
+.studio-desk {
+  border-radius: 1.25rem;
+  background: linear-gradient(180deg, var(--desk-top-a), var(--desk-top-b));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.12),
+    0 12px 0 var(--desk-edge),
+    0 28px 40px -14px rgb(0 0 0 / 0.45);
+}
+
+/* Professional: the studio's props become plain panels. */
+:root[data-theme="professional"] {
+  & .studio-set {
+    background: var(--color-surface-900);
+    border-color: var(--color-line);
+    border-radius: var(--panel-radius);
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+  & .studio-desk {
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    border-radius: var(--panel-radius);
+    box-shadow: var(--panel-shadow);
+  }
+  & .studio-cork {
+    border: 1px solid var(--color-line);
+    border-radius: var(--panel-radius);
+    background: var(--color-surface-700);
+    box-shadow: none;
+  }
+  & .studio-pin,
+  & .studio-clapper {
+    display: none;
+  }
+  & .studio-film {
+    background: var(--color-surface-700);
+    padding: 8px;
+  }
+}
+
+/* Cork board in a wooden frame. */
+.studio-cork {
+  border: 12px solid #6b4a2c;
+  border-radius: 1.25rem;
+  background-color: #b98552;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgb(0 0 0 / 0.12) 0 1px, transparent 2px),
+    radial-gradient(circle at 70% 60%, rgb(255 255 255 / 0.12) 0 1px, transparent 2px),
+    radial-gradient(circle at 45% 85%, rgb(0 0 0 / 0.1) 0 1.5px, transparent 2.5px);
+  background-size:
+    13px 13px,
+    17px 17px,
+    23px 23px;
+  box-shadow:
+    inset 0 0 0 2px #4a321f,
+    inset 0 6px 18px rgb(0 0 0 / 0.35),
+    0 24px 40px -16px rgb(0 0 0 / 0.7);
+}
+.studio-pin {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 30%, #fca5a5, #ef4444 45%, #7f1d1d);
+  box-shadow: 0 4px 4px rgb(0 0 0 / 0.35);
+}
+
+/* Film strip: sprocket holes along the top and bottom edges. */
+.studio-film {
+  background-color: #0b0f1e;
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0 7px, rgb(255 255 255 / 0.55) 7px 15px, transparent 15px 22px),
+    repeating-linear-gradient(90deg, transparent 0 7px, rgb(255 255 255 / 0.55) 7px 15px, transparent 15px 22px);
+  background-size:
+    100% 7px,
+    100% 7px;
+  background-position:
+    0 5px,
+    0 calc(100% - 5px);
+  background-repeat: repeat-x;
+  padding: 18px 10px;
+}
+.studio-clapper {
+  background: repeating-linear-gradient(-45deg, #f8fafc 0 14px, #0b0f1e 14px 28px);
+}
+
+/* Wooden shelf plank that books stand on. */
+.studio-shelf {
+  border-bottom: 14px solid #8a6a4a;
+  box-shadow: 0 10px 0 #5b3f28;
+}
+.studio-book {
+  writing-mode: vertical-rl;
+  transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.3);
+}
+.studio-book:hover,
+.studio-book[aria-pressed="true"] {
+  transform: translateY(-10px);
+}
+
+/* ---------- Month Wrapped ----------
+   The active progress segment fills with a CSS animation; its animationend advances the story,
+   and pausing is just animation-play-state, so no timers tick while a slide is held. */
+.wrapped-progress {
+  animation: wrapped-fill var(--slide-ms, 8000ms) linear forwards;
+  transform-origin: left center;
+}
+.wrapped-paused .wrapped-progress,
+.wrapped-paused .wrapped-drift {
+  animation-play-state: paused;
+}
+.wrapped-drift {
+  animation: wrapped-drift 14s ease-in-out infinite alternate;
+}
+.wrapped-pop {
+  animation: wrapped-pop 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.25) both;
+}
+@keyframes wrapped-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes wrapped-drift {
+  from { transform: translate(-6%, -4%) scale(1); }
+  to { transform: translate(6%, 5%) scale(1.15); }
+}
+@keyframes wrapped-pop {
+  from { opacity: 0; transform: translateY(24px) scale(0.92); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------- Mascot ----------
+   Transform origins are in SVG user units (viewBox 0 0 120 120).
+   Idle animations loop; gesture classes (g-*) on the root swap in one-off moves; mood-* sets the face. */
+.mascot .m-float {
+  animation: m-float 3.2s ease-in-out infinite;
+  transform-origin: 60px 100px;
+}
+.mascot .m-shadow {
+  animation: m-shadow 3.2s ease-in-out infinite;
+  transform-origin: 60px 113px;
+}
+.mascot .m-glow {
+  animation: m-glow 3.2s ease-in-out infinite;
+  transform-origin: 60px 64px;
+}
+.mascot .m-arm-l {
+  transform-origin: 41px 60px;
+  animation: m-sway-l 3.2s ease-in-out infinite;
+}
+.mascot .m-arm-r {
+  transform-origin: 79px 60px;
+  animation: m-sway-r 3.2s ease-in-out infinite;
+}
+.mascot .m-eyes {
+  transform-origin: 60px 62px;
+  animation: m-blink 4.6s infinite;
+}
+.mascot .m-pupils {
+  transition: transform 0.3s ease;
+}
+.mascot .m-page {
+  transform-origin: 101px 53px;
+  transform: scaleX(0);
+}
+.mascot .m-idea {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.mascot .m-twinkle {
+  animation: twinkle 1.8s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.mascot .m-twinkle:nth-of-type(2) {
+  animation-delay: 0.6s;
+}
+.mascot .m-twinkle:nth-of-type(3) {
+  animation-delay: 1.2s;
+}
+
+/* Gestures */
+.mascot.g-wave .m-arm-l {
+  animation: m-wave 1.6s ease-in-out;
+}
+.mascot.g-cheer .m-arm-l {
+  animation: m-cheer-l 1.4s ease-in-out;
+}
+.mascot.g-cheer .m-arm-r {
+  animation: m-cheer-r 1.4s ease-in-out;
+}
+.mascot.g-cheer .m-float {
+  animation: m-hop 0.7s ease-in-out 2;
+}
+.mascot.g-flip .m-page {
+  animation: m-flip 1.2s ease-in-out;
+}
+.mascot.g-flip .m-arm-r {
+  animation: m-hold-up 1.2s ease-in-out;
+}
+.mascot.g-read .m-pupils {
+  transform: translate(2.2px, 1px);
+}
+.mascot.g-read .m-float {
+  animation: m-tilt 1.8s ease-in-out;
+}
+.mascot.g-idea .m-arm-l {
+  animation: m-point 1.8s ease-in-out;
+}
+.mascot.g-idea .m-idea {
+  animation: m-pop 1.8s ease-in-out;
+}
+
+/* Moods */
+.mascot .m-mouth-talk,
+.mascot .m-mouth-open,
+.mascot .m-mouth-o,
+.mascot .m-eyes-happy,
+.mascot .m-idea {
+  opacity: 0;
+}
+.mascot.mood-talking .m-mouth-smile,
+.mascot.mood-happy .m-mouth-smile,
+.mascot.mood-thinking .m-mouth-smile {
+  opacity: 0;
+}
+.mascot.mood-talking .m-mouth-talk {
+  opacity: 1;
+  transform-origin: 60px 71px;
+  animation: m-talk 0.32s ease-in-out infinite alternate;
+}
+.mascot.mood-talking .m-arm-l {
+  animation: m-gesture 1.1s ease-in-out infinite;
+}
+.mascot.mood-happy .m-mouth-open,
+.mascot.mood-happy .m-eyes-happy {
+  opacity: 1;
+}
+.mascot.mood-happy .m-eyes {
+  opacity: 0;
+}
+.mascot.mood-happy .m-arm-l {
+  animation: m-cheer-l 1.4s ease-in-out infinite;
+}
+.mascot.mood-happy .m-arm-r {
+  animation: m-cheer-r 1.4s ease-in-out infinite;
+}
+.mascot.mood-thinking .m-mouth-o {
+  opacity: 1;
+}
+.mascot.mood-thinking .m-pupils {
+  transform: translate(-1.6px, -2px);
+}
+.mascot.mood-thinking .m-arm-l {
+  animation: m-think 2.4s ease-in-out infinite;
+}
+.mascot.mood-thinking .m-idea {
+  animation: m-pop 2.4s ease-in-out infinite;
+}
+.mascot.m-still *,
+.mascot.m-still {
+  animation: none !important;
+}
+
+@keyframes m-float {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  50% { transform: translateY(-4px) scale(1.01, 0.99); }
+}
+@keyframes m-shadow {
+  0%, 100% { transform: scale(1); opacity: 0.35; }
+  50% { transform: scale(0.85); opacity: 0.22; }
+}
+@keyframes m-glow {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.06); }
+}
+@keyframes m-sway-l {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(6deg); }
+}
+@keyframes m-sway-r {
+  0%, 100% { transform: rotate(8deg); }
+  50% { transform: rotate(14deg); }
+}
+@keyframes m-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+@keyframes m-wave {
+  0%, 100% { transform: rotate(0deg); }
+  15%, 45%, 75% { transform: rotate(-48deg); }
+  30%, 60%, 90% { transform: rotate(-22deg); }
+}
+@keyframes m-cheer-l {
+  0%, 100% { transform: rotate(0deg); }
+  30%, 70% { transform: rotate(-38deg); }
+}
+@keyframes m-cheer-r {
+  0%, 100% { transform: rotate(10deg); }
+  30%, 70% { transform: rotate(-26deg); }
+}
+@keyframes m-hop {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  20% { transform: translateY(1px) scale(1.05, 0.94); }
+  50% { transform: translateY(-9px) scale(0.97, 1.04); }
+}
+@keyframes m-flip {
+  0% { transform: scaleX(0); }
+  15% { transform: scaleX(1); }
+  60% { transform: scaleX(-1); }
+  100% { transform: scaleX(0); }
+}
+@keyframes m-hold-up {
+  0%, 100% { transform: rotate(10deg); }
+  20%, 80% { transform: rotate(-2deg); }
+}
+@keyframes m-tilt {
+  0%, 100% { transform: rotate(0deg); }
+  30%, 70% { transform: rotate(5deg) translateY(-1px); }
+}
+@keyframes m-point {
+  0%, 100% { transform: rotate(0deg); }
+  25%, 75% { transform: rotate(-62deg); }
+}
+@keyframes m-pop {
+  0%, 15%, 100% { opacity: 0; transform: translateY(4px) scale(0.6); }
+  30%, 75% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes m-talk {
+  from { transform: scaleY(0.35); }
+  to { transform: scaleY(1); }
+}
+@keyframes m-gesture {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(-26deg); }
+}
+@keyframes m-think {
+  0%, 100% { transform: rotate(-50deg); }
+  50% { transform: rotate(-58deg); }
+}
+
+/* ---------- Interactive world ----------
+   One building: your desk (home) with the mission board on the wall, the computer on the desk
+   and a door to the studio. Room colours come from the theme (--room-*, --desk-*). */
+.world-wall {
+  background:
+    repeating-linear-gradient(90deg, rgb(255 255 255 / 0.03) 0 2px, transparent 2px 110px),
+    linear-gradient(180deg, var(--room-wall-l-a), var(--room-wall-l-b));
+}
+.world-floor {
+  background:
+    repeating-linear-gradient(90deg, rgb(0 0 0 / 0.08) 0 1px, transparent 1px 80px),
+    linear-gradient(180deg, var(--room-floor-a), var(--room-floor-b));
+}
+.world-desk {
+  background:
+    linear-gradient(180deg, rgb(0 0 0 / 0.22), transparent 14%),
+    repeating-linear-gradient(90deg, rgb(0 0 0 / 0.05) 0 2px, transparent 2px 140px),
+    linear-gradient(180deg, var(--world-desk-a), var(--world-desk-b));
+}
+/* The desk you sit at in the interactive world, per theme, and the light along its back edge */
+:root {
+  --world-desk-a: #4a3222;
+  --world-desk-b: #6e4b33;
+  --world-desk-edge: rgb(255 255 255 / 0.25);
+  --world-desk-glow: transparent;
+  --world-light: rgb(255 214 150 / 0.12);
+  /* the lamp's pool of light, the screen's glow and the room's darker corners */
+  --world-lamp-light: rgb(255 206 120 / 0.34);
+  --world-screen-glow: rgb(110 150 255 / 0.22);
+  --world-vignette: rgb(0 0 0 / 0.3);
+  /* string lights */
+  --world-wire: rgb(0 0 0 / 0.5);
+  --world-bulb-a: #ffd27a;
+  --world-bulb-b: #ffb067;
+  /* the view through the window */
+  --world-window-frame: #cfd6ea;
+  --world-moon: #fff4cf;
+  --world-star: #ffffff;
+  --world-stars: 1;
+  --world-clouds: 0;
+}
+:root[data-theme="light"] {
+  --world-desk-a: #d9c2a0;
+  --world-desk-b: #ecdcc2;
+  --world-desk-edge: rgb(255 255 255 / 0.7);
+  --world-light: rgb(255 255 255 / 0.6);
+  --world-lamp-light: rgb(255 214 140 / 0.3);
+  --world-screen-glow: rgb(110 150 255 / 0.12);
+  --world-vignette: rgb(40 60 110 / 0.1);
+  --world-wire: rgb(60 60 90 / 0.45);
+  --world-bulb-a: #ffcf5c;
+  --world-bulb-b: #ffe39a;
+  --world-window-frame: #ffffff;
+  --world-moon: #ffe27a;
+  --world-stars: 0;
+  --world-clouds: 0.95;
+}
+:root[data-theme="cutesy"] {
+  /* a cream desk, so it stands out from the pink walls */
+  --world-desk-a: #f6e6da;
+  --world-desk-b: #fff8f2;
+  --world-desk-edge: #ff9cc8;
+  --world-desk-glow: rgb(255 126 182 / 0.18);
+  --world-light: rgb(255 255 255 / 0.5);
+  --world-lamp-light: rgb(255 170 205 / 0.32);
+  --world-screen-glow: rgb(255 126 182 / 0.15);
+  --world-vignette: rgb(170 60 120 / 0.1);
+  --world-wire: rgb(170 80 130 / 0.4);
+  --world-bulb-a: #ff9cc8;
+  --world-bulb-b: #c4b5fd;
+  --world-window-frame: #fff7fb;
+  --world-moon: #fffbe6;
+  --world-stars: 0.75;
+  --world-clouds: 0.75;
+}
+:root[data-theme="cool"] {
+  --world-desk-a: #121d33;
+  --world-desk-b: #1c2b48;
+  --world-desk-edge: #22d3ee;
+  --world-desk-glow: rgb(34 211 238 / 0.22);
+  --world-light: rgb(34 211 238 / 0.09);
+  --world-lamp-light: rgb(34 211 238 / 0.24);
+  --world-screen-glow: rgb(34 211 238 / 0.24);
+  --world-vignette: rgb(0 0 0 / 0.38);
+  --world-wire: rgb(0 0 0 / 0.6);
+  --world-bulb-a: #22d3ee;
+  --world-bulb-b: #f0abfc;
+  --world-window-frame: #1b2540;
+  --world-moon: #e0f2fe;
+  --world-star: #e0f7ff;
+}
+.world-desk-edge {
+  background: var(--world-desk-edge);
+}
+.world-desk-glow {
+  background: linear-gradient(180deg, var(--world-desk-glow), transparent);
+}
+.world-wood {
+  background: linear-gradient(180deg, var(--room-wood-light), var(--room-wood));
+}
+.world-cork {
+  background-color: #d2ac7f;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgb(0 0 0 / 0.1) 0 1px, transparent 2px),
+    radial-gradient(circle at 70% 60%, rgb(255 255 255 / 0.14) 0 1px, transparent 2px),
+    radial-gradient(circle at 45% 85%, rgb(0 0 0 / 0.08) 0 1.5px, transparent 2.5px);
+  background-size:
+    13px 13px,
+    17px 17px,
+    23px 23px;
+  box-shadow: inset 0 6px 18px rgb(0 0 0 / 0.25);
+}
+.world-frame {
+  border: 12px solid var(--room-wood);
+  box-shadow:
+    inset 0 0 0 2px rgb(0 0 0 / 0.25),
+    0 22px 40px -18px rgb(0 0 0 / 0.6);
+}
+/* The back of the stockroom's shelving unit: the wall, in the shade of the shelf above */
+.world-shelf-back {
+  background:
+    linear-gradient(180deg, var(--world-vignette), transparent 60%),
+    linear-gradient(180deg, var(--room-wall-l-a), var(--room-wall-l-b));
+  box-shadow:
+    inset 0 10px 18px rgb(0 0 0 / 0.22),
+    0 22px 40px -18px rgb(0 0 0 / 0.6);
+}
+.world-paper {
+  background: #fffaf0;
+  color: #2b2118;
+  box-shadow: 0 10px 18px -10px rgb(0 0 0 / 0.55);
+}
+.world-pin::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 30%, #fca5a5, #ef4444 45%, #7f1d1d);
+  box-shadow: 0 3px 3px rgb(0 0 0 / 0.35);
+}
+.world-bezel {
+  background: linear-gradient(180deg, #161c2e, #0a0f1f);
+  border-radius: 18px;
+  padding: 12px;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    0 0 0 1px var(--world-bezel-rim, transparent),
+    0 0 44px -10px var(--world-bezel-glow, transparent),
+    0 30px 50px -24px rgb(0 0 0 / 0.75);
+}
+/* On Neon's dark walls the screen's edge glows, so it doesn't sink into the wall */
+:root[data-theme="cool"] {
+  --world-bezel-rim: rgb(34 211 238 / 0.45);
+  --world-bezel-glow: rgb(34 211 238 / 0.4);
+}
+
+/* Things you can walk up to glow on hover. They stay put: the board is on the wall and the
+   computer is standing on the desk. */
+.world-object {
+  cursor: pointer;
+  outline: none;
+  transition: filter 0.25s ease;
+}
+.world-object:hover,
+.world-object:focus-visible {
+  filter: drop-shadow(0 0 18px var(--accent-glow)) brightness(1.04);
+}
+
+/* The studio door swings away from you on hover, letting the studio's light out */
+.world-door-leaf {
+  transform-origin: left center;
+  transition: transform 0.5s cubic-bezier(0.3, 0.8, 0.3, 1);
+}
+.world-door:hover .world-door-leaf,
+.world-door:focus-visible .world-door-leaf {
+  transform: perspective(700px) rotateY(38deg);
+}
+
+/* Small signs of life at the desk: twinkling lights and stars, steam off the mug. */
+.world-twinkle {
+  animation: world-twinkle 3.4s ease-in-out infinite;
+}
+.world-steam {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: world-steam 3.2s ease-out infinite;
+}
+@keyframes world-twinkle {
+  50% {
+    opacity: 0.6;
+  }
+}
+@keyframes world-steam {
+  0% {
+    transform: translateY(0) scaleX(1);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-30px) scaleX(1.5);
+    opacity: 0;
+  }
+}
+/* The month's Wrapped, as a present: the lid lifts when you reach for it, and it wobbles
+   while Lumi is wrapping it. */
+.world-gift-lid {
+  transform-box: fill-box;
+  transform-origin: 15% 100%;
+  transition: transform 0.35s cubic-bezier(0.3, 0.8, 0.3, 1.4);
+}
+.world-gift:hover .world-gift-lid,
+.world-gift:focus-visible .world-gift-lid {
+  transform: translateY(-9px) rotate(-7deg);
+}
+.world-gift-wrapping {
+  transform-origin: 50% 100%;
+  animation: world-wobble 0.6s ease-in-out infinite;
+}
+@keyframes world-wobble {
+  25% {
+    rotate: -3deg;
+  }
+  75% {
+    rotate: 3deg;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .world-twinkle,
+  .world-steam,
+  .world-gift-wrapping {
+    animation: none;
+  }
+}
+
+/* Walking between rooms: zoom into the thing you clicked, then the next room rises in.
+   Coming back to the desk plays the zoom in reverse from where you were. */
+.world-zoom-in {
+  animation: world-zoom-in 0.48s cubic-bezier(0.55, 0, 0.35, 1) forwards;
+  pointer-events: none;
+}
+.world-return {
+  animation: world-return 0.6s cubic-bezier(0.2, 0.75, 0.3, 1) both;
+}
+.world-enter {
+  animation: world-enter 0.5s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+@keyframes world-zoom-in {
+  65% {
+    opacity: 1;
+  }
+  to {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+@keyframes world-return {
+  from {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+  45% {
+    opacity: 1;
+  }
+}
+@keyframes world-enter {
+  from {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+}
+
+/* The mission board up close: everything on it is paper pinned to cork. */
+.board-scope {
+  color-scheme: light;
+  --color-surface-950: #fffaf0;
+  --color-surface-900: #fffdf7;
+  --color-surface-800: #fffdf7;
+  --color-surface-700: #f3ead8;
+  --color-surface-600: #e8dcc4;
+  --color-fg: #2b2118;
+  --color-ink: #2b2118;
+  --color-muted: #4a3a2c;
+  --color-faint: #6b5643;
+  --color-line: rgb(60 40 20 / 0.16);
+  --color-panel: #fffaf0;
+  --color-star-50: #5c3b00;
+  --color-star-200: #8a5a00;
+  --color-star-300: #a86a0b;
+  --color-star-400: #e2a230;
+  --color-star-500: #ee9a1c;
+  --color-orbit-200: #1e3a8a;
+  --color-orbit-300: #1d4ed8;
+  --color-orbit-400: #2563eb;
+  --color-growth: #15803d;
+  --color-caution: #b45309;
+  --color-alert: #b91c1c;
+  --color-sky-300: #0369a1;
+  --color-fuchsia-300: #a21caf;
+  --color-on-accent: #0b1b3f;
+  --panel-shadow: 0 12px 20px -12px rgb(0 0 0 / 0.55);
+  --panel-radius: 6px;
+  color: var(--color-ink);
+
+  & .panel {
+    position: relative;
+    border-color: transparent;
+  }
+  /* Gold labels straight on the cork need the deeper gold to be readable. */
+  & .text-star-400 {
+    color: var(--color-star-200);
+  }
+  & .panel::before {
+    content: "";
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    margin-left: -7px;
+    border-radius: 9999px;
+    background: radial-gradient(circle at 35% 30%, #fca5a5, #ef4444 45%, #7f1d1d);
+    box-shadow: 0 3px 3px rgb(0 0 0 / 0.35);
+    z-index: 1;
+  }
+}

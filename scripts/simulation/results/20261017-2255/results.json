@@ -1,0 +1,1997 @@
+{
+  "config": {
+    "months": 6,
+    "seed": 23,
+    "base": "http://localhost:3001",
+    "baselineOnly": false,
+    "out": "scripts/simulation/results"
+  },
+  "first": "2026-11-01T01:00:00.000Z",
+  "polaris": [
+    {
+      "month": "2026-11",
+      "plan": {
+        "adSpend": 2400,
+        "tiktokAdShare": 0.5,
+        "priceIndex": 1,
+        "saleDiscount": 0.35,
+        "livesPerMonth": 4,
+        "websitePush": false,
+        "retention": false,
+        "bundles": false,
+        "stockCover": 1.3,
+        "courierDeal": false,
+        "appsTrimmed": false,
+        "packer": true,
+        "influencers": 0,
+        "popups": 0,
+        "capsule": false,
+        "getLicence": false,
+        "restock": {
+          "Satin wrap dress": 32,
+          "Linen co-ord set": 0,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 11,
+          "Silk-touch scarf": 0
+        }
+      },
+      "metrics": {
+        "month": "2026-11",
+        "orders": 135,
+        "newOrders": 109,
+        "repeatOrders": 25,
+        "popupOrders": 0,
+        "lostOrders": 24,
+        "unitsSold": 118,
+        "unitsBought": 43,
+        "inventoryLeft": 52,
+        "soldBy": {
+          "Satin wrap dress": 38,
+          "Linen co-ord set": 34,
+          "Pleated midi skirt": 3,
+          "Tailored blazer": 11,
+          "Silk-touch scarf": 32
+        },
+        "boughtBy": {
+          "Satin wrap dress": 32,
+          "Linen co-ord set": 0,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 11,
+          "Silk-touch scarf": 0
+        },
+        "stockBy": {
+          "Satin wrap dress": 0,
+          "Linen co-ord set": 0,
+          "Pleated midi skirt": 43,
+          "Tailored blazer": 0,
+          "Silk-touch scarf": 9
+        },
+        "missedBy": {
+          "Satin wrap dress": 11,
+          "Linen co-ord set": 3,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 8,
+          "Silk-touch scarf": 0
+        },
+        "stockValue": 1484,
+        "sales": 13963,
+        "salesByChannel": {
+          "Shopee": 4253,
+          "TikTok Shop": 5069,
+          "Instagram & WhatsApp": 2578,
+          "Website": 2062,
+          "Pop-up bazaar": 0
+        },
+        "aov": 104,
+        "adSpend": 2400,
+        "costPerAdOrder": 74,
+        "platformFees": 1131,
+        "expenses": 9867,
+        "net": 4096,
+        "cash": 18896,
+        "rating": 4.52,
+        "awareness": 1,
+        "customers": 489
+      },
+      "polaris": {
+        "question": "Hi Lumi, it's the start of November 2026.  This month's big sale is the 11.11 mega sale. What are the 3 most important things I should do this month to make more profit? Please be specific, with numbers.",
+        "advice": "The 11.11 mega sale drives high traffic, especially on marketplaces like Shopee and TikTok Shop—where you’re losing 9–14% in fees—and your tailored blazer is currently out of stock, missing weekly profit of ~MYR 229. Focus on capturing demand while protecting margins.\n\n1. Restock the tailored blazer immediately using Polaris’s plan: order **11 units** (cost MYR 1,012) from your local tailor so inventory arrives before 11 Nov; this could recover ~MYR 229/week in lost profit once live.  \n2. Run a **limited-time bundle** on your website (lowest fee: 2.9% + MYR 1/order): pair the satin wrap dress (MYR 139) with silk-touch scarf (MYR 39) at MYR 158 total—a MYR 20 discount vs buying separately. Based on your 32 dress and 20 scarf sales last month, even a 25% uptake could add ~MYR 160 profit after fees.  \n3. Boost Shopee/TikTok ads **only for 11.11**, allocating extra MYR 500 to retarget viewers of your past TikTok Live (86 peak viewers) and users who used influencer code NURA10 (41 orders). With your current ad efficiency, this could drive ~15–25 extra sales, adding ~MYR 800–1,200 gross before fees—monitor ROAS closely to keep net positive.  \n\nTrack daily sales and ad spend in a simple sheet (mission: Set up simple bookkeeping) to see what’s working. Avoid deep discounts—they erode your premium-feel pricing. Stick to bundles and limited urgency. Good luck for 11.11! 🌟",
+        "missionsAdded": [
+          "Restock tailored blazer for 11.11 sale",
+          "Launch website bundle for satin dress and scarf",
+          "Run targeted Shopee and TikTok ads for 11.11"
+        ],
+        "checkup": {
+          "score": 65,
+          "headline": "Sales are growing fast (MYR 7k to 15k in five months) and products carry healthy margins, but October's thin MYR 877 net profit, a MYR 1,472 dead-stock pile, missing bookkeeping and permits, and a bla",
+          "strengths": [
+            "Revenue has more than doubled since June (MYR 7,058 → MYR 15,000) with four consecutive profitable months.",
+            "Every product earns 44–69% margin after platform fees; zero-fee channels (Instagram/WhatsApp, pop-ups) keep 58–69% of the sale price.",
+            "MYR 15,000 cash in the bank covers 7–8 months of fixed overheads (MYR 2,630) even if sales pause."
+          ],
+          "issues": [
+            {
+              "title": "Pleated midi skirt is dead stock tying up MYR 1,472",
+              "detail": "46 units on hand, only 2 sold in 30 days. At cost MYR 32 each, a discount deeper than 61% (below MYR 35) sells at a loss after fees. Cash is locked and storage wasted.",
+              "severity": "fix"
+            },
+            {
+              "title": "Tailored blazer stockout costing ~MYR 229 profit per week",
+              "detail": "Was out of stock 3 days last month; the restock plan orders only 11 units (MYR 1,012 cost). At recent pace (8 sold in 30 days) that covers ~6 weeks, but true demand is higher.",
+              "severity": "fix"
+            },
+            {
+              "title": "No bookkeeping system in place",
+              "detail": "Listed as a missing basic. Without daily records you can't file taxes, track which marketing spend works, or spot margin leaks early.",
+              "severity": "fix"
+            },
+            {
+              "title": "October net margin only 5.8% (MYR 877 on MYR 15,000 revenue)",
+              "detail": "Expenses hit MYR 14,000: stock MYR 5,594, marketing MYR 3,300, platform fees MYR 1,227, rent MYR 1,200. Marketing and stock purchases ate most of the gross profit.",
+              "severity": "watch"
+            },
+            {
+              "title": "Business licences/permits not yet obtained",
+              "detail": "Listed as a missing basic. Operating without themissing basic. Risk of fines or forced closure if inspected.",
+              "severity": "watch"
+            }
+          ],
+          "actions": [
+            "Run a Deepavali/11.11 bundle: give the Pleated midi skirt free with any blazer or dress order, or sell it at MYR 49 (covers cost + average fees) to recover ~MYR 1,400 cash in the next 14 days.",
+            "Increase the Tailored blazer restock from 11 to 20 units (extra MYR 828 cost) before the 11.11 sale to cover the hidden demand shown by the 3-day stockout.",
+            "Set up a simple daily bookkeeping sheet (Google Sheets or WaveApps) today: columns for date, channel, product, units, revenue, platform fee, COGS, marketing spend, other expense.",
+            "Apply for the home-business licence (DBKL) and any fire/safety permit for the studio this week; budget MYR 200–300 for fees.",
+            "Tag every marketing MYR spent to a channel (TikTok Live, influencer code NURA10, Shopee ads, etc.) and pause any channel that didn't deliver at least 3x ROAS in October."
+          ]
+        },
+        "restockPlan": {
+          "summary": "Order 43 pieces across 2 products for about MYR 2,676. Once they sell, that's about MYR 3,666 profit. You can afford it and still keep a month of fixed costs, and these pieces should sell enough to pay the order back in about 2 weeks. Ordering less risks sold-out shelves.",
+          "items": [
+            {
+              "product": "Satin wrap dress",
+              "order": 32,
+              "cost": 1664,
+              "profit": 2449.1962595354244,
+              "why": "Sells 7.5 a week and 6 left lasts about 6 days. 32 more covers the next 5 weeks."
+            },
+            {
+              "product": "Tailored blazer",
+              "order": 11,
+              "cost": 1012,
+              "profit": 1216.6367143037687,
+              "why": "Sells 2.1 a week and it's sold out. 11 more covers the next 5 weeks. It was sold out 3 of the last 30 days, so that pace counts only the days it was on the shelf."
+            },
+            {
+              "product": "Linen co-ord set",
+              "order": 0,
+              "cost": 0,
+              "profit": 0,
+              "why": "34 in stock lasts about 6 weeks at 5.6 a week, past the next 5 weeks."
+            },
+            {
+              "product": "Pleated midi skirt",
+              "order": 0,
+              "cost": 0,
+              "profit": 0,
+              "why": "46 in stock but only 2 sold in 30 days. Bundle with a bestseller like the satin wrap dress at a small combined discount (e.g., buy skirt get 20% off dress) to move inventory without deep discounting."
+            },
+            {
+              "product": "Silk-touch scarf",
+              "order": 0,
+              "cost": 0,
+              "profit": 0,
+              "why": "41 in stock lasts about 9 weeks at 4.7 a week, past the next 5 weeks."
+            }
+          ],
+          "watch": "Monitor conversion rates from TikTok Shop and Shopee ads during weekends to see if pop-up bazaar efforts are driving online look-to-buy.",
+          "cash": {
+            "reserve": 2630,
+            "spendable": 12170,
+            "paybackWeeks": 1.9391864690351739,
+            "budget": null
+          }
+        },
+        "campaigns": [
+          {
+            "name": "Deepavali Glow-Up",
+            "offer": "Buy any satin wrap dress (MYR 139) and get a silk-touch scarf (MYR 39) at MYR 19 bundled price—total MYR 158 instead of MYR 178.",
+            "budget": ""
+          },
+          {
+            "name": "11.11 Flash Stitch",
+            "offer": "Every hour from 12pm to 8pm on 11.11, drop 5 pieces of a random item at 40% off—first come, first served.",
+            "budget": ""
+          }
+        ],
+        "changes": [],
+        "finished": [
+          {
+            "title": "Restock tailored blazer for 11.11 sale",
+            "verdict": "not_yet",
+            "feedback": "You received 8 tailored blazers instead of the planned 11, and paid MYR 880 instead of MYR 1,012, which suggests either a partial order or a pricing discrepancy. This means you won’t have full stock to capture the estimated MYR 229/week in lost profit during the 11.11 sale. To complete the mission, follow up with your tailor to deliver the remaining 3 blazers by 10 Nov, confirm the correct unit price (should be MYR 92 per blazer based on your cost data), and update your inventory once all units arrive."
+          },
+          {
+            "title": "Launch website bundle for satin dress and scarf",
+            "verdict": "not_yet",
+            "feedback": "The bundle price you set is MYR 199, which does not match the planned MYR 158 (dress + scarf minus MYR 20 discount). This means the bundle isn’t priced as intended, and since you didn’t test the checkout, we can’t confirm the 2.9% + MYR 1/order fee is being applied correctly. To complete this mission, please adjust the bundle price to MYR 158 on your website and run a test order to verify the fee calculation before promoting it."
+          }
+        ],
+        "wrapped": {
+          "headline": "November flipped the script: sales dipped slightly but profit quadrupled as stock costs plummeted.",
+          "problems": [],
+          "closing": ""
+        },
+        "errors": []
+      }
+    },
+    {
+      "month": "2026-12",
+      "plan": {
+        "adSpend": 2400,
+        "tiktokAdShare": 0.5,
+        "priceIndex": 1,
+        "saleDiscount": 0.35,
+        "livesPerMonth": 4,
+        "websitePush": false,
+        "retention": false,
+        "bundles": false,
+        "stockCover": 1.3,
+        "courierDeal": false,
+        "appsTrimmed": false,
+        "packer": true,
+        "influencers": 0,
+        "popups": 0,
+        "capsule": false,
+        "getLicence": false,
+        "restock": {
+          "Satin wrap dress": 50,
+          "Linen co-ord set": 45,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 15,
+          "Silk-touch scarf": 29
+        }
+      },
+      "metrics": {
+        "month": "2026-12",
+        "orders": 148,
+        "newOrders": 118,
+        "repeatOrders": 30,
+        "popupOrders": 0,
+        "lostOrders": 3,
+        "unitsSold": 130,
+        "unitsBought": 139,
+        "inventoryLeft": 61,
+        "soldBy": {
+          "Satin wrap dress": 48,
+          "Linen co-ord set": 35,
+          "Pleated midi skirt": 3,
+          "Tailored blazer": 15,
+          "Silk-touch scarf": 29
+        },
+        "boughtBy": {
+          "Satin wrap dress": 50,
+          "Linen co-ord set": 45,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 15,
+          "Silk-touch scarf": 29
+        },
+        "stockBy": {
+          "Satin wrap dress": 2,
+          "Linen co-ord set": 10,
+          "Pleated midi skirt": 40,
+          "Tailored blazer": 0,
+          "Silk-touch scarf": 9
+        },
+        "missedBy": {
+          "Satin wrap dress": 0,
+          "Linen co-ord set": 0,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 1,
+          "Silk-touch scarf": 0
+        },
+        "stockValue": 2152,
+        "sales": 15393,
+        "salesByChannel": {
+          "Shopee": 4671,
+          "TikTok Shop": 5630,
+          "Instagram & WhatsApp": 2831,
+          "Website": 2265,
+          "Pop-up bazaar": 0
+        },
+        "aov": 104,
+        "adSpend": 2400,
+        "costPerAdOrder": 64,
+        "platformFees": 1248,
+        "expenses": 14711,
+        "net": 682,
+        "cash": 19579,
+        "rating": 4.54,
+        "awareness": 1.02,
+        "customers": 585
+      },
+      "polaris": {
+        "question": "Hi Lumi, it's the start of December 2026. Last month: 2026-11: sales MYR 14k from 135 orders (109 new, 25 repeat), average order MYR 104. About 24 orders lost to stock-outs or packing limits. Ran out of: Satin wrap dress (11 more wanted), Linen co-ord set (3 more wanted), Tailored blazer (8 more wanted). Stock left: 52 pieces worth MYR 1,484 at cost (bought 43). Ads MYR 2,400, about MYR 74 per order from ads. Platform fees MYR 1,131. Costs MYR 9,867, net MYR 4,096. Cash now MYR 19k. Shop rating 4.52. This month's big sale is the 12.12 year-end sale. What are the 3 most important things I should do this month to make more profit? Please be specific, with numbers.",
+        "advice": "With strong November sales but significant stock‑outs, improving inventory flow will unlock immediate profit while keeping ad spend efficient.\n\n1. Execute the exact restock plan from today’s Stock page: order 29 Silk‑touch scarves (MYR 348), 50 Satin wrap dresses (MYR 2,600), 45 Linen co‑ord sets (MYR 2,970), and 15 Tailored blazers (MYR 1,380). Total cost = MYR 7,298 – well within cash reserves and designed to cover expected demand plus the 12.12 lift.\n2. Shift ad budget toward retargeting: allocate ~MYR 600 of the MYR 2,400 monthly ads to Shopee and TikTok dynamic product ads showing the four restocked items to users who viewed but didn’t buy (based on 86 TikTok Live peak viewers and 41 influencer‑code orders). Test creatives highlighting “back in stock” and limited‑time 12.12 pricing; expect ~15‑25 additional conversions weekly at a lower cost per order than broad prospecting.\n3. Open pre‑orders for the 12.12 sale on your website and Instagram: offer a 10 % discount on bundles (e.g., satin dress + silk scarf) with a clear cutoff of 5 Dec for production. Capture deposits now to lock in sales, reduce post‑sale stock‑out risk, and improve cash flow before the big day. Aim for 30‑40 pre‑orders (≈MYR 4,200–5,600 revenue) based on November’s 135‑order volume and the known demand gaps.",
+        "missionsAdded": [],
+        "checkup": {
+          "score": 70,
+          "headline": "Sales are growing and margins are healthy, but stockouts on three bestsellers are costing roughly MYR 1,800 profit per week and a slow-moving skirt ties up MYR 1,376.",
+          "strengths": [
+            "Monthly revenue climbed from MYR 9,275 in July to MYR 14,000–15,000 in Oct–Nov, a 50%+ increase in five months.",
+            "Every product earns 50–61% profit after platform fees; the Silk-touch scarf leads at 61% (MYR 24/unit).",
+            "Four consecutive months of positive net cash flow, with November netting MYR 4,096.",
+            "Two sales channels — Instagram/WhatsApp and pop-up bazaars — charge 0% commission, preserving full margin."
+          ],
+          "issues": [
+            {
+              "title": "Stockouts on three top sellers losing ~MYR 1,847 profit per week",
+              "detail": "Satin wrap dress (MYR 747/week), Linen co-ord set (MYR 788/week) and Tailored blazer (MYR 312/week) were each out of stock for 3 days in the last 30 days. Actual demand is higher than recorded sales.",
+              "severity": "fix"
+            },
+            {
+              "title": "Pleated midi skirt ties up MYR 1,376 capital with almost no sales",
+              "detail": "43 units on hand, only 3 sold in 30 days. At MYR 32 cost each, MYR 1,376 is locked in a product that turns over once every 14 months. A discount over 61% would sell below cost.",
+              "severity": "fix"
+            },
+            {
+              "title": "High platform fees on Shopee (14%) and TikTok Shop (9%) erode margins",
+              "detail": "Shopee cuts Satin wrap dress margin from 63% (IG/WP) to 49%; TikTok Shop cuts it to 54%. Shifting even 20% of Shopee volume to 0% channels could add ~MYR 300–500/month profit.",
+              "severity": "watch"
+            },
+            {
+              "title": "No bookkeeping system in place",
+              "detail": "Listed under 'Basics NOT in place yet'. Without it, tax filing, cost tracking and profit-per-product checks become guesswork as the business scales.",
+              "severity": "fix"
+            },
+            {
+              "title": "October expenses spiked to MYR 14k, leaving only MYR 877 net",
+              "detail": "Marketing MYR 2,400 and platform fees MYR 1,131 were the largest variable costs. If marketing spend doesn’t convert to proportional sales, cash buffer shrinks fast.",
+              "severity": "watch"
+            }
+          ],
+          "actions": [
+            "Place the restock order exactly as planned on 1 Dec: 29 Silk-touch scarves (MYR 348), 50 Satin wrap dresses (MYR 2,600), 45 Linen co-ord sets (MYR 2,970), 15 Tailored blazers (MYR 1,380) — total MYR 7,298 — to stop weekly profit leakage.",
+            "Run a 7-day 'pop-up exclusive' bundle for the Pleated midi skirt (e.g., buy skirt + scarf, save MYR 15) at pop-up bazaars and IG/WhatsApp to move 15–20 units without dropping below MYR 32 cost.",
+            "Redirect at least 30% of Shopee ad spend to Instagram/WhatsApp live sessions and weekend pop-ups for the next two weeks; track orders per channel to confirm margin lift.",
+            "Set up a simple bookkeeping system this week: use a spreadsheet or free tier of a local cloud accounting tool (e.g., SQL Payroll, Bukku) to log every sale, fee, and expense by product and channel.",
+            "Prepare 12.12 sale (12 Dec) stock: ensure the restock arrives by 10 Dec, pre-load 12.12 promo codes on IG/WhatsApp and Website (0% and 2.9% fee channels), and schedule two live sessions on 11–12 Dec."
+          ]
+        },
+        "restockPlan": {
+          "summary": "Order 139 pieces across 4 products for about MYR 7,298. Once they sell, that's about MYR 10k profit. You can afford it and still keep a month of fixed costs, and these pieces should sell enough to pay the order back in about 2 weeks. Ordering less risks sold-out shelves.",
+          "items": [
+            {
+              "product": "Silk-touch scarf",
+              "order": 29,
+              "cost": 348,
+              "profit": 688.2250136312366,
+              "why": "Sells 7.5 a week and 9 left lasts about 8 days. 29 more covers the next 5 weeks."
+            },
+            {
+              "product": "Satin wrap dress",
+              "order": 50,
+              "cost": 2600,
+              "profit": 3788.66149535626,
+              "why": "Sells 9.9 a week and it's sold out. 50 more covers the next 5 weeks. It was sold out 3 of the last 30 days, so that pace counts only the days it was on the shelf."
+            },
+            {
+              "product": "Linen co-ord set",
+              "order": 45,
+              "cost": 2970,
+              "profit": 4022.3533397729725,
+              "why": "Sells 8.8 a week and it's sold out. 45 more covers the next 5 weeks. It was sold out 3 of the last 30 days, so that pace counts only the days it was on the shelf."
+            },
+            {
+              "product": "Tailored blazer",
+              "order": 15,
+              "cost": 1380,
+              "profit": 1641.0944432311792,
+              "why": "Sells 2.9 a week and it's sold out. 15 more covers the next 5 weeks. It was sold out 3 of the last 30 days, so that pace counts only the days it was on the shelf."
+            },
+            {
+              "product": "Pleated midi skirt",
+              "order": 0,
+              "cost": 0,
+              "profit": 0,
+              "why": "43 in stock but only 3 sold in 30 days. Bundle with a bestseller like the satin wrap dress or linen co-ord set at a small added cost (e.g., 'Complete the look' offer) to increase perceived value without deep discounting."
+            }
+          ],
+          "watch": "Monitor silk-touch scarf stock closely — with only 9 left and selling ~7.5/week, it may run out before the next restock arrives, risking lost sales on a high-margin, fast-moving item.",
+          "cash": {
+            "reserve": 2630,
+            "spendable": 16266,
+            "paybackWeeks": 2.103365474342475,
+            "budget": null
+          }
+        },
+        "campaigns": [
+          {
+            "name": "Modest & Merry Countdown",
+            "offer": "Buy any 2 items, get the third (lowest price) free. Max 1 free item per order. Valid sitewide 12–12 only.",
+            "budget": "RM600 on Shopee Live booster ads (RM300/day x 2), RM400 on TikTok Spark Ads boosting top unboxing reel, RM200 on Instagram story ads targeting lookalike audiences."
+          },
+          {
+            "name": "Pop-Up Bazaar Blitz",
+            "offer": "Flat 20% off all items at the pop-up only. Free hijab pin with every purchase. No online coupon needed.",
+            "budget": "RM350 for stall fee (shared weekend rate), RM200 for Shopee and IG geo-ads, RM150 for TikTok production boost, RM100 for hijab pins, RM200 for contingency (transport, electricity)."
+          }
+        ],
+        "changes": [],
+        "finished": [],
+        "wrapped": {
+          "headline": "December hit a revenue high but a heavy restock bill left little profit.",
+          "problems": [
+            {
+              "title": "Massive restock order erased December profit",
+              "rootCause": "A large stock purchase of MYR 7,298 was placed in December, likely to prepare for upcoming sale events, but it arrived in a single month and overwhelmed cash flow.",
+              "evidence": "Ingredients/stock spending jumped from MYR 2,676 in November to MYR 7,298 in December, turning a MYR 4,096 profit into MYR 682."
+            },
+            {
+              "title": "Pleated midi skirt ties up MYR 1,280 in slow stock",
+              "rootCause": "The skirt isn't selling at current price; only 3 units moved in 30 days while 40 sit in stock, suggesting a mismatch between product and audience or price point.",
+              "evidence": "3 sold in 30 days, 40 units on hand worth MYR 1,280 at cost, and a discount over 61% would sell at a loss."
+            },
+            {
+              "title": "Tailored blazer stockouts missing weekly profit",
+              "rootCause": "Reorder quantities didn't match the blazer's sell-through rate, causing a 3-day stockout that halted sales of the highest-margin item.",
+              "evidence": "Blazer sold out for 3 days in the last 30 days, missing an estimated MYR 425 profit per week."
+            },
+            {
+              "title": "Marketing spend flat while sales growth slows",
+              "rootCause": "Marketing held at MYR 2,400 for two months but revenue only grew 10%, suggesting diminishing returns on the same ad spend.",
+              "evidence": "Marketing MYR 2,400 in both November and December; sales rose from MYR 13,963 to MYR 15,393, a 10% increase."
+            }
+          ],
+          "closing": "December hit a revenue high but a heavy restock bill left little profit — ask Lumi anytime to explore ideas for the coming sale season."
+        },
+        "errors": []
+      }
+    },
+    {
+      "month": "2027-01",
+      "plan": {
+        "adSpend": 2000,
+        "tiktokAdShare": 0.5,
+        "priceIndex": 1,
+        "saleDiscount": 0.15,
+        "livesPerMonth": 4,
+        "websitePush": true,
+        "retention": false,
+        "bundles": false,
+        "stockCover": 1.3,
+        "courierDeal": false,
+        "appsTrimmed": false,
+        "packer": true,
+        "influencers": 0,
+        "popups": 0,
+        "capsule": false,
+        "getLicence": false,
+        "restock": {
+          "Satin wrap dress": 54,
+          "Linen co-ord set": 31,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 21,
+          "Silk-touch scarf": 25
+        }
+      },
+      "metrics": {
+        "month": "2027-01",
+        "orders": 125,
+        "newOrders": 84,
+        "repeatOrders": 41,
+        "popupOrders": 0,
+        "lostOrders": 1,
+        "unitsSold": 110,
+        "unitsBought": 131,
+        "inventoryLeft": 82,
+        "soldBy": {
+          "Satin wrap dress": 45,
+          "Linen co-ord set": 30,
+          "Pleated midi skirt": 2,
+          "Tailored blazer": 13,
+          "Silk-touch scarf": 20
+        },
+        "boughtBy": {
+          "Satin wrap dress": 54,
+          "Linen co-ord set": 31,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 21,
+          "Silk-touch scarf": 25
+        },
+        "stockBy": {
+          "Satin wrap dress": 11,
+          "Linen co-ord set": 11,
+          "Pleated midi skirt": 38,
+          "Tailored blazer": 8,
+          "Silk-touch scarf": 14
+        },
+        "missedBy": {
+          "Satin wrap dress": 0,
+          "Linen co-ord set": 0,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 0,
+          "Silk-touch scarf": 0
+        },
+        "stockValue": 3418,
+        "sales": 14013,
+        "salesByChannel": {
+          "Shopee": 3535,
+          "TikTok Shop": 4463,
+          "Instagram & WhatsApp": 2334,
+          "Website": 3680,
+          "Pop-up bazaar": 0
+        },
+        "aov": 112,
+        "adSpend": 2000,
+        "costPerAdOrder": 78,
+        "platformFees": 1038,
+        "expenses": 13873,
+        "net": 140,
+        "cash": 19719,
+        "rating": 4.56,
+        "awareness": 1.03,
+        "customers": 651
+      },
+      "polaris": {
+        "question": "Hi Lumi, it's the start of January 2027. Last month: 2026-12: sales MYR 15k from 148 orders (118 new, 30 repeat), average order MYR 104. About 3 orders lost to stock-outs or packing limits. Ran out of: Tailored blazer (1 more wanted). Stock left: 61 pieces worth MYR 2,152 at cost (bought 139). Ads MYR 2,400, about MYR 64 per order from ads. Platform fees MYR 1,248. Costs MYR 15k, net MYR 682. Cash now MYR 20k. Shop rating 4.54. This month's big sale is the 1.1 New Year sale. What are the 3 most important things I should do this month to make more profit? Please be specific, with numbers.",
+        "advice": "FINANCE  \n\nYour December data shows strong turnover but thin margins—ads ate ~16 % of revenue while only three stock‑outs cost you potential sales. To lift profit this month, tighten ad efficiency, eliminate avoidable stock‑outs, and push higher‑margin channels before the 1.1 New Year sale rush.\n\n1. **Audit and trim ad spend**: Pull the last 30‑day ad report from Shopee/TikTok. Pause any creative or audience with ROAS below 2.0 (i.e., earning less than MYR 2 per MYR 1 spent). Reallocate the saved MYR 400–600 to boost high‑margin organic posts (e.g., TikTok Live try‑ons) and retarget website visitors with a MYR 50‑off bundle code. Expect to shave MYR 0.5–0.8 off the MYR 64/ad‑order cost, adding roughly MYR 200–300 extra net profit if sales hold steady.\n\n2. **Lock in blazer stock NOW**: Your restock plan calls for 21 Tailored blazers (MYR 1,932). Place that order today with your KL tailor so it arrives before the 1.1 sale. Each blazer sold via Instagram/WhatsApp or your site nets ~MYR 109 after fees; even selling just 12 of the 21 during the sale week would add ~MYR 1,300 profit and prevent the MYR 441/week missed‑sale loss you saw in December.\n\n3. **Shift 20 % of December’s Shopee/TikTok volume to the website**: Website orders keep 97.1 % of revenue (only MYR 1/order + 2.9 % fee) vs. Shopee’s 86 % and TikTok’s 91 %. Use your existing Instagram following to post a “Website‑only New Year bundle” (satin dress + silk scarf) priced at MYR 150 (cost MYR 64). Target the 30 repeat buyers from December with a personal DM offering free shipping. Converting just 6 of those repeats adds ~MYR 516 profit (6 × MYR 86 net) and begins building your owned‑audience channel for higher long‑term margin.  \n\nTrack daily ad ROAS, blazer stock levels, and website order share; adjust weekly to stay on track for MYR 8,800 monthly sales needed for Level 4. 🌟",
+        "missionsAdded": [],
+        "checkup": {
+          "score": 65,
+          "headline": "Atelier Nura makes consistent sales and healthy margins but has no bookkeeping, missing permits, stockouts on best-sellers, and a slow-mover tying up MYR 1,280.",
+          "strengths": [
+            "Average monthly net profit of MYR 1,800 over the last 5 months (Aug–Dec) with revenue steady at MYR 12–15k.",
+            "Product margins after platform fees are strong: 50–69% across all items, and zero-fee channels (Instagram/WhatsApp, pop-ups) keep the full margin.",
+            "Cash reserve of MYR 20k covers about 1.6 months of average expenses (MYR 12.2k) even if sales stop."
+          ],
+          "issues": [
+            {
+              "title": "No bookkeeping system in place",
+              "detail": "You have 5 months of Treasury data but no formal bookkeeping. Without it you cannot file taxes, track true profitability per SKU, or get financing. This is a legal and operational gap.",
+              "severity": "fix"
+            },
+            {
+              "title": "Missing licences or permits",
+              "detail": "Basics list shows licences/permits not yet obtained. Operating without them risks fines or forced closure, especially with a physical studio and pop-up events.",
+              "severity": "fix"
+            },
+            {
+              "title": "Tailored blazer out of stock — losing ~MYR 441 profit per week",
+              "detail": "The blazer contributes MYR 1,638 profit in 30 days (15 sold). Being out 4 days last month means ~MYR 882 missed profit. Restock plan orders 21 units (MYR 1,932 cost) — execute immediately.",
+              "severity": "fix"
+            },
+            {
+              "title": "Three best-sellers running critically low",
+              "detail": "Satin wrap dress (2 left, ~1 day), Linen co-ord set (10 left, ~9 days), Silk-touch scarf (9 left, ~9 days). Combined they generated MYR 7,442 profit last 30 days. Restock plan covers them: 54 dresses (MYR 2,808), 31 co-ords (MYR 2,046), 25 scarves (MYR 300).",
+              "severity": "fix"
+            },
+            {
+              "title": "Pleated midi skirt ties up MYR 1,280 with only 3 sales in 30 days",
+              "detail": "40 units in stock, MYR 50 profit each (56% margin). At this rate it takes 13 months to clear. A discount over 61% sells at a loss. Consider bundling with scarves or a CNY gift-with-purchase instead of discounting.",
+              "severity": "watch"
+            }
+          ],
+          "actions": [
+            "Place the 1 Jan restock order exactly: 25 Silk-touch scarves (MYR 300), 54 Satin wrap dresses (MYR 2,808), 31 Linen co-ord sets (MYR 2,046), 21 Tailored blazers (MYR 1,932) — total MYR 7,086.",
+            "Launch a Chinese New Year bundle: 1 Pleated midi skirt + 1 Silk-touch scarf at MYR 118 (skirt MYR 89 + scarf MYR 39 = MYR 128 value) to move slow stock without dropping below cost.",
+            "Set up a simple bookkeeping system this week (spreadsheet or free tier of Xero/QuickBooks) and enter Aug–Dec data; reconcile with bank statements.",
+            "Check KL City Hall (DBKL) for required fashion retail/trading licences and apply before the 2.2 sale (2 Feb) and Ramadan bazaar season (from ~8 Feb).",
+            "Push high-margin items (blazer, co-ord set, scarf) on zero-fee channels — Instagram/WhatsApp and weekend pop-ups — for the 1.1 sale today and CNY weekend (6 Feb)."
+          ]
+        },
+        "restockPlan": {
+          "summary": "Order 131 pieces across 4 products for about MYR 7,086. Once they sell, that's about MYR 9,738 profit. You can afford it and still keep a month of fixed costs, and these pieces should sell enough to pay the order back in about 2 weeks. Ordering less risks sold-out shelves.",
+          "items": [
+            {
+              "product": "Silk-touch scarf",
+              "order": 25,
+              "cost": 300,
+              "profit": 592.6668287363111,
+              "why": "Sells 6.8 a week and 9 left lasts about 9 days. 25 more covers the next 5 weeks."
+            },
+            {
+              "product": "Satin wrap dress",
+              "order": 54,
+              "cost": 2808,
+              "profit": 4085.4523753351205,
+              "why": "Sells 11.2 a week and 2 left lasts about 1 days. 54 more covers the next 5 weeks."
+            },
+            {
+              "product": "Linen co-ord set",
+              "order": 31,
+              "cost": 2046,
+              "profit": 2766.4859161175987,
+              "why": "Sells 8.2 a week and 10 left lasts about 9 days. 31 more covers the next 5 weeks."
+            },
+            {
+              "product": "Tailored blazer",
+              "order": 21,
+              "cost": 1932,
+              "profit": 2293.544553823783,
+              "why": "Sells 4 a week and it's sold out. 21 more covers the next 5 weeks. It was sold out 4 of the last 30 days, so that pace counts only the days it was on the shelf."
+            },
+            {
+              "product": "Pleated midi skirt",
+              "order": 0,
+              "cost": 0,
+              "profit": 0,
+              "why": "40 in stock but only 3 sold in 30 days. Bundle with a bestseller like the satin wrap dress or linen co-ord set at a small combined discount (e.g., 15% off the pair) to move stock without deep discounting that risks loss."
+            }
+          ],
+          "watch": "Monitor demand for the tailored blazer—it’s selling ~4/week but has been out of stock 4 days in the last 30, indicating unmet demand that could boost profit once restocked.",
+          "cash": {
+            "reserve": 2630,
+            "spendable": 16949,
+            "paybackWeeks": 1.8887043050825743,
+            "budget": null
+          }
+        },
+        "campaigns": [
+          {
+            "name": "New Year Fresh Start Bundle",
+            "offer": "Buy any 2 items from the satin wrap dress, linen co-ord set, or pleated midi skirt and get 15% off the total. Minimum spend MYR 178, maximum discount MYR 40 per order.",
+            "budget": "MYR 1200: TikTok Spark Ads MYR 450 (3 days at MYR 150/day), Instagram Story ads MYR 300 (3 days at MYR 100/day), Shopee homepage banner MYR 200 (flat fee for week), WhatsApp broadcast tool MYR 150 (third-party service), website timer plugin MYR 100 (one-time)."
+          },
+          {
+            "name": "CNY Red Envelope Flash",
+            "offer": "Every order over MYR 150 during the 1.1 sale gets a scratch card digital voucher: 80% chance of MYR 10 off, 15% chance of MYR 25 off, 5% chance of MYR 50 off next purchase (valid until 6 Feb).",
+            "budget": ""
+          },
+          {
+            "name": "Weekend Pop-Up Preview",
+            "offer": "Book a 15-minute try-on slot at the weekend pop-up (location TBA) via WhatsApp during 1.1-3 Jan and get 10% off any item tried on, redeemable only at the bazaar.",
+            "budget": "MYR 1200: Pop-up rental share MYR 500 (assuming split with organiser), transport MYR 200, hanging rack & mirror MYR 150, sanitizer & wipes MYR 50, WhatsApp booking tool (if needed) MYR 100, printed try-on slips MYR 100."
+          }
+        ],
+        "changes": [
+          {
+            "what": "setting",
+            "from": "2400",
+            "to": "2000",
+            "because": "Audit and trim ad spend: Pull the last 30‑day ad report from Shopee/TikTok. Pause any creative or audience with ROAS below 2.0 (i.e., earning less than MYR 2 per MYR 1 spent). Reallocate the saved MYR 400–600 to boost high‑margin organic posts (e.g., TikTok Live try‑ons) and retarget website visitors with a MYR 50‑off bundle code."
+          },
+          {
+            "what": "setting",
+            "from": "0.35",
+            "to": "0.15",
+            "because": "New Year Fresh Start Bundle: Offer: Buy any 2 items from the satin wrap dress, linen co-ord set, or pleated midi skirt and get 15% off the total."
+          },
+          {
+            "what": "setting",
+            "from": "false",
+            "to": "true",
+            "because": "Shift 20 % of December’s Shopee/TikTok volume to the website: Website orders keep 97.1 % of revenue (only MYR 1/order + 2.9 % fee) vs. Shopee’s 86 % and TikTok’s 91 %. Use your existing Instagram following to post a “Website‑only New Year bundle” (satin dress + silk scarf) priced at MYR 150 (cost MYR 64)."
+          },
+          {
+            "what": "setting",
+            "from": "false",
+            "to": "true",
+            "because": "Set up a simple bookkeeping system this week (spreadsheet or free tier of Xero/QuickBooks) and enter Aug–Dec data; reconcile with bank statements."
+          }
+        ],
+        "finished": [],
+        "wrapped": {
+          "headline": "January squeezed profit to MYR 140 as sales dipped and costs held firm.",
+          "problems": [
+            {
+              "title": "Profit margin erosion",
+              "rootCause": "Sales dropped 9% while fixed overheads (MYR 2,630) and variable costs (marketing MYR 2,120, stock MYR 7,086) did not adjust down proportionally.",
+              "evidence": "Margin 1% (MYR 140 net) vs 4.4% in Dec (MYR 682) and 29% in Nov (MYR 4,096)."
+            },
+            {
+              "title": "Slow-moving Pleated midi skirt inventory",
+              "rootCause": "The product does not resonate at current price or positioning, tying up cash that could fund faster sellers.",
+              "evidence": "38 units on hand, only 2 sold in 30 days, MYR 1,216 tied up at cost; a discount over 61% would sell at a loss."
+            },
+            {
+              "title": "Bestseller stockouts looming",
+              "rootCause": "Restock lead time is not aligned with sales velocity for top performers.",
+              "evidence": "Satin wrap dress 11 left (~7 days), Linen co-ord set 11 left (~11 days) at recent pace; both drive the bulk of profit."
+            },
+            {
+              "title": "Post-TikTok Live sales drop on 8 Jan",
+              "rootCause": "Unclear — the week after the 8 Jan Lives averaged MYR 383/day versus MYR 690/day before, with no other reported activity in that window.",
+              "evidence": "Activity data shows 45% decline in daily sales in the 7 days following the event."
+            }
+          ],
+          "closing": "A quiet month where sales dipped and costs didn't follow, leaving almost nothing on the table — ask Lumi anytime for ideas on what to try next."
+        },
+        "errors": []
+      }
+    },
+    {
+      "month": "2027-02",
+      "plan": {
+        "adSpend": 800,
+        "tiktokAdShare": 0.5,
+        "priceIndex": 1,
+        "saleDiscount": 0.15,
+        "livesPerMonth": 4,
+        "websitePush": true,
+        "retention": false,
+        "bundles": false,
+        "stockCover": 1.3,
+        "courierDeal": false,
+        "appsTrimmed": false,
+        "packer": true,
+        "influencers": 0,
+        "popups": 0,
+        "capsule": false,
+        "getLicence": false,
+        "restock": {
+          "Satin wrap dress": 42,
+          "Linen co-ord set": 24,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 8,
+          "Silk-touch scarf": 10
+        }
+      },
+      "metrics": {
+        "month": "2027-02",
+        "orders": 141,
+        "newOrders": 94,
+        "repeatOrders": 47,
+        "popupOrders": 0,
+        "lostOrders": 13,
+        "unitsSold": 124,
+        "unitsBought": 84,
+        "inventoryLeft": 42,
+        "soldBy": {
+          "Satin wrap dress": 53,
+          "Linen co-ord set": 28,
+          "Pleated midi skirt": 3,
+          "Tailored blazer": 16,
+          "Silk-touch scarf": 24
+        },
+        "boughtBy": {
+          "Satin wrap dress": 42,
+          "Linen co-ord set": 24,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 8,
+          "Silk-touch scarf": 10
+        },
+        "stockBy": {
+          "Satin wrap dress": 0,
+          "Linen co-ord set": 7,
+          "Pleated midi skirt": 35,
+          "Tailored blazer": 0,
+          "Silk-touch scarf": 0
+        },
+        "missedBy": {
+          "Satin wrap dress": 5,
+          "Linen co-ord set": 0,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 3,
+          "Silk-touch scarf": 2
+        },
+        "stockValue": 1582,
+        "sales": 15769,
+        "salesByChannel": {
+          "Shopee": 4061,
+          "TikTok Shop": 4817,
+          "Instagram & WhatsApp": 2679,
+          "Website": 4214,
+          "Pop-up bazaar": 0
+        },
+        "aov": 112,
+        "adSpend": 800,
+        "costPerAdOrder": 45,
+        "platformFees": 1164,
+        "expenses": 10463,
+        "net": 5306,
+        "cash": 25024,
+        "rating": 4.57,
+        "awareness": 1.03,
+        "customers": 724
+      },
+      "polaris": {
+        "question": "Hi Lumi, it's the start of February 2027. Last month: 2027-01: sales MYR 14k from 125 orders (84 new, 41 repeat), average order MYR 112. About 1 orders lost to stock-outs or packing limits. Stock left: 82 pieces worth MYR 3,418 at cost (bought 131). Ads MYR 2,000, about MYR 78 per order from ads. Platform fees MYR 1,038. Costs MYR 14k, net MYR 140. Cash now MYR 20k. Shop rating 4.56. This month's big sale is the Raya collection pre-orders. What are the 3 most important things I should do this month to make more profit? Please be specific, with numbers.",
+        "advice": "Your January results show solid volume but thin margins—ads ate nearly all ad-driven revenue, and only MYR 140 net profit leaves little room to grow. To boost profit this month, focus on cutting waste, lifting repeat‑buyer value, and tightening inventory so you sell more of what already makes money.\n\n1. **Trim ad spend to break‑even or better:** Your ads cost MYR 2,000 for ~125 orders → MYR 16 per order just in ads. Pause or test lower‑budget campaigns (aim for ≤MYR 800 total) and shift that saving into organic TikTok/IG reels showcasing the Raya pre‑order pieces; even a 50% cut could add ~MYR 600 to net if sales hold steady.  \n2. **Convert repeat buyers to higher‑margin direct sales:** You have 41 repeat customers (Jan). Offer them an exclusive website‑only bundle (e.g., satin wrap dress + silk scarf) priced at MYR 150 (cost ~MYR 118) → ~MYR 32 profit per bundle vs ~MYR 23 on marketplace fees. Target 10 bundles via email/WhatsApp → ~MYR 320 extra profit.  \n3. **Lock in Raya pre‑order stock using the restock plan:** The Stock page calls for 42 satin wrap dresses, 24 linen co‑ords, 10 silk scarves, 8 blazers (total MYR 4,624). Order now to avoid stock‑outs during the Raya bazaar surge (around 10 Mar). With those pieces you could realistically sell 70+ units → ~MYR 4,900 revenue at current margins, adding roughly MYR 2,500 profit versus last month’s MYR 140.  \n\nTrack daily ad cost vs. orders, monitor website bundle uptake, and confirm stock arrival before 8 Mar to capture the Raya bazaar crowd.",
+        "missionsAdded": [],
+        "checkup": {
+          "score": 55,
+          "headline": "Sales are steady but profit has collapsed from MYR 2,313 to MYR 140 in five months, and you have no bookkeeping system to diagnose why.",
+          "strengths": [
+            "Healthy gross margins on four of five products (50–61% after platform fees), with the Silk-touch scarf leading at 61% and MYR 24 profit per unit.",
+            "Owned channels (Instagram & WhatsApp, pop-up bazaars, website) keep 55–69% margins because they carry 0–2.9% fees versus 9–14% on marketplaces.",
+            "MYR 20,000 cash reserve gives you roughly 12+ months of runway at January’s near-breakeven burn rate.",
+            "Clear, data-backed restock plan for fast movers: 42 Satin wrap dresses, 24 Linen co-ord sets, 8 Tailored blazers, 10 Silk-touch scarves (MYR 4,624 total)."
+          ],
+          "issues": [
+            {
+              "title": "Net profit has dropped 94% in five months",
+              "detail": "Monthly net fell from MYR 2,313 (Sept) to MYR 140 (Jan) while revenue stayed flat at MYR 13–15k. Variable costs (stock, marketing) are eating almost every ringgit of revenue.",
+              "severity": "fix"
+            },
+            {
+              "title": "No bookkeeping system in place",
+              "detail": "You flagged this as a missing basic. Without it you cannot tell whether the profit slide comes from rising COGS, ad spend creep, platform fee mix, or something else.",
+              "severity": "fix"
+            },
+            {
+              "title": "Pleated midi skirt ties up MYR 1,216 with almost no sales",
+              "detail": "38 units in stock, only 2 sold in 30 days. A discount deeper than 61% would sell below cost, so heavy markdowns are not an option.",
+              "severity": "watch"
+            },
+            {
+              "title": "Heavy reliance on high-fee marketplaces",
+              "detail": "Shopee (14% fee) and TikTok Shop (9% fee) cut product margins to 44–60% versus 55–69% on your own channels. Shifting even 20% of marketplace volume to Instagram/WhatsApp or pop-ups would add roughly MYR 500–1,000/month in saved fees (estimate).",
+              "severity": "watch"
+            },
+            {
+              "title": "Restock order of MYR 4,624 will cut cash to ~MYR 15k",
+              "detail": "After paying the 1 February restock plan, your buffer shrinks. If January’s MYR 140 net becomes the norm, you have limited room for unexpected costs.",
+              "severity": "watch"
+            }
+          ],
+          "actions": [
+            "Set up a simple bookkeeping system this week (spreadsheet or free tier of Xero/QuickBooks) and enter Sept–Jan transactions so you can see exactly where MYR 14k/month goes.",
+            "Run the 1 February restock order exactly as planned: 42 Satin wrap dresses (MYR 2,184), 24 Linen co-ord sets (MYR 1,584), 8 Tailored blazers (MYR 736), 10 Silk-touch scarves (MYR 120).",
+            "Launch a ‘Direct & Save’ push for the 2.2 sale (Tue 2 Feb) and Chinese New Year (Sat 6 Feb): offer a small bundle perk (e.g. free scarf with any dress) only on Instagram/WhatsApp and website to shift volume off Shopee/TikTok Shop.",
+            "List the 38 slow Pleated midi skirts as a ‘last chance’ bundle add-on at full price (MYR 89) with any co-ord set or blazer purchase — avoids discounting below cost while clearing stock.",
+            "Schedule two pop-up bazaar days during Ramadan bazaar season (from ~Mon 8 Feb) and Valentine’s weekend (Sun 14 Feb); pop-ups carry 0% fees and your best margins (58–69%)."
+          ]
+        },
+        "restockPlan": {
+          "summary": "Order 84 pieces across 4 products for about MYR 4,624. Once they sell, that's about MYR 6,469 profit. You can afford it and still keep a month of fixed costs, and these pieces should sell enough to pay the order back in about 1 week. Ordering less risks sold-out shelves.",
+          "items": [
+            {
+              "product": "Silk-touch scarf",
+              "order": 10,
+              "cost": 120,
+              "profit": 238.10927874749243,
+              "why": "Sells 4.7 a week and 14 left lasts about 3 weeks. 10 more covers the next 5 weeks."
+            },
+            {
+              "product": "Satin wrap dress",
+              "order": 42,
+              "cost": 2184,
+              "profit": 3196.5080887730865,
+              "why": "Sells 10.5 a week and 11 left lasts about 7 days. 42 more covers the next 5 weeks."
+            },
+            {
+              "product": "Linen co-ord set",
+              "order": 24,
+              "cost": 1584,
+              "profit": 2155.1101852475267,
+              "why": "Sells 7 a week and 11 left lasts about 11 days. 24 more covers the next 5 weeks."
+            },
+            {
+              "product": "Tailored blazer",
+              "order": 8,
+              "cost": 736,
+              "profit": 879.5556920380917,
+              "why": "Sells 3 a week and 8 left lasts about 3 weeks. 8 more covers the next 5 weeks."
+            },
+            {
+              "product": "Pleated midi skirt",
+              "order": 0,
+              "cost": 0,
+              "profit": 0,
+              "why": "38 in stock but only 2 sold in 30 days. Bundle with a bestseller like the satin wrap dress at a small combined discount to move stock without deep markdowns."
+            }
+          ],
+          "watch": "Monitor whether the linen co-ord set’s sales pace holds, as it’s selling faster than current stock covers (~11 days left).",
+          "cash": {
+            "reserve": 2630,
+            "spendable": 17089,
+            "paybackWeeks": 1.4380866875728782,
+            "budget": null
+          }
+        },
+        "campaigns": [
+          {
+            "name": "Pre-Raya Early Bird Bundle",
+            "offer": "Buy any two items from the new Raya preview collection and get 15% off the total. Bundles available for pre-order only until 5 March.",
+            "budget": ""
+          },
+          {
+            "name": "Ramadan Bazaar Teaser Drop",
+            "offer": "First 20 customers who pre-order any Raya item via website get a free silk-touch scarf (worth MYR39). Offer valid 8–14 Feb only.",
+            "budget": "RM1000: RM300 Shopee Ads, RM200 TikTok Boost, RM200 Canva Pro (if needed for assets), RM150 phone credit for WhatsApp blasts, RM150 contingency"
+          }
+        ],
+        "changes": [
+          {
+            "what": "setting",
+            "from": "2000",
+            "to": "800",
+            "because": "Trim ad spend to break‑even or better: Your ads cost MYR 2,000 for ~125 orders → MYR 16 per order just in ads. Pause or test lower‑budget campaigns (aim for ≤MYR 800 total)"
+          },
+          {
+            "what": "setting",
+            "from": "true",
+            "to": "false",
+            "because": "Retention was already false last month and Polaris did not advise changing it this month, so it remains unchanged."
+          }
+        ],
+        "finished": [],
+        "wrapped": {
+          "headline": "February flipped the script: profit jumped to MYR 5,306 after January's near-zero.",
+          "problems": [
+            {
+              "title": "TikTok Live try-ons followed by consistent sales drops",
+              "rootCause": "Live sessions may be cannibalizing immediate purchases — viewers engage but delay buying — or the timing coincides with natural post-promotion cooling. Both 8 Jan and 8 Feb lives saw ~45% daily sales declines in the following week.",
+              "evidence": "Jan 8 live: daily sales MYR 690 → MYR 383 (-45%). Feb 8 live: daily sales MYR 852 → MYR 467 (-45%)."
+            },
+            {
+              "title": "Bestsellers out of stock, losing ~MYR 1,493 profit per week",
+              "rootCause": "Restock quantities haven't kept pace with actual demand for top sellers. Satin wrap dress, Tailored blazer, and Silk-touch scarf all show zero stock while weekly missed profit is MYR 946, MYR 413, and MYR 134 respectively.",
+              "evidence": "Combined weekly missed profit MYR 1,493. Polaris restock plan calls for 62 Satin wrap dresses, 19 Tailored blazers, 28 Silk-touch scarves for the next 5 weeks."
+            },
+            {
+              "title": "Pleated midi skirt tying up MYR 1,120 in slow-moving stock",
+              "rootCause": "Product-market fit or pricing mismatch — only 3 sold in 30 days with 35 units on hand. A discount over 61% would be needed to clear at cost, indicating the product doesn't meet customer expectations at current price.",
+              "evidence": "35 units in stock, 3 sold in 30 days, MYR 1,120 at cost tied up. Profit per unit MYR 50 (56%) but velocity near zero."
+            },
+            {
+              "title": "Linen co-ord set down to 7 units — ~8 days of stock left",
+              "rootCause": "Same under-ordering pattern as the out-of-stock bestsellers. Recent pace sells ~28 units/month but only 7 remain, risking another stockout on a MYR 90/unit profit product.",
+              "evidence": "7 units left, ~8 days at recent pace. Polaris restock plan calls for 26 units (MYR 1,716 at cost) for 5 weeks."
+            }
+          ],
+          "closing": "February proved the model works when stock and promotions align — ask Lumi anytime for ideas on the next steps."
+        },
+        "errors": []
+      }
+    },
+    {
+      "month": "2027-03",
+      "plan": {
+        "adSpend": 600,
+        "tiktokAdShare": 0.5,
+        "priceIndex": 1,
+        "saleDiscount": 0.15,
+        "livesPerMonth": 4,
+        "websitePush": true,
+        "retention": false,
+        "bundles": false,
+        "stockCover": 1.3,
+        "courierDeal": false,
+        "appsTrimmed": false,
+        "packer": true,
+        "influencers": 0,
+        "popups": 0,
+        "capsule": false,
+        "getLicence": false,
+        "restock": {
+          "Satin wrap dress": 64,
+          "Linen co-ord set": 26,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 20,
+          "Silk-touch scarf": 29
+        }
+      },
+      "metrics": {
+        "month": "2027-03",
+        "orders": 143,
+        "newOrders": 89,
+        "repeatOrders": 53,
+        "popupOrders": 0,
+        "lostOrders": 2,
+        "unitsSold": 125,
+        "unitsBought": 139,
+        "inventoryLeft": 56,
+        "soldBy": {
+          "Satin wrap dress": 49,
+          "Linen co-ord set": 31,
+          "Pleated midi skirt": 2,
+          "Tailored blazer": 17,
+          "Silk-touch scarf": 26
+        },
+        "boughtBy": {
+          "Satin wrap dress": 64,
+          "Linen co-ord set": 26,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 20,
+          "Silk-touch scarf": 29
+        },
+        "stockBy": {
+          "Satin wrap dress": 15,
+          "Linen co-ord set": 2,
+          "Pleated midi skirt": 33,
+          "Tailored blazer": 3,
+          "Silk-touch scarf": 3
+        },
+        "missedBy": {
+          "Satin wrap dress": 0,
+          "Linen co-ord set": 0,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 0,
+          "Silk-touch scarf": 0
+        },
+        "stockValue": 2280,
+        "sales": 15899,
+        "salesByChannel": {
+          "Shopee": 3975,
+          "TikTok Shop": 4800,
+          "Instagram & WhatsApp": 2655,
+          "Website": 4471,
+          "Pop-up bazaar": 0
+        },
+        "aov": 112,
+        "adSpend": 600,
+        "costPerAdOrder": 43,
+        "platformFees": 1160,
+        "expenses": 12876,
+        "net": 3023,
+        "cash": 28047,
+        "rating": 4.58,
+        "awareness": 0.99,
+        "customers": 793
+      },
+      "polaris": {
+        "question": "Hi Lumi, it's the start of March 2027. Last month: 2027-02: sales MYR 16k from 141 orders (94 new, 47 repeat), average order MYR 112. About 13 orders lost to stock-outs or packing limits. Ran out of: Satin wrap dress (5 more wanted), Tailored blazer (3 more wanted), Silk-touch scarf (2 more wanted). Stock left: 42 pieces worth MYR 1,582 at cost (bought 84). Ads MYR 800, about MYR 45 per order from ads. Platform fees MYR 1,164. Costs MYR 10k, net MYR 5,306. Cash now MYR 25k. Shop rating 4.57. This month's big sale is the Raya last-call sale. What are the 3 most important things I should do this month to make more profit? Please be specific, with numbers.",
+        "advice": "Last month’s strong February shows healthy demand but stock‑outs limited upside—you turned away ~13 orders worth roughly MYR 1,456 in potential revenue (based on avg order value). Your cash buffer lets you act fast. Focus on securing inventory for the Raya last‑call sale while tightening ad efficiency and shifting repeat buyers to lower‑fee channels.\n\n1. **Execute the restock plan today**: Order exactly 29 Silk‑touch scarves (MYR 348), 64 Satin wrap dresses (MYR 3,328), 26 Linen co‑ord sets (MYR 1,716) and 20 Tailored blazers (MYR 1,840) – totalling MYR 7,232. These quantities match your Polaris restock plan and will cover projected Raya demand plus a safety buffer. Receive goods within 5–7 days to avoid missing the 10 Mar Raya window.\n\n2. **Cut ad waste by improving targeting**: Your February ads cost MYR 800 for ~18 attributed orders (MYR 45/order). Pause broad campaigns and re‑allocate MYR 400 to retarget website visitors who viewed product pages but didn’t buy (use Shopee/TikTok pixel data). Test look‑alike audiences based on your 47 repeat buyers. Expect to maintain similar order volume at ~MYR 30/ad order, saving ~MYR 200‑300 this month.\n\n3. **Push repeat buyers to your website**: You have 47 repeat customers from February. Send a personalized WhatsApp broadcast offering free shipping + a MYR 10 loyalty voucher on orders placed via your site (fees drop from avg 9% to 2.9% + MYR 1/order). For a typical MYR 112 order, that saves ~MYR 9 in fees per order. If 20 repeats shift, you keep ~MYR 180 extra profit this month with minimal effort. Track uptake via unique discount code “WEBLOYAL”.",
+        "missionsAdded": [],
+        "checkup": {
+          "score": 72,
+          "headline": "Atelier Nura has strong products and cash but loses weekly profit to stockouts and has no bookkeeping or permits yet.",
+          "strengths": [
+            "Cash reserve of MYR 25,000 covers fixed overheads (MYR 2,630/month) for over 9 months even if sales stop.",
+            "Every product earns 50–69% margin after average platform fees; zero-fee channels (Instagram/WhatsApp, pop-ups) keep the full margin.",
+            "Sold 124 units in the last 30 days — well above the ~36 units/month needed to cover fixed costs."
+          ],
+          "issues": [
+            {
+              "title": "Stockouts on three best-sellers cost ~MYR 1,543 profit per week",
+              "detail": "Satin wrap dress (MYR 978/week), Tailored blazer (MYR 427/week), Silk-touch scarf (MYR 138/week) are out of stock. The 1 March restock plan orders 64 satin dresses, 20 blazers, 29 scarves — but until they arrive, that profit is lost.",
+              "severity": "fix"
+            },
+            {
+              "title": "No bookkeeping system in place",
+              "detail": "Listed as a missing basic. Without it you cannot reliably track profit per channel, file taxes, or spot cash leaks.",
+              "severity": "fix"
+            },
+            {
+              "title": "No licences or permits secured permits for fashion production/sales in KL",
+              "detail": "Listed as a missing basic. Operating without them risks fines or forced closure.",
+              "severity": "fix"
+            },
+            {
+              "title": "Pleated midi skirt ties up MYR 1,120 and sells 3 units/month",
+              "detail": "35 units on hand, only 3 sold in 30 days. A discount over 61% would sell below cost. Cash is locked in slow stock.",
+              "severity": "watch"
+            },
+            {
+              "title": "Linen co-ord set down to 7 units (~8 days)",
+              "detail": "Restock plan includes 26 sets (MYR 1,716) but lead time must be shorter than 8 days or you'll stock out again.",
+              "severity": "watch"
+            },
+            {
+              "title": "Monthly net profit volatile — Dec MYR 682, Jan MYR 140",
+              "detail": "Two of five months near break-even. Fixed overheads MYR 2,630 leave little buffer when variable costs spike (e.g. Feb stock MYR 4,624).",
+              "severity": "watch"
+            }
+          ],
+          "actions": [
+            "Place the 1 March restock order exactly: 29 Silk-touch scarf (MYR 348), 64 Satin wrap dress (MYR 3,328), 26 Linen co-ord set (MYR 1,716), 20 Tailored blazer (MYR 1,840) — total MYR 7,232.",
+            "Confirm supplier lead time for Linen co-ord set is under 8 days; if not, expedite or source a local backup.",
+            "Run a Hari Raya pop-up (Wed 10 Mar) to clear Pleated midi skirts: bundle 1 skirt + 1 Silk-touch scarf at MYR 119 (skirt MYR 89 + scarf MYR 39 = MYR 128 value) — keeps margin, moves 35 slow units.",
+            "Set up a simple bookkeeping system this week (spreadsheet or free tier of Xero/QuickBooks) — record every sale, fee, and cost by channel.",
+            "Check KL City Hall (DBKL) for home-based fashion business licence and any tailor-workshop permits; apply before end of March."
+          ]
+        },
+        "restockPlan": {
+          "summary": "Order 139 pieces across 4 products for about MYR 7,232. Once they sell, that's about MYR 10k profit. You can afford it and still keep a month of fixed costs, and these pieces should sell enough to pay the order back in about 2 weeks. Ordering less risks sold-out shelves.",
+          "items": [
+            {
+              "product": "Silk-touch scarf",
+              "order": 29,
+              "cost": 348,
+              "profit": 692.5137865855007,
+              "why": "Sells 5.8 a week and it's sold out. 29 more covers the next 5 weeks."
+            },
+            {
+              "product": "Satin wrap dress",
+              "order": 64,
+              "cost": 3328,
+              "profit": 4893.174679446596,
+              "why": "Sells 12.8 a week and it's sold out. 64 more covers the next 5 weeks."
+            },
+            {
+              "product": "Linen co-ord set",
+              "order": 26,
+              "cost": 1716,
+              "profit": 2345.9455487769783,
+              "why": "Sells 6.5 a week and 7 left lasts about 8 days. 26 more covers the next 5 weeks."
+            },
+            {
+              "product": "Tailored blazer",
+              "order": 20,
+              "cost": 1840,
+              "profit": 2210.334185279469,
+              "why": "Sells 3.9 a week and it's sold out. 20 more covers the next 5 weeks."
+            },
+            {
+              "product": "Pleated midi skirt",
+              "order": 0,
+              "cost": 0,
+              "profit": 0,
+              "why": "35 in stock but only 3 sold in 30 days. Bundle with a bestseller like the satin wrap dress at a small combined discount (e.g., buy dress, get skirt at 20% off) to move stock without deep discounting."
+            }
+          ],
+          "watch": "Monitor whether the linen co-ord set sells through before restock arrives, as only 7 units cover ~8 days of demand.",
+          "cash": {
+            "reserve": 2630,
+            "spendable": 22394,
+            "paybackWeeks": 1.979183623433184,
+            "budget": null
+          }
+        },
+        "campaigns": [
+          {
+            "name": "Safe Campaign - Raya Last Call Countdown",
+            "offer": "RM10 off satin wrap dress (now RM129) and linen co-ord set (now RM159) for 48 hours only, starting 8 March.",
+            "budget": ""
+          },
+          {
+            "name": "Bolder Campaign - Raya Eve Whisper Drop",
+            "offer": "Restock of 20 satin wrap dresses and 15 silk-touch scarves at full price, released at 10pm on 9 March via WhatsApp and Instagram only.",
+            "budget": "RM300 for content creation (video editing, graphic design) and RM100 for WhatsApp blast service via verified business tool."
+          },
+          {
+            "name": "Safe Campaign - Raya Last Call Countdown",
+            "offer": "RM10 off satin wrap dress (now RM129) and linen co-ord set (now RM159) for 48 hours only, starting 8 March.",
+            "budget": ""
+          }
+        ],
+        "changes": [
+          {
+            "what": "setting",
+            "from": "800",
+            "to": "600",
+            "because": "Cut ad waste by improving targeting: Your February ads cost MYR 800 for ~18 attributed orders (MYR 45/order). Pause broad campaigns and re‑allocate MYR 400 to retarget website visitors who viewed product pages but didn’t buy ... Expect to maintain similar order volume at ~MYR 30/ad order, saving ~MYR 200‑300 this month."
+          }
+        ],
+        "finished": [],
+        "wrapped": {
+          "headline": "March sales held at MYR 15.9k but a MYR 2.6k stock build-up nearly halved profit.",
+          "problems": [
+            {
+              "title": "Stock spending surged 56% while sales stayed flat",
+              "rootCause": "Purchasing in large batches rather than steady replenishment, causing cash to sit in inventory.",
+              "evidence": "Ingredients/stock outlay rose from MYR 4,624 (Feb) to MYR 7,232 (Mar) against nearly identical revenue (MYR 15,769 → MYR 15,899)."
+            },
+            {
+              "title": "Pleated midi skirt ties up MYR 1,056 with minimal movement",
+              "rootCause": "Product-market fit or pricing mismatch — the skirt sells only 2 units per 30 days at current price.",
+              "evidence": "33 units on hand at cost MYR 1,056; 2 sold in 30 days; a discount over 61% would sell at a loss."
+            },
+            {
+              "title": "Four bestsellers risk stockouts within two weeks",
+              "rootCause": "Restock lead time not aligned with sell-through velocity for top movers.",
+              "evidence": "Satin wrap dress 15 left (~9 days), Linen co-ord set 2 left (~2 days), Tailored blazer 3 left (~5 days), Silk-touch scarf 3 left (~3 days)."
+            },
+            {
+              "title": "Profit margin swung from 34% to 19% month-over-month",
+              "rootCause": "Lumpy stock purchasing creates artificial profit volatility unrelated to operating performance.",
+              "evidence": "Net profit MYR 5,306 (Feb) → MYR 3,023 (Mar) on flat revenue; six-month net range MYR 140–5,306."
+            }
+          ],
+          "closing": "A steady sales month masked by a heavy stock order — ask Lumi anytime if you want ideas to smooth the cash flow."
+        },
+        "errors": []
+      }
+    },
+    {
+      "month": "2027-04",
+      "plan": {
+        "adSpend": 0,
+        "tiktokAdShare": 0.5,
+        "priceIndex": 1,
+        "saleDiscount": 0.15,
+        "livesPerMonth": 4,
+        "websitePush": true,
+        "retention": false,
+        "bundles": false,
+        "stockCover": 1.3,
+        "courierDeal": false,
+        "appsTrimmed": false,
+        "packer": true,
+        "influencers": 0,
+        "popups": 0,
+        "capsule": false,
+        "getLicence": false,
+        "restock": {
+          "Satin wrap dress": 43,
+          "Linen co-ord set": 35,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 17,
+          "Silk-touch scarf": 28
+        }
+      },
+      "metrics": {
+        "month": "2027-04",
+        "orders": 107,
+        "newOrders": 50,
+        "repeatOrders": 57,
+        "popupOrders": 0,
+        "lostOrders": 0,
+        "unitsSold": 94,
+        "unitsBought": 123,
+        "inventoryLeft": 85,
+        "soldBy": {
+          "Satin wrap dress": 38,
+          "Linen co-ord set": 20,
+          "Pleated midi skirt": 2,
+          "Tailored blazer": 12,
+          "Silk-touch scarf": 22
+        },
+        "boughtBy": {
+          "Satin wrap dress": 43,
+          "Linen co-ord set": 35,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 17,
+          "Silk-touch scarf": 28
+        },
+        "stockBy": {
+          "Satin wrap dress": 20,
+          "Linen co-ord set": 17,
+          "Pleated midi skirt": 31,
+          "Tailored blazer": 8,
+          "Silk-touch scarf": 9
+        },
+        "missedBy": {
+          "Satin wrap dress": 0,
+          "Linen co-ord set": 0,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 0,
+          "Silk-touch scarf": 0
+        },
+        "stockValue": 3998,
+        "sales": 11950,
+        "salesByChannel": {
+          "Shopee": 2586,
+          "TikTok Shop": 3497,
+          "Instagram & WhatsApp": 1832,
+          "Website": 4036,
+          "Pop-up bazaar": 0
+        },
+        "aov": 112,
+        "adSpend": 0,
+        "costPerAdOrder": null,
+        "platformFees": 831,
+        "expenses": 10879,
+        "net": 1071,
+        "cash": 29118,
+        "rating": 4.59,
+        "awareness": 0.96,
+        "customers": 828
+      },
+      "polaris": {
+        "question": "Hi Lumi, it's the start of April 2027. Last month: 2027-03: sales MYR 16k from 143 orders (89 new, 53 repeat), average order MYR 112. About 2 orders lost to stock-outs or packing limits. Stock left: 56 pieces worth MYR 2,280 at cost (bought 139). Ads MYR 600, about MYR 43 per order from ads. Platform fees MYR 1,160. Costs MYR 13k, net MYR 3,023. Cash now MYR 28k. Shop rating 4.58. This month's big sale is the Post-Raya clearance. What are the 3 most important things I should do this month to make more profit? Please be specific, with numbers.",
+        "advice": "Your biggest profit leaks are ad spend efficiency and inventory turnover—ads cost MYR 43 per order while only driving part of your volume, and slow-moving stock ties up cash without generating margin. Fixing these will free cash and lift net profit toward your MYR 8,800 monthly target.\n\n1. Pause low‑ROAS ads and reinvest the saved MYR 600 into organic reach: post 3 TikTok styling videos this week using existing inventory (scarf + dress combos) and reply to every comment with a direct product link—aim to convert at least 5% of engaged viewers into sales, adding ~MYR 400–600 revenue without extra ad cost.\n2. Run a flash “Post-Raya Clearance” on the pleated midi skirt (current cost MYR 32, price MYR 89): discount to MYR 55 for 48 hours starting 5 April to move the 33 units before they age further—expect to sell 20–25 units, recovering ~MYR 550 cash and freeing storage space.\n3. Bundle the satin wrap dress (MYR 139) with silk-touch scarf (MYR 39) as a “Modest Duo” on your website at MYR 155 (instead of MYR 178 separate), promoting it via Instagram Stories and WhatsApp broadcast to your 53 March repeat buyers—target 15 bundles sold, generating ~MYR 2,325 revenue and higher margin than individual sales due to lower effective platform fees.",
+        "missionsAdded": [],
+        "checkup": {
+          "score": 68,
+          "headline": "Atelier Nura is profitable and growing but runs without bookkeeping or permits, and four of five products will stock out before the 4.4 sale.",
+          "strengths": [
+            "Healthy margins on every product: 51–69% after platform fees, with Silk-touch scarf at 61% (MYR 24/unit) and Satin wrap dress at 55% (MYR 77/unit).",
+            "Zero-fee channels (Instagram/WhatsApp and pop-ups) give 58–69% margins vs 44–60% on Shopee/TikTok, so each sale kept off Shopee saves ~MYR 19 on a blazer.",
+            "Cash reserve of MYR 28k covers 10.6 months of fixed overheads (MYR 2,630/mo) or 2.3 months of total average spend (MYR 12.4k/mo)."
+          ],
+          "issues": [
+            {
+              "title": "No bookkeeping system in place",
+              "detail": "You have 5 months of Treasury data but no formal books. Without it you can't file taxes, apply for financing, or catch leaks like the MYR 1,160 platform fees last month.",
+              "severity": "fix"
+            },
+            {
+              "title": "No licences or permits secured",
+              "detail": "Operating without required permits risks fines or forced closure. This is a legal must-do before scaling.",
+              "severity": "fix"
+            },
+            {
+              "title": "Four products will stock out before the 4.4 sale (Sun 4 Apr)",
+              "detail": "Linen co-ord set has 2 units left (~2 days), Silk-touch scarf 3 units (~3 days), Tailored blazer 3 units (~5 days), Satin wrap dress 15 units (~9 days). The restock plan (28 scarves, 43 dresses, 35 co-ords, 17 blazers = MYR 6,446) must be ordered today to arrive in time.",
+              "severity": "fix"
+            },
+            {
+              "title": "Pleated midi skirt ties up MYR 1,056 with only 2 sales in 30 days",
+              "detail": "33 units on hand, 16.5 months of stock at current pace. A discount over 61% sells below cost. This cash is frozen while best-sellers run dry.",
+              "severity": "watch"
+            },
+            {
+              "title": "Shopee's 14% fee cuts margins 10–15 points vs zero-fee channels",
+              "detail": "Example: Tailored blazer margin drops from 58% (IG/WhatsApp) to 44% on Shopee — MYR 31 less profit per unit. Last month's MYR 1,160 platform fees could be lower if more buyers came through IG/WhatsApp or pop-ups.",
+              "severity": "watch"
+            }
+          ],
+          "actions": [
+            "Place the restock order today: 28 Silk-touch scarf (MYR 336), 43 Satin wrap dress (MYR 2,236), 35 Linen co-ord set (MYR 2,310), 17 Tailored blazer (MYR 1,564) — total MYR 6,446.",
+            "Set up a simple bookkeeping system this week: a cloud accounting tool (e.g. Xero, QuickBooks) or a spreadsheet with monthly revenue, COGS, fees, fixed overheads, and bank reconciliation.",
+            "Apply for the missing business licences/permits this week — check Kuala Lumpur City Hall (DBKL) for fashion retail and home-based production requirements.",
+            "Run a 4.4 sale push on Instagram/WhatsApp and pop-up only (0% fees): bundle Satin wrap dress + Silk-touch scarf at MYR 169 (vs MYR 178 separate) to move 20+ bundles 4–9 Apr.",
+            "List the 33 Pleated midi skirts at a 40% discount (MYR 53) on IG/WhatsApp and at the next pop-up; even at 40% off you keep ~MYR 21/unit profit and free MYR 1,056 cash."
+          ]
+        },
+        "restockPlan": {
+          "summary": "Order 123 pieces across 4 products for about MYR 6,446. Once they sell, that's about MYR 9,041 profit. You can afford it and still keep a month of fixed costs, and these pieces should sell enough to pay the order back in about 2 weeks. Ordering less risks sold-out shelves.",
+          "items": [
+            {
+              "product": "Silk-touch scarf",
+              "order": 28,
+              "cost": 336,
+              "profit": 670.8319296863028,
+              "why": "Sells 6.1 a week and 3 left lasts about 3 days. 28 more covers the next 5 weeks."
+            },
+            {
+              "product": "Satin wrap dress",
+              "order": 43,
+              "cost": 2236,
+              "profit": 3304.6817693351727,
+              "why": "Sells 11.4 a week and 15 left lasts about 9 days. 43 more covers the next 5 weeks."
+            },
+            {
+              "product": "Linen co-ord set",
+              "order": 35,
+              "cost": 2310,
+              "profit": 3175.2524567106675,
+              "why": "Sells 7.2 a week and 2 left lasts about 2 days. 35 more covers the next 5 weeks."
+            },
+            {
+              "product": "Tailored blazer",
+              "order": 17,
+              "cost": 1564,
+              "profit": 1889.8711191742739,
+              "why": "Sells 4 a week and 3 left lasts about 5 days. 17 more covers the next 5 weeks."
+            },
+            {
+              "product": "Pleated midi skirt",
+              "order": 0,
+              "cost": 0,
+              "profit": 0,
+              "why": "33 in stock but only 2 sold in 30 days. Bundle it as a free gift with any purchase over MYR 150 to move stock without discounting and preserve perceived value."
+            }
+          ],
+          "watch": "Monitor whether the linen co-ord set sells out before restock arrives—only 2 units left with ~2 days of cover at current pace.",
+          "cash": {
+            "reserve": 2630,
+            "spendable": 25417,
+            "paybackWeeks": 1.7753227651557761,
+            "budget": null
+          }
+        },
+        "campaigns": [
+          {
+            "name": "Post-Raya Refresh",
+            "offer": "Buy 2 items from the Raya collection, get 15% off the lower-priced item. Applies to satin wrap dress, linen co-ord set, tailored blazer, and silk-touch scarf. Minimum spend MYR 100.",
+            "budget": "RM50 for TikTok boost, RM100 for Shopee sponsored ads (3 days), RM100 for Instagram post promotion, RM50 contingency = RM300"
+          },
+          {
+            "name": "Raya Remnants Remix",
+            "offer": "Mother’s Day Set: 1 pleated midi skirt (MYR 89) + 1 silk-touch scarf (MYR 39) for MYR 100 (save MYR 28). Only 20 sets available.",
+            "budget": "RM60 for TikTok Shop live incentive (data top-up), RM80 for Shopee Coins absorption (estimated 20 sets * MYR 4 cashback), RM80 for Instagram Reels promotion, RM80 contingency = RM300"
+          }
+        ],
+        "changes": [
+          {
+            "what": "setting",
+            "from": "600",
+            "to": "0",
+            "because": "Pause low‑ROAS ads and reinvest the saved MYR 600 into organic reach"
+          },
+          {
+            "what": "setting",
+            "from": "false",
+            "to": "true",
+            "because": "Bundle the satin wrap dress (MYR 139) with silk-touch scarf (MYR 39) as a \"Modest Duo\" on your website at MYR 155 (instead of MYR 178 separate)"
+          }
+        ],
+        "finished": [],
+        "wrapped": {
+          "headline": "April sales dipped post-Raya, profit squeezed to MYR 1k.",
+          "problems": [
+            {
+              "title": "Post-Raya sales slump across all channels",
+              "rootCause": "Seasonal dip after festive peak compounded by 83% marketing cut",
+              "evidence": "Sales MYR 11,950 vs March MYR 15,899; marketing MYR 120 vs MYR 720"
+            },
+            {
+              "title": "Pleated midi skirt tying up MYR 992",
+              "rootCause": "Low demand at current price; only 2 sold in 30 days",
+              "evidence": "31 units in stock, 2 sold last 30 days, discount >61% sells at loss"
+            },
+            {
+              "title": "Fixed overheads eating 22% of revenue",
+              "rootCause": "Revenue fell MYR 3,949 while fixed costs stayed MYR 2,630",
+              "evidence": "Overheads MYR 2,630 vs sales MYR 11,950 (22%) vs March 16.5%"
+            },
+            {
+              "title": "Silk-touch scarf stock critical",
+              "rootCause": "Fast sell-through outpacing restock lead time",
+              "evidence": "9 units left, ~12 days at recent pace; restock 17 units planned"
+            }
+          ],
+          "closing": "A quiet month after Raya; ask Lumi anytime for ideas to rebuild momentum."
+        },
+        "errors": []
+      }
+    }
+  ],
+  "autopilot": [
+    {
+      "month": "2026-11",
+      "plan": {
+        "adSpend": 2400,
+        "tiktokAdShare": 0.5,
+        "priceIndex": 1,
+        "saleDiscount": 0.35,
+        "livesPerMonth": 4,
+        "websitePush": false,
+        "retention": false,
+        "bundles": false,
+        "stockCover": 1.3,
+        "courierDeal": false,
+        "appsTrimmed": false,
+        "packer": true,
+        "influencers": 0,
+        "popups": 0,
+        "capsule": false,
+        "getLicence": false,
+        "restock": null
+      },
+      "metrics": {
+        "month": "2026-11",
+        "orders": 135,
+        "newOrders": 109,
+        "repeatOrders": 25,
+        "popupOrders": 0,
+        "lostOrders": 24,
+        "unitsSold": 118,
+        "unitsBought": 43,
+        "inventoryLeft": 52,
+        "soldBy": {
+          "Satin wrap dress": 38,
+          "Linen co-ord set": 34,
+          "Pleated midi skirt": 3,
+          "Tailored blazer": 11,
+          "Silk-touch scarf": 32
+        },
+        "boughtBy": {
+          "Satin wrap dress": 32,
+          "Linen co-ord set": 0,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 11,
+          "Silk-touch scarf": 0
+        },
+        "stockBy": {
+          "Satin wrap dress": 0,
+          "Linen co-ord set": 0,
+          "Pleated midi skirt": 43,
+          "Tailored blazer": 0,
+          "Silk-touch scarf": 9
+        },
+        "missedBy": {
+          "Satin wrap dress": 11,
+          "Linen co-ord set": 3,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 8,
+          "Silk-touch scarf": 0
+        },
+        "stockValue": 1484,
+        "sales": 13963,
+        "salesByChannel": {
+          "Shopee": 4253,
+          "TikTok Shop": 5069,
+          "Instagram & WhatsApp": 2578,
+          "Website": 2062,
+          "Pop-up bazaar": 0
+        },
+        "aov": 104,
+        "adSpend": 2400,
+        "costPerAdOrder": 74,
+        "platformFees": 1131,
+        "expenses": 9867,
+        "net": 4096,
+        "cash": 18896,
+        "rating": 4.52,
+        "awareness": 1,
+        "customers": 489
+      }
+    },
+    {
+      "month": "2026-12",
+      "plan": {
+        "adSpend": 2500,
+        "tiktokAdShare": 0.5,
+        "priceIndex": 1,
+        "saleDiscount": 0.35,
+        "livesPerMonth": 4,
+        "websitePush": false,
+        "retention": false,
+        "bundles": false,
+        "stockCover": 1.3,
+        "courierDeal": false,
+        "appsTrimmed": false,
+        "packer": true,
+        "influencers": 0,
+        "popups": 1,
+        "capsule": false,
+        "getLicence": false,
+        "restock": null
+      },
+      "metrics": {
+        "month": "2026-12",
+        "orders": 149,
+        "newOrders": 110,
+        "repeatOrders": 27,
+        "popupOrders": 12,
+        "lostOrders": 16,
+        "unitsSold": 131,
+        "unitsBought": 138,
+        "inventoryLeft": 59,
+        "soldBy": {
+          "Satin wrap dress": 47,
+          "Linen co-ord set": 35,
+          "Pleated midi skirt": 3,
+          "Tailored blazer": 14,
+          "Silk-touch scarf": 32
+        },
+        "boughtBy": {
+          "Satin wrap dress": 47,
+          "Linen co-ord set": 35,
+          "Pleated midi skirt": 4,
+          "Tailored blazer": 14,
+          "Silk-touch scarf": 38
+        },
+        "stockBy": {
+          "Satin wrap dress": 0,
+          "Linen co-ord set": 0,
+          "Pleated midi skirt": 44,
+          "Tailored blazer": 0,
+          "Silk-touch scarf": 15
+        },
+        "missedBy": {
+          "Satin wrap dress": 6,
+          "Linen co-ord set": 4,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 4,
+          "Silk-touch scarf": 0
+        },
+        "stockValue": 1588,
+        "sales": 15528,
+        "salesByChannel": {
+          "Shopee": 4343,
+          "TikTok Shop": 5225,
+          "Instagram & WhatsApp": 2632,
+          "Website": 2106,
+          "Pop-up bazaar": 1221
+        },
+        "aov": 104,
+        "adSpend": 2500,
+        "costPerAdOrder": 71,
+        "platformFees": 1160,
+        "expenses": 14361,
+        "net": 1167,
+        "cash": 20064,
+        "rating": 4.54,
+        "awareness": 1.03,
+        "customers": 588
+      }
+    },
+    {
+      "month": "2027-01",
+      "plan": {
+        "adSpend": 2800,
+        "tiktokAdShare": 0.5,
+        "priceIndex": 1,
+        "saleDiscount": 0.35,
+        "livesPerMonth": 4,
+        "websitePush": false,
+        "retention": false,
+        "bundles": false,
+        "stockCover": 1.3,
+        "courierDeal": false,
+        "appsTrimmed": false,
+        "packer": true,
+        "influencers": 0,
+        "popups": 0,
+        "capsule": false,
+        "getLicence": false,
+        "restock": null
+      },
+      "metrics": {
+        "month": "2027-01",
+        "orders": 105,
+        "newOrders": 79,
+        "repeatOrders": 26,
+        "popupOrders": 0,
+        "lostOrders": 28,
+        "unitsSold": 92,
+        "unitsBought": 88,
+        "inventoryLeft": 55,
+        "soldBy": {
+          "Satin wrap dress": 34,
+          "Linen co-ord set": 25,
+          "Pleated midi skirt": 2,
+          "Tailored blazer": 10,
+          "Silk-touch scarf": 21
+        },
+        "boughtBy": {
+          "Satin wrap dress": 34,
+          "Linen co-ord set": 25,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 10,
+          "Silk-touch scarf": 19
+        },
+        "stockBy": {
+          "Satin wrap dress": 0,
+          "Linen co-ord set": 0,
+          "Pleated midi skirt": 42,
+          "Tailored blazer": 0,
+          "Silk-touch scarf": 13
+        },
+        "missedBy": {
+          "Satin wrap dress": 13,
+          "Linen co-ord set": 7,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 4,
+          "Silk-touch scarf": 0
+        },
+        "stockValue": 1500,
+        "sales": 10934,
+        "salesByChannel": {
+          "Shopee": 3278,
+          "TikTok Shop": 4077,
+          "Instagram & WhatsApp": 1987,
+          "Website": 1589,
+          "Pop-up bazaar": 0
+        },
+        "aov": 104,
+        "adSpend": 2800,
+        "costPerAdOrder": 113,
+        "platformFees": 887,
+        "expenses": 11687,
+        "net": -753,
+        "cash": 19310,
+        "rating": 4.48,
+        "awareness": 1.04,
+        "customers": 649
+      }
+    },
+    {
+      "month": "2027-02",
+      "plan": {
+        "adSpend": 2000,
+        "tiktokAdShare": 0.5,
+        "priceIndex": 1,
+        "saleDiscount": 0.35,
+        "livesPerMonth": 4,
+        "websitePush": false,
+        "retention": false,
+        "bundles": false,
+        "stockCover": 1.3,
+        "courierDeal": false,
+        "appsTrimmed": false,
+        "packer": true,
+        "influencers": 0,
+        "popups": 1,
+        "capsule": false,
+        "getLicence": false,
+        "restock": null
+      },
+      "metrics": {
+        "month": "2027-02",
+        "orders": 162,
+        "newOrders": 110,
+        "repeatOrders": 36,
+        "popupOrders": 16,
+        "lostOrders": 22,
+        "unitsSold": 142,
+        "unitsBought": 172,
+        "inventoryLeft": 85,
+        "soldBy": {
+          "Satin wrap dress": 56,
+          "Linen co-ord set": 34,
+          "Pleated midi skirt": 4,
+          "Tailored blazer": 17,
+          "Silk-touch scarf": 31
+        },
+        "boughtBy": {
+          "Satin wrap dress": 56,
+          "Linen co-ord set": 42,
+          "Pleated midi skirt": 14,
+          "Tailored blazer": 17,
+          "Silk-touch scarf": 43
+        },
+        "stockBy": {
+          "Satin wrap dress": 0,
+          "Linen co-ord set": 8,
+          "Pleated midi skirt": 52,
+          "Tailored blazer": 0,
+          "Silk-touch scarf": 25
+        },
+        "missedBy": {
+          "Satin wrap dress": 13,
+          "Linen co-ord set": 0,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 6,
+          "Silk-touch scarf": 0
+        },
+        "stockValue": 2492,
+        "sales": 16825,
+        "salesByChannel": {
+          "Shopee": 4641,
+          "TikTok Shop": 5474,
+          "Instagram & WhatsApp": 2813,
+          "Website": 2250,
+          "Pop-up bazaar": 1649
+        },
+        "aov": 104,
+        "adSpend": 2000,
+        "costPerAdOrder": 72,
+        "platformFees": 1229,
+        "expenses": 16195,
+        "net": 630,
+        "cash": 19940,
+        "rating": 4.44,
+        "awareness": 1.06,
+        "customers": 749
+      }
+    },
+    {
+      "month": "2027-03",
+      "plan": {
+        "adSpend": 3000,
+        "tiktokAdShare": 0.5,
+        "priceIndex": 1,
+        "saleDiscount": 0.35,
+        "livesPerMonth": 4,
+        "websitePush": false,
+        "retention": false,
+        "bundles": false,
+        "stockCover": 1.3,
+        "courierDeal": false,
+        "appsTrimmed": false,
+        "packer": true,
+        "influencers": 0,
+        "popups": 0,
+        "capsule": false,
+        "getLicence": false,
+        "restock": null
+      },
+      "metrics": {
+        "month": "2027-03",
+        "orders": 139,
+        "newOrders": 101,
+        "repeatOrders": 38,
+        "popupOrders": 0,
+        "lostOrders": 25,
+        "unitsSold": 122,
+        "unitsBought": 101,
+        "inventoryLeft": 64,
+        "soldBy": {
+          "Satin wrap dress": 44,
+          "Linen co-ord set": 33,
+          "Pleated midi skirt": 2,
+          "Tailored blazer": 13,
+          "Silk-touch scarf": 30
+        },
+        "boughtBy": {
+          "Satin wrap dress": 44,
+          "Linen co-ord set": 25,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 13,
+          "Silk-touch scarf": 19
+        },
+        "stockBy": {
+          "Satin wrap dress": 0,
+          "Linen co-ord set": 0,
+          "Pleated midi skirt": 50,
+          "Tailored blazer": 0,
+          "Silk-touch scarf": 14
+        },
+        "missedBy": {
+          "Satin wrap dress": 12,
+          "Linen co-ord set": 3,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 7,
+          "Silk-touch scarf": 0
+        },
+        "stockValue": 1768,
+        "sales": 14453,
+        "salesByChannel": {
+          "Shopee": 4416,
+          "TikTok Shop": 5218,
+          "Instagram & WhatsApp": 2676,
+          "Website": 2141,
+          "Pop-up bazaar": 0
+        },
+        "aov": 104,
+        "adSpend": 3000,
+        "costPerAdOrder": 103,
+        "platformFees": 1171,
+        "expenses": 13227,
+        "net": 1226,
+        "cash": 21166,
+        "rating": 4.41,
+        "awareness": 1.04,
+        "customers": 828
+      }
+    },
+    {
+      "month": "2027-04",
+      "plan": {
+        "adSpend": 2600,
+        "tiktokAdShare": 0.5,
+        "priceIndex": 1,
+        "saleDiscount": 0.35,
+        "livesPerMonth": 4,
+        "websitePush": false,
+        "retention": false,
+        "bundles": false,
+        "stockCover": 1.3,
+        "courierDeal": false,
+        "appsTrimmed": false,
+        "packer": true,
+        "influencers": 0,
+        "popups": 0,
+        "capsule": false,
+        "getLicence": false,
+        "restock": null
+      },
+      "metrics": {
+        "month": "2027-04",
+        "orders": 109,
+        "newOrders": 70,
+        "repeatOrders": 39,
+        "popupOrders": 0,
+        "lostOrders": 23,
+        "unitsSold": 96,
+        "unitsBought": 84,
+        "inventoryLeft": 52,
+        "soldBy": {
+          "Satin wrap dress": 32,
+          "Linen co-ord set": 24,
+          "Pleated midi skirt": 3,
+          "Tailored blazer": 10,
+          "Silk-touch scarf": 27
+        },
+        "boughtBy": {
+          "Satin wrap dress": 32,
+          "Linen co-ord set": 24,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 10,
+          "Silk-touch scarf": 18
+        },
+        "stockBy": {
+          "Satin wrap dress": 0,
+          "Linen co-ord set": 0,
+          "Pleated midi skirt": 47,
+          "Tailored blazer": 0,
+          "Silk-touch scarf": 5
+        },
+        "missedBy": {
+          "Satin wrap dress": 15,
+          "Linen co-ord set": 1,
+          "Pleated midi skirt": 0,
+          "Tailored blazer": 4,
+          "Silk-touch scarf": 0
+        },
+        "stockValue": 1564,
+        "sales": 11445,
+        "salesByChannel": {
+          "Shopee": 3429,
+          "TikTok Shop": 4274,
+          "Instagram & WhatsApp": 2078,
+          "Website": 1662,
+          "Pop-up bazaar": 0
+        },
+        "aov": 105,
+        "adSpend": 2600,
+        "costPerAdOrder": 115,
+        "platformFees": 929,
+        "expenses": 11384,
+        "net": 61,
+        "cash": 21227,
+        "rating": 4.38,
+        "awareness": 1.04,
+        "customers": 879
+      }
+    }
+  ],
+  "robustness": [
+    {
+      "seed": 23,
+      "polaris": {
+        "sales": 86987,
+        "net": 14318,
+        "endCash": 29118,
+        "lowestCash": 18896,
+        "last3": 3133.3333333333335,
+        "lost": 43,
+        "missed": 33,
+        "endStock": 3998,
+        "worth": 33116
+      },
+      "autopilot": {
+        "sales": 83148,
+        "net": 6427,
+        "endCash": 21227,
+        "lowestCash": 18896,
+        "last3": 639,
+        "lost": 138,
+        "missed": 121,
+        "endStock": 1564,
+        "worth": 22791
+      }
+    },
+    {
+      "seed": 11,
+      "polaris": {
+        "sales": 84882,
+        "net": 12523,
+        "endCash": 27323,
+        "lowestCash": 18900,
+        "last3": 2595,
+        "lost": 43,
+        "missed": 38,
+        "endStock": 4756,
+        "worth": 32079
+      },
+      "autopilot": {
+        "sales": 82082,
+        "net": 6387,
+        "endCash": 21186,
+        "lowestCash": 18900,
+        "last3": 399.3333333333333,
+        "lost": 143,
+        "missed": 124,
+        "endStock": 1676,
+        "worth": 22862
+      }
+    },
+    {
+      "seed": 37,
+      "polaris": {
+        "sales": 84714,
+        "net": 12387,
+        "endCash": 27188,
+        "lowestCash": 18698,
+        "last3": 1904,
+        "lost": 67,
+        "missed": 60,
+        "endStock": 4694,
+        "worth": 31882
+      },
+      "autopilot": {
+        "sales": 86689,
+        "net": 8832,
+        "endCash": 23632,
+        "lowestCash": 18698,
+        "last3": 874.6666666666666,
+        "lost": 129,
+        "missed": 112,
+        "endStock": 1712,
+        "worth": 25344
+      }
+    },
+    {
+      "seed": 51,
+      "polaris": {
+        "sales": 85193,
+        "net": 12787,
+        "endCash": 27588,
+        "lowestCash": 18297,
+        "last3": 2962,
+        "lost": 48,
+        "missed": 44,
+        "endStock": 4432,
+        "worth": 32020
+      },
+      "autopilot": {
+        "sales": 82776,
+        "net": 6754,
+        "endCash": 21553,
+        "lowestCash": 18297,
+        "last3": 838,
+        "lost": 143,
+        "missed": 127,
+        "endStock": 1444,
+        "worth": 22997
+      }
+    }
+  ]
+}

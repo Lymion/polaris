@@ -1,0 +1,922 @@
+[
+  {
+    "month": "2026-11",
+    "plan": {
+      "adSpend": 800,
+      "tiktokAdShare": 0,
+      "priceIndex": 1,
+      "saleDiscount": 0.35,
+      "livesPerMonth": 4,
+      "websitePush": true,
+      "retention": false,
+      "bundles": true,
+      "stockCover": 1.25,
+      "courierDeal": false,
+      "appsTrimmed": false,
+      "packer": true,
+      "influencers": 5,
+      "popups": 0,
+      "capsule": false,
+      "getLicence": false
+    },
+    "metrics": {
+      "month": "2026-11",
+      "orders": 161,
+      "newOrders": 129,
+      "repeatOrders": 32,
+      "popupOrders": 0,
+      "lostOrders": 25,
+      "unitsSold": 205,
+      "unitsBought": 145,
+      "inventoryLeft": 0,
+      "sales": 19346,
+      "salesByChannel": {
+        "Shopee": 4010,
+        "TikTok Shop": 4110,
+        "Instagram & WhatsApp": 5194,
+        "Website": 6033,
+        "Pop-up bazaar": 0
+      },
+      "aov": 120,
+      "adSpend": 800,
+      "costPerAdOrder": 55,
+      "platformFees": 1158,
+      "expenses": 14494,
+      "net": 4852,
+      "cash": 19652,
+      "rating": 4.52,
+      "awareness": 1,
+      "customers": 506
+    },
+    "polaris": {
+      "question": "Hi Lumi, it's the start of November 2026.  This month's big sale is the 11.11 mega sale. What are the 3 most important things I should do this month to make more profit? Please be specific, with numbers.",
+      "advice": "Your data shows strong margins across channels, especially direct ones like Instagram/WhatsApp (~60–69%) versus marketplace fees eating 9–14%. Your biggest expense last month was inventory (RM 5,594) and marketing (RM 3,300). To lift profit during 11.11, focus on shifting volume to higher-margin channels while controlling acquisition cost.\n\n1. **Run flash bundles exclusive to your website & Instagram DM**: Offer “Buy 2, Get 15% off” on your top margin items—silk-touch scarf (RM 39, ~65% margin) paired with pleated midi skirt (RM 89, ~60%). Promote via Stories and WhatsApp broadcast to existing followers. Target 150 bundle sets (RM 193.50 avg after discount → ~RM 29k revenue, ~RM 17.4k gross profit vs. RM 10.2k if sold separately on Shopee/TikTok after fees).  \n2. **Cap Shopee & TikTok ad spend at RM 800 total** and reallocate that RM 2,500 saved to influencer seeding: Pay 5 micro‑influencers RM 500 each for a 1‑day affiliate link + story swipe‑up promoting the website-exclusive bundle. Track UTM codes; aim for ≥300 website visits and ≥50 orders from this push (estimated RM 9.7k revenue, ~RM 5.8k profit).  \n3. **Implement a 2‑day pre‑order window (Nov 8‑9) for the website‑only bundle** with a RM 10 deposit collected via Instamojo/PayHit. Use deposits to finance fabric cut, reducing working‑capital strain. Target 200 pre‑orders (RM 20k deposits → covers ~35% of fabric cost). Fulfil Nov 10‑11; this locks demand and avoids over‑stock risk.  \n\nWatch your daily ad‑ROAS; pause any creative under 2.5× return. Deposit cash flow helps you keep inventory tighter and profit higher. Let me know if you’d like the exact UTM template or deposit‑collection script. ✨📘",
+      "missionsAdded": [
+        "Create website-exclusive flash bundle offer",
+        "Reallocate marketplace ad spend to influencer seeding for website traffic",
+        "Launch 2-day pre-order campaign with deposit for website bundle"
+      ],
+      "checkup": {
+        "score": 65,
+        "headline": "Sales are growing fast and margins are healthy on direct channels, but missing bookkeeping and licences, thin net profit, and heavy reliance on high-fee platforms put the business at risk.",
+        "strengths": [
+          "Revenue grew from MYR 7,058 to MYR 15,000 in five months (113% increase).",
+          "Direct channels (Instagram/WhatsApp, website, pop-ups) keep 55–69% margin after fees because they charge 0% commission.",
+          "Cash reserve of MYR 15,000 covers about 5–6 months of fixed overheads (MYR 2,630/month)."
+        ],
+        "issues": [
+          {
+            "title": "No bookkeeping system",
+            "detail": "You have no way to track every sale, cost, and tax obligation. Without it you cannot file taxes correctly, spot margin leaks, or prove income for loans.",
+            "severity": "fix"
+          },
+          {
+            "title": "No licences or permits",
+            "detail": "Operating without required local permits exposes you to fines or forced closure. Fashion retail in Malaysia typically needs a business licence from the local council (PBT) and possibly a signboard licence.",
+            "severity": "fix"
+          },
+          {
+            "title": "Net profit is thin and volatile",
+            "detail": "October net was only MYR 877 on MYR 15,000 sales (5.8% margin) because expenses jumped to MYR 14,000 (marketing MYR 3,300, stock MYR 5,594, fees MYR 1,227). One bad month could wipe the buffer.",
+            "severity": "watch"
+          },
+          {
+            "title": "High dependence on Shopee and TikTok Shop",
+            "detail": "Shopee takes 14% and TikTok 9% commission, cutting your after-fee margins to 44–55% vs 55–69% on direct channels. If most orders come from these platforms, you leave MYR 2,000–3,000/month on the table.",
+            "severity": "watch"
+          },
+          {
+            "title": "Marketing spend not tied to measured return",
+            "detail": "Marketing cost MYR 3,300 in October (22% of revenue). You reported 41 orders from influencer code NURA10 and 86 peak live viewers, but no cost-per-acquisition or ROAS data.",
+            "severity": "watch"
+          }
+        ],
+        "actions": [
+          "Set up a simple bookkeeping system this week (e.g., Wavelet, Xero, or a structured Google Sheet) recording every sale, fee, COGS, and expense by category.",
+          "Apply for the local council business licence (PBT) and signboard permit immediately; check with MBSA/MPAJ for home-based or studio-based fashion retail.",
+          "Run a 2-week test: pause Shopee ads, shift that budget to Instagram/WhatsApp and website traffic, and measure orders and CAC on each channel.",
+          "Calculate cost-per-acquisition for the influencer code (NURA10) and TikTok Live; if CAC > MYR 30 per order, renegotiate or stop.",
+          "Build a 3-month total-expense buffer (MYR 14,000 × 3 = MYR 42,000) by retaining 50% of monthly net profit until reached."
+        ]
+      },
+      "campaigns": [
+        {
+          "name": "Double Eleven Double Drops",
+          "offer": "First drop: 20 satin wrap dresses at MYR 99 each (normally MYR 139). Second drop: 15 linen co-ord sets at MYR 119 each (normally MYR 169). Each drop lasts 3 hours or until sold out.",
+          "budget": "RM1200: RM500 for TikTok Shop ad boost during live hours (RM250 per stream), RM400 for Instagram story ads targeting lookalike audiences, RM200 for WhatsApp blast service fee, RM100 for emergency fabric/top-up if sells faster than expected."
+        },
+        {
+          "name": "Modest Mix & Save",
+          "offer": "Any 2 items for MYR 229 (normally min MYR 228), any 3 items for MYR 329 (normally min MYR 347). Mix and match across dress, co-ord, skirt, blazer, scarf. Scarf free with any blazer purchase.",
+          "budget": "RM1200: RM300 for Shopee sponsored search and coins cashback, RM250 for TikTok Spark Ads boost, RM200 for Instagram story and reel promotion, RM250 for WhatsApp Business API messaging fees, RM200 for contingency fabric if bundling increases demand on specific items."
+        }
+      ],
+      "changes": [
+        {
+          "what": "setting",
+          "from": "2400",
+          "to": "800",
+          "because": "Cap Shopee & TikTok ad spend at RM 800 total"
+        },
+        {
+          "what": "setting",
+          "from": "0.5",
+          "to": "0",
+          "because": "Cap Shopee & TikTok ad spend at RM 800 total and reallocate that RM 2,500 saved to influencer seeding"
+        },
+        {
+          "what": "setting",
+          "from": "false",
+          "to": "true",
+          "because": "Add a 'members get free shipping' insert to every parcel; Send repeat buyers a website-only code"
+        },
+        {
+          "what": "setting",
+          "from": "false",
+          "to": "true",
+          "because": "Offer “Buy 2, Get 15% off” on your top margin items—silk-touch scarf (RM 39, ~65% margin) paired with pleated midi skirt (RM 89, ~60%)."
+        },
+        {
+          "what": "setting",
+          "from": "1.3",
+          "to": "1.25",
+          "because": "Use deposits to finance fabric cut, reducing working‑capital strain."
+        }
+      ],
+      "finished": [],
+      "wrapped": {
+        "headline": "November broke every record: MYR 19.3k sales, MYR 4.9k profit, and the first month past the MYR 8.8k level-up target.",
+        "problems": [
+          {
+            "title": "Shopee revenue declining despite overall growth",
+            "rootCause": "High 14% platform fee compresses margins and may discourage promotional effort on this channel.",
+            "evidence": "Shopee sales fell 25% to MYR 4,010 while Website (+147%) and Instagram/WhatsApp (+101%) grew; Shopee unit margin only 47-55% vs 58-69% on zero-fee channels."
+          },
+          {
+            "title": "Transport costs doubling faster than sales",
+            "rootCause": "Logistics spend scaling linearly with order volume without batch optimization or channel mix shift.",
+            "evidence": "Transport rose 97% to MYR 1,161 from MYR 589 while sales grew 32%; pop-up bazaar and delivery-heavy channels likely drove the increase."
+          },
+          {
+            "title": "Marketing spend still high with unclear return",
+            "rootCause": "Reliance on gifted creator pieces and paid ads without tracked attribution to orders.",
+            "evidence": "November marketing MYR 2,020 included MYR 1,100 for creator gifting; only 41 lifetime orders tracked via influencer code NURA10, no November-specific data."
+          },
+          {
+            "title": "Platform fees eating 8% of revenue",
+            "rootCause": "Sales concentration on fee-charging platforms (Shopee 14%, TikTok 9%) instead of zero-fee direct channels.",
+            "evidence": "Platform fees MYR 1,158 on MYR 19,346 sales; Shopee MYR 4,010 at 14% ≈ MYR 561 fees, TikTok MYR 4,109 at 9% ≈ MYR 370 fees."
+          }
+        ],
+        "closing": "November proved the model works at scale — ask Lumi anytime to explore what's next."
+      },
+      "errors": []
+    }
+  },
+  {
+    "month": "2026-12",
+    "plan": {
+      "adSpend": 800,
+      "tiktokAdShare": 0,
+      "priceIndex": 1,
+      "saleDiscount": 0.35,
+      "livesPerMonth": 4,
+      "websitePush": true,
+      "retention": false,
+      "bundles": true,
+      "stockCover": 1.25,
+      "courierDeal": false,
+      "appsTrimmed": false,
+      "packer": true,
+      "influencers": 6,
+      "popups": 0,
+      "capsule": false,
+      "getLicence": false
+    },
+    "metrics": {
+      "month": "2026-12",
+      "orders": 172,
+      "newOrders": 132,
+      "repeatOrders": 39,
+      "popupOrders": 0,
+      "lostOrders": 0,
+      "unitsSold": 218,
+      "unitsBought": 267,
+      "inventoryLeft": 49,
+      "sales": 20498,
+      "salesByChannel": {
+        "Shopee": 4337,
+        "TikTok Shop": 4529,
+        "Instagram & WhatsApp": 5242,
+        "Website": 6391,
+        "Pop-up bazaar": 0
+      },
+      "aov": 120,
+      "adSpend": 800,
+      "costPerAdOrder": 48,
+      "platformFees": 1255,
+      "expenses": 20772,
+      "net": -274,
+      "cash": 19378,
+      "rating": 4.54,
+      "awareness": 1.03,
+      "customers": 613
+    },
+    "polaris": {
+      "question": "Hi Lumi, it's the start of December 2026. Last month: 2026-11: sales MYR 19k from 161 orders (129 new, 32 repeat), average order MYR 120. About 25 orders lost to stock-outs or packing limits. Stock left: 0 pieces (bought 145). Ads MYR 800, about MYR 55 per order from ads. Platform fees MYR 1,158. Costs MYR 14k, net MYR 4,852. Cash now MYR 20k. Shop rating 4.52. This month's big sale is the 12.12 year-end sale. What are the 3 most important things I should do this month to make more profit? Please be specific, with numbers.",
+      "advice": "Last month’s data shows strong demand—you’re selling fast but losing ~25 potential sales due to stock-outs and slow packing. To boost profit, fix inventory flow and tighten costs while leveraging your upcoming 12.12 sale.\n\n1. Pre-stock top sellers based on last month’s mix: Order 70 satin wrap dresses (cost MYR 3,640) and 40 linen co‑ords (MYR 2,640)—these drove 60% of units sold. Use cash reserve (MYR 20k) to cover this ~MYR 6.3k batch, keeping buffer for reorder lead time.  \n2. Cut variable ad cost: Pause low‑ROI Shopee/TikTok ads (MYR 800 spent → MYR 55/order). Shift that budget to influencer codes (NURA10 gave 41 orders) — allocate MYR 600 to 6 micro‑influencers (MYR 100 each) for trackable UTM links driving website traffic (lower 2.9% fee vs marketplace).  \n3. Speed fulfillment: Hire a part‑time helper for 10 hrs/week @ MYR 12/hr (MYR 480/mo) to pack during peak sale days. Target packing 30+ orders/day to avoid lost sales; even capturing half the 25 lost orders adds ~MYR 3k revenue at ~60% margin → ~MYR 1.8k extra profit. Track daily packed vs shipped to adjust.",
+      "missionsAdded": [],
+      "checkup": {
+        "score": 70,
+        "headline": "Atelier Nura is growing sales and turning a profit, but lacks bookkeeping and licences, and marketing efficiency needs checking.",
+        "strengths": [
+          "Sales grew from MYR 9,275 to MYR 19,000 in five months, with November net profit of MYR 4,852.",
+          "All products earn 44–69% margin after platform fees; Instagram/WhatsApp and pop-ups give the highest margins (0% fees).",
+          "Fixed overheads are only MYR 2,630/month, so break-even is around MYR 6,700 – well below current sales."
+        ],
+        "issues": [
+          {
+            "title": "No bookkeeping system",
+            "detail": "You have no bookkeeping system in place. Without it you cannot track true profitability, prepare taxes, or make informed decisions.",
+            "severity": "fix"
+          },
+          {
+            "title": "Licences and permits missing",
+            "detail": "Required licences/permits for fashion retail in Malaysia are not obtained, creating legal risk.",
+            "severity": "fix"
+          },
+          {
+            "title": "Marketing ROI unclear",
+            "detail": "Marketing spend was MYR 2,020 this month, but TikTok Live peak viewers only 86 and influencer code NURA10 brought 41 orders. Cost per acquisition and return on spend are unknown.",
+            "severity": "watch"
+          },
+          {
+            "title": "High-fee platforms drag average margin",
+            "detail": "Shopee (14% fee) and TikTok Shop (9% fee) reduce per-unit margins to 44–55%. Sales mix per channel is not tracked, so you don't know how much this hurts overall profit.",
+            "severity": "watch"
+          },
+          {
+            "title": "Cash runway limited if sales drop",
+            "detail": "Cash reserve MYR 20k covers ~7.6 months of fixed costs (MYR 2,630/month) if sales stop, but variable costs would increase the burn rate.",
+            "severity": "watch"
+          }
+        ],
+        "actions": [
+          "Set up a simple bookkeeping system (spreadsheet or accounting software) this week to record every sale, expense, and platform fee.",
+          "Apply for the required business licences/permits for fashion retail in Malaysia within two weeks.",
+          "Track marketing ROI: assign unique codes/links per channel, measure cost per order, and shift budget to channels with lowest cost per acquisition.",
+          "Drive more sales to 0%-fee channels: promote Instagram/WhatsApp and pop-up bazaars with exclusive bundles or free shipping.",
+          "Review Shopee and TikTok Shop pricing: consider raising prices by 5–10% on those platforms to offset fees, or run platform-specific promotions to boost volume without cutting margin."
+        ]
+      },
+      "campaigns": [
+        {
+          "name": "Safe Play – Bundle & Save",
+          "offer": "Buy any satin wrap dress (RM139) + silk-touch scarf (RM39) together for RM159 flat – saves RM19 vs buying separate.",
+          "budget": "RM100 TikTok Spark Ads + RM50 Shopee Coins + RM150 buffer for unexpected top-up + RM100 held for pop-up transport if needed = RM400"
+        },
+        {
+          "name": "Bold Move – Mystery Modest Box",
+          "offer": "Mystery Modest Box – RM99 blind box containing 2 items (total retail value up to RM280). Guaranteed: at least one scarf or skirt plus one dress/top. No returns, all sales final.",
+          "budget": "RM150 TikTok In-Feed ads + RM30 Shopee coins + RM120 buffer for extra box packing + RM100 held for urgent restock if sells out = RM400"
+        }
+      ],
+      "changes": [],
+      "finished": [],
+      "wrapped": {
+        "headline": "December brought record sales of MYR 20.5k, but a MYR 12.8k inventory build-up turned a MYR 4.9k profit into a MYR 274 loss.",
+        "problems": [
+          {
+            "title": "Inventory purchase swallowed the month's profit",
+            "rootCause": "Stock spending nearly doubled to MYR 12,816 (62% of revenue) versus MYR 6,960 (36%) in November, suggesting over-ordering or slower sell-through than expected.",
+            "evidence": "Ingredients/stock MYR 12,816 vs sales MYR 20,498; November stock MYR 6,960 vs sales MYR 19,346; net swung from +MYR 4,852 to -MYR 274."
+          },
+          {
+            "title": "Marketing spend rose but sales barely moved",
+            "rootCause": "Creator gifting and ads (MYR 2,240 total, including MYR 1,320 for gifting) aren't tracked to resulting orders, so efficiency is unknown.",
+            "evidence": "Marketing MYR 2,240 in December vs MYR 2,020 in November; sales grew only 6% (MYR 20,498 vs MYR 19,346)."
+          },
+          {
+            "title": "High-fee marketplaces take a growing cut",
+            "rootCause": "Shopee (14%) and TikTok Shop (9%) together generated 43% of revenue but contributed an estimated 81% of platform fees.",
+            "evidence": "Shopee MYR 4,337 + TikTok MYR 4,527 = MYR 8,864 (43% of sales); platform fees MYR 1,256, of which ~MYR 1,014 likely from these two channels."
+          },
+          {
+            "title": "Profit streak broken after three gaining months",
+            "rootCause": "The inventory cash-outflow timed against a modest sales rise created a one-month loss, interrupting the Aug-Nov profit run.",
+            "evidence": "Six-month net: Jul -MYR 1,237, Aug +MYR 1,073, Sep +MYR 2,313, Oct +MYR 877, Nov +MYR 4,852, Dec -MYR 274."
+          }
+        ],
+        "closing": "December proved you can sell at record levels, and the next step is matching stock rhythm to cash flow — ask Lumi anytime for ideas."
+      },
+      "errors": []
+    }
+  },
+  {
+    "month": "2027-01",
+    "plan": {
+      "adSpend": 400,
+      "tiktokAdShare": 0.25,
+      "priceIndex": 1,
+      "saleDiscount": 0.25,
+      "livesPerMonth": 4,
+      "websitePush": true,
+      "retention": false,
+      "bundles": true,
+      "stockCover": 1.25,
+      "courierDeal": false,
+      "appsTrimmed": false,
+      "packer": true,
+      "influencers": 0,
+      "popups": 1,
+      "capsule": false,
+      "getLicence": true
+    },
+    "metrics": {
+      "month": "2027-01",
+      "orders": 125,
+      "newOrders": 68,
+      "repeatOrders": 43,
+      "popupOrders": 13,
+      "lostOrders": 0,
+      "unitsSold": 158,
+      "unitsBought": 147,
+      "inventoryLeft": 38,
+      "sales": 14865,
+      "salesByChannel": {
+        "Shopee": 3314,
+        "TikTok Shop": 4078,
+        "Instagram & WhatsApp": 2227,
+        "Website": 3873,
+        "Pop-up bazaar": 1374
+      },
+      "aov": 119,
+      "adSpend": 400,
+      "costPerAdOrder": 44,
+      "platformFees": 976,
+      "expenses": 13028,
+      "net": 1837,
+      "cash": 21215,
+      "rating": 4.56,
+      "awareness": 1.02,
+      "customers": 676
+    },
+    "polaris": {
+      "question": "Hi Lumi, it's the start of January 2027. Last month: 2026-12: sales MYR 20k from 172 orders (132 new, 39 repeat), average order MYR 120. Stock left: 49 pieces (bought 267). Ads MYR 800, about MYR 48 per order from ads. Platform fees MYR 1,255. Costs MYR 21k, net -MYR 274. Cash now MYR 19k. Shop rating 4.54. This month's big sale is the 1.1 New Year sale. What are the 3 most important things I should do this month to make more profit? Please be specific, with numbers.",
+      "advice": "Your December loss came mainly from high inventory buildup—you bought 267 pieces but only sold 172, leaving excess stock tying up cash while fixed costs stayed flat. To lift profit this January, focus on clearing old stock efficiently, tightening ad spend, and pushing more sales to your lowest-fee channel (website) where margins are strongest.\n\n1. Run a limited-time “New Year Clearance” on leftover stock: discount slow-movers 20–30% (e.g., satin wrap dress from MYR 139 to MYR 110) and promote via TikTok Live and Instagram Stories. Aim to move at least 80 excess units this month; even at 20% off, you’d still make ~MYR 48 profit per dress vs. holding cost.\n2. Cut ad spend by half (to MYR 400) and redirect those funds to website-exclusive offers: create a “Website Only” flash bundle (e.g., dress + scarf for MYR 150) and promote it via email/SMS to your 39 repeat buyers. Website fees are just 2.9% + MYR 1/order vs. 9–14% on marketplaces, boosting margin ~10% per sale.\n3. Set up a simple bookkeeping tracker this week: record daily sales, ad spend, and inventory received/sold in a free Google Sheet. Use it to calculate real-time gross profit per platform and stop any campaign where cost per order exceeds MYR 60 (your break-even ad cost based on current margins). Review every Friday.",
+      "missionsAdded": [],
+      "checkup": {
+        "score": 62,
+        "headline": "Sales grew 67% in five months and product margins are healthy, but December slipped to a MYR 274 loss and you're operating without bookkeeping or permits.",
+        "strengths": [
+          "Revenue climbed from MYR 12k to MYR 20k/month in five months (67% growth).",
+          "Every product earns 44–69% margin after platform fees — strong for fashion.",
+          "Fixed overheads are only MYR 2,630 (13% of December revenue), keeping break-even low.",
+          "MYR 19k cash buffer gives roughly 7 months of runway at current burn rate."
+        ],
+        "issues": [
+          {
+            "title": "No bookkeeping system",
+            "detail": "You have no way to track true profit, tax owed, or cash flow — every decision is a guess.",
+            "severity": "fix"
+          },
+          {
+            "title": "No licences or permits",
+            "detail": "Operating without required local permits exposes you to fines or forced closure.",
+            "severity": "fix"
+          },
+          {
+            "title": "December net loss of MYR 274",
+            "detail": "Expenses MYR 21k exceeded revenue MYR 20k, mainly due to a MYR 13k stock purchase that month.",
+            "severity": "fix"
+          },
+          {
+            "title": "Shopee margins 15–25 points lower than zero-fee channels",
+            "detail": "Shopee takes 14% fee: e.g. Tailored blazer margin drops to 44% vs 58% on Instagram/WhatsApp. Volume may justify it, but you don't know the split.",
+            "severity": "watch"
+          },
+          {
+            "title": "Marketing spend MYR 2,240 with no measured return",
+            "detail": "You spent MYR 2,240 in December but have no data linking it to orders or revenue.",
+            "severity": "watch"
+          }
+        ],
+        "actions": [
+          "Set up a simple bookkeeping spreadsheet this week: columns for date, product, channel, price, platform fee, cost, net profit, and running cash balance.",
+          "Apply for the home-based business licence (Pelesenan Perniagaan Berasaskan Rumah) from DBKL/MBPJ — required for KL tailoring and online sales.",
+          "Audit the MYR 13k December stock buy: list every item received, units sold since, and units still on hand; stop reordering slow movers.",
+          "Run a 14-day 'Direct Order' push: offer free shipping or a MYR 10 voucher for orders via Instagram/WhatsApp or Website (0% and 2.9% fees) to shift mix toward higher-margin channels.",
+          "Tag every MYR 100 of marketing spend to a specific campaign (e.g. 'TikTok Live 12 Dec', 'Influencer NURA10') and record resulting orders in your new bookkeeping sheet."
+        ]
+      },
+      "campaigns": [
+        {
+          "name": "New Year Fresh Start Bundle",
+          "offer": "Buy any two items, get 15% off the total. Minimum spend RM200. Valid Jan 1–7 only.",
+          "budget": "RM400 split: RM150 for Instagram boost (targeting women 25–40 in KL/Selangor interested in modest fashion), RM100 for TikTok Shop ads (in-feed, 3-day burst), RM100 for Shopee sponsored search (keywords: ‘baju kurung moden’, ‘rajut kantor’), RM50 for Canva Pro month to design assets."
+        },
+        {
+          "name": "Pop-Up Wardrobe Refresh",
+          "offer": "Free tailoring adjustment (hem or waist take-in) on any item bought at the pop-up. Limited to first 30 customers. Jan 5 only, 10am–6pm.",
+          "budget": "RM400 split: RM180 for stall fee (weekend market rate), RM100 for transport and setup (rental rack, mirror, steamer), RM70 for signage and hangers, RM50 for alteration supplies (thread, pins, chalk)."
+        }
+      ],
+      "changes": [
+        {
+          "what": "setting",
+          "from": "800",
+          "to": "400",
+          "because": "Cut ad spend by half (to MYR 400)"
+        },
+        {
+          "what": "setting",
+          "from": "0",
+          "to": "0.25",
+          "because": "redirect those funds to website-exclusive offers"
+        },
+        {
+          "what": "setting",
+          "from": "0.35",
+          "to": "0.25",
+          "because": "discount slow-movers 20–30%"
+        },
+        {
+          "what": "oneOffs",
+          "from": "0",
+          "to": "1",
+          "because": "Host a one-day mini pop-up at a high-footfall weekend market"
+        },
+        {
+          "what": "oneOffs",
+          "from": "false",
+          "to": "true",
+          "because": "Apply for the home-based business licence"
+        }
+      ],
+      "finished": [
+        {
+          "title": "Move repeat buyers to the website",
+          "verdict": "complete",
+          "feedback": "Great job tracking both metrics—seeing 43 repeat buyers shift to your website this month shows real progress toward reducing reliance on marketplace fees. With platform fees at MYR 976 this month, you’re already saving significantly compared to what those same sales would have cost on Shopee alone. Keep reinforcing the website-only incentive and consider measuring the average order value from these repeat buyers next to see if they’re also spending more when they buy direct."
+        },
+        {
+          "title": "Get a licence for bazaar pop-ups",
+          "verdict": "not_yet",
+          "feedback": "You said 'Yes' but didn’t share any details—such as which council issued the licence, its reference number, validity period, or how much it cost. Without those specifics, I can’t confirm the licence was actually obtained. Please provide proof or concrete information like the licence number, issuing authority (e.g., Dewan Bandaraya Kuala Lumpur), and dates it covers."
+        }
+      ],
+      "wrapped": null,
+      "errors": [
+        "wrapped: Error: Couldn't write your month story right now. Try again in a moment."
+      ]
+    }
+  },
+  {
+    "month": "2027-02",
+    "plan": {
+      "adSpend": 200,
+      "tiktokAdShare": 0.25,
+      "priceIndex": 1,
+      "saleDiscount": 0.25,
+      "livesPerMonth": 4,
+      "websitePush": true,
+      "retention": false,
+      "bundles": true,
+      "stockCover": 1,
+      "courierDeal": false,
+      "appsTrimmed": false,
+      "packer": true,
+      "influencers": 0,
+      "popups": 1,
+      "capsule": false,
+      "getLicence": false
+    },
+    "metrics": {
+      "month": "2027-02",
+      "orders": 162,
+      "newOrders": 91,
+      "repeatOrders": 53,
+      "popupOrders": 18,
+      "lostOrders": 0,
+      "unitsSold": 206,
+      "unitsBought": 200,
+      "inventoryLeft": 32,
+      "sales": 19233,
+      "salesByChannel": {
+        "Shopee": 4474,
+        "TikTok Shop": 4995,
+        "Instagram & WhatsApp": 2978,
+        "Website": 4928,
+        "Pop-up bazaar": 1859
+      },
+      "aov": 119,
+      "adSpend": 200,
+      "costPerAdOrder": 26,
+      "platformFees": 1261,
+      "expenses": 15771,
+      "net": 3462,
+      "cash": 24677,
+      "rating": 4.57,
+      "awareness": 1.01,
+      "customers": 762
+    },
+    "polaris": {
+      "question": "Hi Lumi, it's the start of February 2027. Last month: 2027-01: sales MYR 15k from 125 orders (68 new, 43 repeat, 13 at pop-ups), average order MYR 119. Stock left: 38 pieces (bought 147). Ads MYR 400, about MYR 44 per order from ads. Platform fees MYR 976. Costs MYR 13k, net MYR 1,837. Cash now MYR 21k. Shop rating 4.56. This month's big sale is the Raya collection pre-orders. What are the 3 most important things I should do this month to make more profit? Please be specific, with numbers.",
+      "advice": "Your biggest leak is high variable costs eating margins—ads alone took ~2.9% of revenue last month while driving only part of your volume. With cash healthy, focus on lifting margin and converting paid traffic into higher-AOV, repeat sales.\n\n1. Cut ad waste: pause the lowest‑ROAS creative/test audience until ROAS ≥ 3× (i.e., ≥ MYR 120 return per MYR 40 spent). Shift that budget to influencer codes like NURA10 which drove 41 orders last month at near‑zero incremental cost. Target ≤ MYR 200 ad spend this month.  \n2. Boost AOV on website: launch a “Raya Mini‑Bundle” (scarf + skirt) priced MYR 200 (cost ~MYR 98) exclusive to your site, promoted via email/SMS to the 43 repeat buyers plus TikTok Live viewers. Aim for 30 bundle sales → extra MYR 3,000 revenue, ~MYR 1,470 gross profit.  \n3. Tighten stock ordering: you bought 147 units, sold 125, left 38. Reduce next purchase by 20% (order ~118 units) to lower carrying cost and free ~MYR 800 cash for higher‑margin pre‑order deposits on the Raya collection. Track sell‑through weekly and reorder only when <15 units remain.  \n\nIf you hit these, net profit could rise to MYR 3,000+ this month. Need your current ad CPM or cost per click to refine step 1?",
+      "missionsAdded": [],
+      "checkup": {
+        "score": 68,
+        "headline": "Atelier Nura has strong product margins and growing sales, but missing bookkeeping and permits create legal and visibility risk, and cash flow swings leave only about 6 weeks of runway if sales dip.",
+        "strengths": [
+          "Healthy product margins: 44–69% after platform fees across all items, with the silk-touch scarf hitting 69% on zero-fee channels (Instagram/WhatsApp, pop-up).",
+          "Diversified sales across 5 channels with 43 repeat website buyers this month and 41 orders from influencer code NURA10.",
+          "Positive net income in 4 of 5 months, averaging MYR 1,900/month profit, with MYR 21k cash in the bank."
+        ],
+        "issues": [
+          {
+            "title": "No bookkeeping system in place",
+            "detail": "You cannot see true profitability per product, track tax obligations, or spot cash-flow gaps early. Without it, December’s MYR 274 loss (MYR 20k revenue vs MYR 21k spend) went unexplained until after the fact.",
+            "severity": "fix"
+          },
+          {
+            "title": "Missing required licences/permits",
+            "detail": "Fashion retail in KL needs proper licences. Operating without them risks fines or forced closure, which would wipe out the MYR 21k cash buffer instantly.",
+            "severity": "fix"
+          },
+          {
+            "title": "December cash crunch from lump-sum stock buying",
+            "detail": "Revenue MYR 20k but expenses MYR 21k (net -274) because a large stock purchase hit in one month. Average monthly outflow is MYR 14.6k; a single heavy purchase month can turn profit to loss.",
+            "severity": "watch"
+          },
+          {
+            "title": "High platform fees on Shopee (14%) and TikTok Shop (9%) erode margins",
+            "detail": "Tailored blazer margin drops from 58% (Instagram) to 44% on Shopee — a 14-point hit. Linen co-ord set falls from 61% to 47%. These two channels collectively cost MYR 976 in fees this month.",
+            "severity": "watch"
+          },
+          {
+            "title": "Cash runway only ~1.5 months if revenue stops",
+            "detail": "MYR 21k bank balance divided by average monthly outflow MYR 14.6k = 1.4 months. With average net profit of only MYR 1.9k/month, the buffer grows slowly and a bad month (like December) eats into it fast.",
+            "severity": "watch"
+          }
+        ],
+        "actions": [
+          "Set up a simple bookkeeping system this week (spreadsheet or Xero/QuickBooks) logging every sale, cost, platform fee, and overhead by product and channel.",
+          "Apply for the required fashion retail licences/permits for Kuala Lumpur within the next two weeks.",
+          "Launch a \"direct order\" promo: free shipping or 5% off for orders placed via Instagram/WhatsApp or your website (0–2.9% fees) to shift sales mix away from Shopee (14%) and TikTok (9%).",
+          "Stagger fabric and tailor orders into smaller weekly batches instead of one large monthly purchase to smooth cash outflow and avoid December-style crunches.",
+          "Test a MYR 10–15 price increase on Shopee and TikTok listings for the tailored blazer (MYR 219→229/234) and linen co-ord set (MYR 169→179/184) to offset their high commissions while keeping Instagram/Website prices unchanged."
+        ]
+      },
+      "campaigns": [
+        {
+          "name": "Pre-Raya Wrap Dress Bundle",
+          "offer": "Satin wrap dress (MYR 139) + Silk-touch scarf (MYR 39) = Raya Bundle at MYR 158 (save MYR 20). Only 30 bundles available for pre-order.",
+          "budget": "RM200: RM80 Shopee Ads, RM70 TikTok Boost (promote top video), RM50 for banner design on Canva Pro (one-month pass reused across assets)."
+        },
+        {
+          "name": "Buka Puasa Try-On Live",
+          "offer": "During live: 15% off any item with code BUKA15, valid only until 8 PM same day. Free delivery on orders over MYR 150.",
+          "budget": "RM200: RM100 for phone ring light and tripod (one-time, reusable), RM60 for data booster (5GB) for stable live streaming, RM40 for mini steamer to prep clothes quickly between changes."
+        }
+      ],
+      "changes": [
+        {
+          "what": "setting",
+          "from": "adSpend",
+          "to": "200",
+          "because": "Cut ad waste: pause the lowest‑ROAS creative/test audience until ROAS ≥ 3× ... Target ≤ MYR 200 ad spend this month."
+        },
+        {
+          "what": "setting",
+          "from": "stockCover",
+          "to": "1",
+          "because": "Tighten stock ordering: you bought 147 units, sold 125, left 38. Reduce next purchase by 20% (order ~118 units)"
+        }
+      ],
+      "finished": [
+        {
+          "title": "Set up simple bookkeeping",
+          "verdict": "complete",
+          "feedback": "Great job keeping your bookkeeping going for four weeks straight—that’s consistent effort and shows you’re building a real habit. Logging payouts and costs weekly gives you the clarity you need to spot trends, like how your net profit dipped in December despite higher sales, so you can adjust before small issues grow. For your next step, try reviewing your logged data at the end of each month to see which sales channel is giving you the best profit after fees—your website and pop-ups look promising based on your earlier margins."
+        },
+        {
+          "title": "Get a licence for bazaar pop-ups",
+          "verdict": "not_yet",
+          "feedback": "The licence hasn’t been approved yet, which means your plan to run regular pop-up bazaars remains on hold—this is an important step since those events have shown strong sales potential. You’ll need to follow up with the local council on any missing documents or delays in processing, and consider applying again with complete paperwork. Once secured, aim to lock in a bazaar slot for next month to keep momentum going."
+        }
+      ],
+      "wrapped": {
+        "headline": "Raya pre-orders lifted February to MYR 19k sales and MYR 3.5k profit, but the month leaned hard on a 25% discount.",
+        "problems": [
+          {
+            "title": "December inventory overbuy",
+            "rootCause": "Stock purchased for unproven December demand pushed money out (MYR 20,772) above money in (MYR 20,498), causing a MYR 274 loss.",
+            "evidence": "December spending MYR 20,772 vs sales MYR 20,498; net -MYR 274."
+          },
+          {
+            "title": "Promotion-dependent volume",
+            "rootCause": "Without the 25% off Raya pre-orders, early February daily sales averaged only MYR 156, indicating weak full-price demand.",
+            "evidence": "Pre-Raya daily sales MYR 156 vs post-Raya MYR 964; February net margin 18% relied on discounted pre-orders."
+          },
+          {
+            "title": "Missing bazaar trading licence",
+            "rootCause": "Operating weekend pop-ups without an approved licence (application filed Jan 9, still pending) risks sudden shutdown of a MYR 1,859/month channel.",
+            "evidence": "Pop-up bazaar sales MYR 1,859 in February; licence application cost MYR 250 recorded Jan 9, no approval noted."
+          }
+        ],
+        "closing": "February proved promotions can unlock volume, but the real test is turning Raya buyers into full-price regulars — ask me anytime for ideas."
+      },
+      "errors": []
+    }
+  },
+  {
+    "month": "2027-03",
+    "plan": {
+      "adSpend": 100,
+      "tiktokAdShare": 0.5,
+      "priceIndex": 1,
+      "saleDiscount": 0.15,
+      "livesPerMonth": 4,
+      "websitePush": true,
+      "retention": false,
+      "bundles": true,
+      "stockCover": 1,
+      "courierDeal": false,
+      "appsTrimmed": false,
+      "packer": true,
+      "influencers": 0,
+      "popups": 1,
+      "capsule": false,
+      "getLicence": true
+    },
+    "metrics": {
+      "month": "2027-03",
+      "orders": 138,
+      "newOrders": 70,
+      "repeatOrders": 52,
+      "popupOrders": 16,
+      "lostOrders": 13,
+      "unitsSold": 175,
+      "unitsBought": 143,
+      "inventoryLeft": 0,
+      "sales": 16917,
+      "salesByChannel": {
+        "Shopee": 3661,
+        "TikTok Shop": 4527,
+        "Instagram & WhatsApp": 2486,
+        "Website": 4563,
+        "Pop-up bazaar": 1676
+      },
+      "aov": 123,
+      "adSpend": 100,
+      "costPerAdOrder": 23,
+      "platformFees": 1090,
+      "expenses": 12551,
+      "net": 4366,
+      "cash": 29043,
+      "rating": 4.58,
+      "awareness": 0.97,
+      "customers": 828
+    },
+    "polaris": {
+      "question": "Hi Lumi, it's the start of March 2027. Last month: 2027-02: sales MYR 19k from 162 orders (91 new, 53 repeat, 18 at pop-ups), average order MYR 119. Stock left: 32 pieces (bought 200). Ads MYR 200, about MYR 26 per order from ads. Platform fees MYR 1,261. Costs MYR 16k, net MYR 3,462. Cash now MYR 25k. Shop rating 4.57. This month's big sale is the Raya last-call sale. What are the 3 most important things I should do this month to make more profit? Please be specific, with numbers.",
+      "advice": "Your margins are healthy, but ad efficiency and inventory turnover could lift profit further. With cash strong and a Raya sale coming, focus on converting interest efficiently, clearing old stock smartly, and protecting net gains from platform creep.\n\n1. Shift ad budget to retargeting website visitors who viewed but didn’t buy—aim for ≤ MYR 15 cost per acquired order (vs current MYR 26) using Meta pixel data; test ₹50/day spend for 7 days to validate.  \n2. Bundle slow-moving items (e.g., 2–3 scarves + skirt) into a “Raya Ready” flash set priced at MYR 129 (cost ~MYR 30) and promote via WhatsApp broadcast to the 43 repeat website buyers—target 15 bundles sold to clear ~45 units and add ~MYR 1,485 revenue.  \n3. Negotiate 2-day extended pop-up permits with DBKL for the Raya weekend to avoid last-minute fines; prepay MYR 300 fee now to lock location and reduce stress, ensuring pop-up sales contribute without unexpected costs.  \n\nTrack ad cost per order daily; if it creeps above MYR 18, pause and re-test creative. End-month, compare net profit against February’s MYR 3,462 target.",
+      "missionsAdded": [
+        "Shift ad budget to retargeting website visitors",
+        "Bundle slow-moving items into a Raya Ready flash set",
+        "Secure extended pop-up permits for Raya weekend"
+      ],
+      "checkup": {
+        "score": 75,
+        "headline": "Atelier Nura is profitable with strong margins and 25k cash, but missing licences and high marketplace fees are holding back full potential.",
+        "strengths": [
+          "Four of five months profitable, cumulative net +10,754 MYR; February net +3,462 on 19k revenue.",
+          "Gross margins 58–69% before fees; zero-fee channels (Instagram/WhatsApp, pop-ups) deliver 58–69% after fees.",
+          "Cash reserve 25k covers 9+ months of fixed overheads (2,630/month)."
+        ],
+        "issues": [
+          {
+            "title": "Missing business licences/permits",
+            "detail": "You reported licences or permits not in place. Operating without them risks fines or forced closure.",
+            "severity": "fix"
+          },
+          {
+            "title": "Marketplace fees cut margins by up to 15 percentage points",
+            "detail": "On Shopee (14% fee) the tailored blazer margin drops to 44% vs 58% on Instagram/WhatsApp (0% fee). TikTok Shop (9% fee) takes 9–10 points. This reduces profit on every marketplace order.",
+            "severity": "fix"
+          },
+          {
+            "title": "December loss and revenue volatility",
+            "detail": "December net was -274 MYR (21k out vs 20k in) while January revenue fell to 15k from 20k. Cause not clear from data; needs review.",
+            "severity": "watch"
+          },
+          {
+            "title": "No visibility on marketing spend or customer acquisition cost",
+            "detail": "Bookkeeping shows only 4 weeks; marketing costs not separated. Can't tell if growth is profitable.",
+            "severity": "watch"
+          },
+          {
+            "title": "Product sales mix unknown",
+            "detail": "Profit per unit known but not how many of each product sold per channel. Can't optimize mix or calculate exact break-even.",
+            "severity": "watch"
+          }
+        ],
+        "actions": [
+          "Apply for the required business licences/permits this week; check with local council (PBT) and any fashion-specific permits.",
+          "Run a 'DM to order' Instagram campaign this week offering free shipping (absorb the ~8 MYR shipping cost) to shift 20% of Shopee orders to 0% fee channel; each shifted blazer sale gains ~30 MYR extra margin.",
+          "Pull December's detailed expense report from your bookkeeping; identify the 7k spike in outflows (21k vs 14k prior month) and fix any recurring issue.",
+          "Add a 'marketing' category in your bookkeeping today; tag all ad spend, influencer fees, and content costs for the next 4 weeks.",
+          "Calculate weekly break-even: fixed costs 2,630 ÷ 4.3 weeks = 612 MYR/week. At average 55% contribution margin, need ~1,113 MYR revenue/week (≈8–10 units). Track weekly."
+        ]
+      },
+      "campaigns": [
+        {
+          "name": "Hari Raya Last Call – Safe Play",
+          "offer": "Flat 15% off all satin wrap dresses and linen co-ord sets sitewide. No minimum spend. Valid 7 days only.",
+          "budget": "RM100 split: RM50 for TikTok boost (promote 3 videos), RM30 for Shopee ad fee to join Flash Sale, RM20 for Canva Pro month (if not already) to design IG/WhatsApp assets."
+        },
+        {
+          "name": "Hari Raya Last Call – Bold Move",
+          "offer": "Raya Rescue Kit: Any satin wrap dress (RM139) + silk-touch scarf (RM39) for RM150 flat. Saves RM28. Limited to 30 kits.",
+          "budget": ""
+        },
+        {
+          "name": "Hari Raya Last Call – Bold Move",
+          "offer": "Raya Rescue Kit: Any satin wrap dress (RM139) + silk-touch scarf (RM39) for RM150 flat. Saves RM28. Limited to 30 kits.",
+          "budget": ""
+        }
+      ],
+      "changes": [
+        {
+          "what": "oneOff",
+          "from": "false",
+          "to": "true",
+          "because": "Negotiate 2-day extended pop-up permits with DBKL for the Raya weekend to avoid last-minute fines; prepay MYR 300 fee now to lock location and reduce stress, ensuring pop-up sales contribute without unexpected costs."
+        }
+      ],
+      "finished": [
+        {
+          "title": "Get a licence for bazaar pop-ups",
+          "verdict": "not_yet",
+          "feedback": "The licence hasn’t been approved yet, which means you’re not able to run regular pop-up bazaars just yet—this is an important step since your pop-ups have shown strong performance. To move forward, check with your local municipal council (DBKL or district office) about the exact documents needed for a temporary trading licence, such as a copy of your business registration, site plan, and possibly a letter of consent from the bazaar organiser. Once you have the checklist, submit your application and aim to secure approval before booking next month’s slot."
+        },
+        {
+          "title": "Secure extended pop-up permits for Raya weekend",
+          "verdict": "complete",
+          "feedback": "Great job securing the extended pop-up permit for Raya weekend—this ensures you can operate smoothly without risk of fines. Having the permit reference DBKL-POPUP-RAYA-2027-088 confirms the application was processed and approved, which is exactly what was needed to proceed with confidence. Now that this is in place, focus on promoting the pop-up across your TikTok, Instagram, and WhatsApp channels to maximize foot traffic and sales during the Raya weekend."
+        }
+      ],
+      "wrapped": null,
+      "errors": [
+        "wrapped: Error: Couldn't write your month story right now. Try again in a moment."
+      ]
+    }
+  },
+  {
+    "month": "2027-04",
+    "plan": {
+      "adSpend": 100,
+      "tiktokAdShare": 0.5,
+      "priceIndex": 1,
+      "saleDiscount": 0.15,
+      "livesPerMonth": 4,
+      "websitePush": true,
+      "retention": false,
+      "bundles": true,
+      "stockCover": 1.25,
+      "courierDeal": false,
+      "appsTrimmed": false,
+      "packer": true,
+      "influencers": 0,
+      "popups": 1,
+      "capsule": false,
+      "getLicence": false
+    },
+    "metrics": {
+      "month": "2027-04",
+      "orders": 120,
+      "newOrders": 51,
+      "repeatOrders": 57,
+      "popupOrders": 12,
+      "lostOrders": 5,
+      "unitsSold": 152,
+      "unitsBought": 152,
+      "inventoryLeft": 0,
+      "sales": 14735,
+      "salesByChannel": {
+        "Shopee": 2938,
+        "TikTok Shop": 3892,
+        "Instagram & WhatsApp": 2077,
+        "Website": 4542,
+        "Pop-up bazaar": 1286
+      },
+      "aov": 123,
+      "adSpend": 100,
+      "costPerAdOrder": 24,
+      "platformFees": 931,
+      "expenses": 12653,
+      "net": 2082,
+      "cash": 31126,
+      "rating": 4.59,
+      "awareness": 0.95,
+      "customers": 873
+    },
+    "polaris": {
+      "question": "Hi Lumi, it's the start of April 2027. Last month: 2027-03: sales MYR 17k from 138 orders (70 new, 52 repeat, 16 at pop-ups), average order MYR 123. About 13 orders lost to stock-outs or packing limits. Stock left: 0 pieces (bought 143). Ads MYR 100, about MYR 23 per order from ads. Platform fees MYR 1,090. Costs MYR 13k, net MYR 4,366. Cash now MYR 29k. Shop rating 4.58. This month's big sale is the Post-Raya clearance. What are the 3 most important things I should do this month to make more profit? Please be specific, with numbers.",
+      "advice": "Your March data shows strong demand—you sold out all 143 units—but you’re losing ~13 potential orders due to stockouts and limited packing capacity. With cash healthy at MYR 29k and low fixed costs, boosting inventory and fulfillment will directly lift sales without heavy ad spend.\n\nHere are three actions to increase profit this month:\n\n1. **Pre‑order top sellers**: Identify your three fastest‑moving SKUs (based on March’s sell‑through) and open a 2‑week pre‑order window with a 30% deposit. Target 80 extra units across those styles. Deposit covers fabric cost; produce only what’s committed. Expected extra revenue: ~MYR 11,000 (80 × avg price MYR 137). Net profit after 50% COGS: ~MYR 5,500.\n\n2. **Add a part‑time packer for peak days**: Hire one flexible helper at MYR 12/hour for 4 hours/day on order‑peak days (Mon/Wed/Fri). Cost ≈ MYR 192/week. This cuts packing delays, letting you fulfill the ~13 lost orders each week. Recovered sales: ~MYR 1,600/week (13 orders × MYR 123). Net gain after labor: ~MYR 1,400/week → ~MYR 5,600/month.\n\n3. **Run a website‑only flash bundle**: Pair your slow‑moving silk‑touch scarf (cost MYR 12) with a satin wrap dress (cost MYR 52) as a “Raya Ready” set priced at MYR 180 (website‑only). Promote via Instagram Stories to your 43 website repeat buyers. Goal: 30 bundles sold. Revenue: MYR 5,400. Combined cost: MYR 1,920. Net profit: ~MYR 3,480 (after 2.9% website fee + MYR 1/order shipping).  \n\nThese steps use existing cash, target proven demand, and avoid unnecessary ad spend. Track weekly to hit your MYR 22k monthly sales goal. 🌟",
+      "missionsAdded": [],
+      "checkup": {
+        "score": 72,
+        "headline": "Profitable with strong margins and MYR 29k cash, but sales plateau below the MYR 22k target and Shopee/TikTok fees eat 15–20% of revenue on those channels.",
+        "strengths": [
+          "Healthy gross margins on every product: 44–69% after platform fees, highest on Instagram/WhatsApp and pop-ups (0% fees).",
+          "Positive net income in 4 of the last 5 months, averaging ~MYR 2,800/month profit.",
+          "MYR 29k cash reserve covers ~11 months of fixed overheads (MYR 2,630) or ~2 months of total spend.",
+          "Repeat buyers on website (43 this month) and influencer code NURA10 (41 orders) show working retention and partnership channels."
+        ],
+        "issues": [
+          {
+            "title": "Shopee and TikTok Shop fees slash margins by 15–20 percentage points",
+            "detail": "Shopee (14% fee) leaves only 44–50% margin vs 58–69% on zero-fee channels; TikTok (9% fee) leaves 49–60% vs 58–69%. On the tailored blazer, Shopee margin is 44% vs 58% on Instagram — a MYR 31 difference per unit.",
+            "severity": "fix"
+          },
+          {
+            "title": "Sales stuck at MYR 17–20k, short of the MYR 22k level-up target",
+            "detail": "Best month was MYR 20,498; last 5 months averaged MYR 18k. Need a 10–30% jump to hit MYR 22k consistently.",
+            "severity": "fix"
+          },
+          {
+            "title": "No general business licences/permits in place",
+            "detail": "Only a pop-up permit (DBKL-POPUP-RAYA-2027-088) is documented. Operating without required licences risks fines or shutdown.",
+            "severity": "fix"
+          },
+          {
+            "title": "December loss (–MYR 274) signals cash-flow timing risk",
+            "detail": "Expenses (MYR 21k) exceeded revenue (MYR 20k) likely due to a large stock purchase (MYR 6,864 this month). Inventory buying needs pacing to avoid negative months.",
+            "severity": "watch"
+          },
+          {
+            "title": "Website fee structure hurts low-ticket items",
+            "detail": "2.9% + MYR 1/order on the MYR 39 scarf takes ~5.5% margin; on higher items it’s ~3%. Still better than Shopee/TikTok but worse than zero-fee channels.",
+            "severity": "watch"
+          }
+        ],
+        "actions": [
+          "Redirect 50% of Shopee/TikTok ad spend to Instagram/WhatsApp and pop-up promotions this week — zero fees mean every sale keeps 15–20% more margin.",
+          "Raise Shopee and TikTok Shop prices by 8–10% (e.g. satin wrap dress from MYR 139 to MYR 150) to offset platform fees, or create exclusive bundles only on zero-fee channels.",
+          "Apply for the missing business licences/permits this week — check DBKL and SSM requirements for home-based fashion production and online sales.",
+          "Use the Raya pop-up permit (DBKL-POPUP-RAYA-2027-088) to run a 2-day weekend event: target MYR 5k+ in pop-up sales to push the month toward MYR 22k.",
+          "Negotiate a performance deal with the NURA10 influencer (41 orders this month): offer 12% commission on revenue they drive, paid only on delivered orders, to scale that channel."
+        ]
+      },
+      "campaigns": [
+        {
+          "name": "Raya Reload",
+          "offer": "Buy any two items, get 15% off the lower-priced piece. Valid sitewide March 25–31. Code RAYARELOAD15.",
+          "budget": "RM50: RM15 Shopee ad boost, RM20 TikTok Boost Post (top-performing video), RM15 Canva Pro for quick graphic edits if needed."
+        },
+        {
+          "name": "Secret Stitch Sale",
+          "offer": "Flat 25% off all past-season styles (marked with 🔐 icon). WhatsApp-only access: message 'NURASECRET' to get private link. 48 hours only.",
+          "budget": ""
+        }
+      ],
+      "changes": [
+        {
+          "what": "setting",
+          "from": "1",
+          "to": "1.25",
+          "because": "boosting inventory and fulfillment will directly lift sales without heavy ad spend."
+        }
+      ],
+      "finished": [],
+      "wrapped": {
+        "headline": "April cooled after Raya's heat, profit halved but cash holds.",
+        "problems": [
+          {
+            "title": "Sales dropped across every platform after Raya",
+            "rootCause": "Post-festive seasonal dip after Raya demand faded",
+            "evidence": "April sales MYR 14,735 vs March MYR 16,917 (-13%); TikTok Shop -14%, Shopee -20%, Instagram -16%, pop-up -23%"
+          },
+          {
+            "title": "Stock purchasing outpaced sales",
+            "rootCause": "Inventory ordered for festive expectations that didn't fully materialize",
+            "evidence": "Ingredients/stock MYR 7,296 (49.5% of revenue) vs March MYR 6,864 (40.6%); sales fell MYR 2,182 while stock spend rose MYR 432"
+          },
+          {
+            "title": "Fixed overheads consuming larger share of shrinking sales",
+            "rootCause": "Sales volatility without variable cost structure",
+            "evidence": "Fixed MYR 2,630 = 17.8% of April sales vs 15.5% in March; overheads flat while sales dropped MYR 2,182"
+          },
+          {
+            "title": "Marketplace fees eroding margin on high-fee channels",
+            "rootCause": "Reliance on Shopee (14%) and TikTok Shop (9%) for volume instead of zero-fee direct channels",
+            "evidence": "Platform fees MYR 931 on MYR 6,831 marketplace sales (13.6% rate); Instagram/Website/pop-up MYR 7,904 paid 0% fees"
+          }
+        ],
+        "closing": "A quieter month after the festive rush — ask Lumi anytime for ideas."
+      },
+      "errors": []
+    }
+  }
+]
