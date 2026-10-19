@@ -5,8 +5,10 @@ import { TrendingUp } from "lucide-react";
 import { Mascot } from "@/components/mascot/Mascot";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
+import { notify } from "@/components/ui/toast";
 import { CURRENCIES, currencyForCountry } from "@/lib/currency";
 import { LEVELS, gateText } from "@/lib/levels";
+import { formatMoney } from "@/lib/money";
 import { mascotName, usePolaris } from "@/lib/store";
 
 const inputClass =
@@ -52,7 +54,12 @@ function SalesDialog({ onClose }: { onClose: () => void }) {
     if (!Number.isFinite(total) || !Number.isFinite(month)) return setError("Use numbers only.");
     if (month > total && total > 0) return setError("Your best month can't be more than your total sales.");
     updateProfile({ currency });
+    const before = usePolaris.getState().celebration;
     updateRevenue({ lifetime: total, bestMonth: month });
+    // A level-up already celebrates; otherwise say the numbers were saved.
+    if (usePolaris.getState().celebration === before) {
+      notify({ title: "Sales updated", description: `${formatMoney(total, currency, { compact: true })} in total` });
+    }
     onClose();
   }
 

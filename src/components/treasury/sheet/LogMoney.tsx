@@ -5,8 +5,11 @@ import clsx from "clsx";
 import { ArrowDownLeft, ArrowUpRight, Plus } from "lucide-react";
 import { rovingKeys } from "@/components/ui/a11y";
 import { Button } from "@/components/ui/Button";
+import { SectionTitle } from "@/components/ui/SectionTitle";
+import { notify } from "@/components/ui/toast";
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from "@/lib/categories";
 import { fieldClass, parseAmount, todayIso } from "@/lib/inputs";
+import { formatMoney } from "@/lib/money";
 import { newId, usePolaris } from "@/lib/store";
 import type { EntryType } from "@/lib/types";
 
@@ -15,6 +18,7 @@ export function LogMoney({ month, className }: { month: string; className?: stri
   const currency = usePolaris((s) => s.profile.currency);
   const channels = usePolaris((s) => s.channels);
   const addEntry = usePolaris((s) => s.addEntry);
+  const removeEntry = usePolaris((s) => s.removeEntry);
   const [type, setType] = useState<EntryType>("income");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState(INCOME_CATEGORIES[0]);
@@ -23,7 +27,6 @@ export function LogMoney({ month, className }: { month: string; className?: stri
   const [date, setDate] = useState(() => (todayIso().startsWith(month) ? todayIso() : `${month}-01`));
   const [note, setNote] = useState("");
   const [error, setError] = useState("");
-  const [saved, setSaved] = useState(false);
   const categories = type === "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
 
   function switchType(t: EntryType) {
@@ -35,7 +38,7 @@ export function LogMoney({ month, className }: { month: string; className?: stri
     const value = parseAmount(amount);
     if (!(value > 0)) return setError("Enter an amount above zero.");
     if (!date) return setError("Pick a date.");
-    addEntry({
+    const entry = {
       id: newId(),
       type,
       category,
@@ -43,12 +46,17 @@ export function LogMoney({ month, className }: { month: string; className?: stri
       date,
       note: note.trim(),
       channel: type === "income" && channel ? channel : undefined,
+    };
+    addEntry(entry);
+    const day = new Date(`${date}T00:00`).toLocaleDateString(undefined, { day: "numeric", month: "short" });
+    notify({
+      title: `${formatMoney(entry.amount, currency)} ${type === "income" ? "in" : "out"} added`,
+      description: `${entry.note || category} · ${day}`,
+      action: { label: "Undo", onClick: () => removeEntry(entry.id) },
     });
     setAmount("");
     setNote("");
     setError("");
-    setSaved(true);
-    setTimeout(() => setSaved(false), 1500);
   }
 
   return (
@@ -59,8 +67,7 @@ export function LogMoney({ month, className }: { month: string; className?: stri
         submit();
       }}
     >
-      <h2 className="font-semibold">Log money</h2>
-      <p className="mt-0.5 text-xs text-muted">One payment in or out. It goes straight into the sheet above.</p>
+      <SectionTitle title="Log money" hint="One payment in or out. It goes straight into the sheet above." />
       <div className="mt-4 grid grid-cols-2 rounded-full bg-fg/[0.04] p-1 ring-1 ring-line" role="radiogroup" aria-label="Type" onKeyDown={rovingKeys}>
         {(
           [
@@ -161,7 +168,7 @@ export function LogMoney({ month, className }: { month: string; className?: stri
         </p>
       )}
       <Button type="submit" className="mt-5 w-full">
-        <Plus className="size-4" aria-hidden /> {saved ? "Saved!" : type === "income" ? "Add money in" : "Add money out"}
+        <Plus className="size-4" aria-hidden /> {type === "income" ? "Add money in" : "Add money out"}
       </Button>
     </form>
   );

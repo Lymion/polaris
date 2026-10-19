@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import { Check, LayoutDashboard, Map } from "lucide-react";
 import { Modal } from "@/components/ui/Modal";
-import { EXPERIENCES, THEMES, worldAllowed, type Experience } from "@/lib/appearance";
+import { EXPERIENCES, SCHEMES, THEMES, WORKSPACE_DARK_SWATCH, worldAllowed, type Experience } from "@/lib/appearance";
 import { usePolaris } from "@/lib/store";
 
 const EXPERIENCE_ICONS: Record<Experience, typeof Map> = { classic: LayoutDashboard, world: Map };
@@ -54,6 +54,7 @@ export function AppearancePicker() {
         <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
           {THEMES.map((t) => {
             const selected = prefs.theme === t.id;
+            const swatch = t.id === "professional" && prefs.scheme === "dark" ? WORKSPACE_DARK_SWATCH : t.swatch;
             return (
               <button
                 key={t.id}
@@ -66,9 +67,9 @@ export function AppearancePicker() {
                 )}
               >
                 <span className="flex h-12 overflow-hidden rounded-xl ring-1 ring-black/10" aria-hidden>
-                  <span className="flex-[2]" style={{ backgroundColor: t.swatch[0] }} />
-                  <span className="flex-[2]" style={{ backgroundColor: t.swatch[1] }} />
-                  <span className="flex-1" style={{ backgroundColor: t.swatch[2] }} />
+                  <span className="flex-[2]" style={{ backgroundColor: swatch[0] }} />
+                  <span className="flex-[2]" style={{ backgroundColor: swatch[1] }} />
+                  <span className="flex-1" style={{ backgroundColor: swatch[2] }} />
                 </span>
                 <span className="mt-2 block text-sm font-semibold">{t.name}</span>
                 <span className="block text-xs leading-snug text-muted">{t.blurb}</span>
@@ -78,6 +79,32 @@ export function AppearancePicker() {
           })}
         </div>
       </fieldset>
+
+      {/* Only Workspace comes in light and dark; the other themes are one or the other. */}
+      {prefs.theme === "professional" && (
+        <fieldset className="animate-rise-in">
+          <legend className="text-sm font-semibold">Workspace mode</legend>
+          <div className="mt-3 inline-flex rounded-full bg-fg/[0.05] p-1 ring-1 ring-line">
+            {SCHEMES.map((s) => {
+              const selected = prefs.scheme === s.id;
+              return (
+                <button
+                  key={s.id}
+                  type="button"
+                  aria-pressed={selected}
+                  onClick={() => setPrefs({ scheme: s.id })}
+                  className={clsx(
+                    "tap-target relative h-8 rounded-full px-4 text-sm font-medium transition-[background-color,color,transform] duration-150 ease-out active:scale-[0.97]",
+                    selected ? "bg-star-400 text-on-accent" : "text-muted hover:text-ink",
+                  )}
+                >
+                  {s.name}
+                </button>
+              );
+            })}
+          </div>
+        </fieldset>
+      )}
     </div>
   );
 }

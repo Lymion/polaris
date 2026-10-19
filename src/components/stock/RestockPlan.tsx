@@ -5,6 +5,9 @@ import Link from "next/link";
 import { LoaderCircle, Sparkles, Target, Wallet } from "lucide-react";
 import { Mascot } from "@/components/mascot/Mascot";
 import { Button } from "@/components/ui/Button";
+import { Hint } from "@/components/ui/Hint";
+import { SeeMore } from "@/components/ui/More";
+import { notify } from "@/components/ui/toast";
 import { AiError, generateMissions, planRestock } from "@/lib/ai/client";
 import type { RestockPlan } from "@/lib/ai/shared";
 import { planIsCurrent, type StockLine } from "@/lib/inventory";
@@ -61,6 +64,7 @@ export function RestockPlanPanel({ lines }: { lines: StockLine[] }) {
       const made = await generateMissions({ mode: "advice", text, source: "advisor" });
       addMissions(made.slice(0, 1));
       setMission("made");
+      if (made[0]) notify({ title: "Mission added", description: made[0].title });
     } catch {
       setMission("idle");
       setError("Couldn't make a mission from the plan just now.");
@@ -71,9 +75,12 @@ export function RestockPlanPanel({ lines }: { lines: StockLine[] }) {
     <section className="panel p-5 sm:p-6">
       <div className="flex items-start gap-3">
         <Mascot size={44} className="shrink-0" mood={state === "planning" ? "thinking" : "idle"} />
-        <div className="min-w-0">
+        <div className="flex min-w-0 items-center gap-1.5">
           <h2 className="font-semibold">{name}&apos;s restock plan</h2>
-          <p className="mt-1 text-sm text-muted">What to order now, from your sales pace, the weeks ahead and what each product earns.</p>
+          <Hint label="About the restock plan">
+            What to order now, from your sales pace, the weeks ahead and what each product earns.
+            {saved && ` Made ${madeOn}; ${name} quotes these numbers when you ask about stock.`}
+          </Hint>
         </div>
       </div>
 
@@ -91,7 +98,6 @@ export function RestockPlanPanel({ lines }: { lines: StockLine[] }) {
 
       {plan && (
         <div className="mt-4 space-y-4">
-          <p className="text-xs text-faint">Made {madeOn}. {name} quotes these numbers when you ask about stock.</p>
           <p className="text-sm leading-relaxed">{plan.summary}</p>
           {toOrder.length > 0 && (
             <div className="space-y-2">
@@ -105,26 +111,27 @@ export function RestockPlanPanel({ lines }: { lines: StockLine[] }) {
                       </span>
                       <span className="shrink-0 tabular-nums text-muted">{fmt(i.cost)}</span>
                     </p>
-                    <p className="mt-1 text-xs leading-relaxed text-muted">{i.why}</p>
-                    <p className="mt-1.5 text-xs font-medium tabular-nums text-growth">
+                    <p className="mt-1 text-xs font-medium tabular-nums text-growth">
                       About {fmt(i.profit)} profit once sold: {formatMoney(back(i), currency)} for every {formatMoney(1, currency, { compact: true })} spent
                     </p>
+                    <SeeMore label="Why">
+                      <p className="text-xs leading-relaxed text-muted">{i.why}</p>
+                    </SeeMore>
                   </li>
                 ))}
               </ul>
             </div>
           )}
           {skip.length > 0 && (
-            <div className="text-xs leading-relaxed text-muted">
-              <p className="font-semibold text-ink">No need to order</p>
-              <ul className="mt-1 space-y-1">
+            <SeeMore label={`${skip.length} ${skip.length === 1 ? "product doesn't" : "products don't"} need ordering`}>
+              <ul className="space-y-1 text-xs leading-relaxed text-muted">
                 {skip.map((i) => (
                   <li key={i.product}>
                     <span className="font-medium text-ink">{i.product}:</span> {i.why}
                   </li>
                 ))}
               </ul>
-            </div>
+            </SeeMore>
           )}
           <div className="space-y-1.5 border-t border-line pt-3 text-sm">
             <p className="flex flex-wrap justify-between gap-2">
@@ -156,10 +163,10 @@ export function RestockPlanPanel({ lines }: { lines: StockLine[] }) {
             <div className="rounded-xl bg-caution/10 p-3 text-sm ring-1 ring-caution/30">
               <p className="flex items-center gap-1.5 font-semibold">
                 <Wallet className="size-4 shrink-0 text-caution" aria-hidden /> The order that fits your cash
-              </p>
-              <p className="mt-1 text-xs leading-relaxed text-muted">
-                Keep {fmt(plan.cash.reserve)} for a month of fixed costs and {fmt(plan.cash.spendable)} is left for stock. Spend it from the top of the list down
-                instead of trimming every line: the top earns the most back.
+                <Hint label="How this order was chosen">
+                  Keep {fmt(plan.cash.reserve)} for a month of fixed costs and {fmt(plan.cash.spendable)} is left for stock. Spend it from the top of the list
+                  down instead of trimming every line: the top earns the most back.
+                </Hint>
               </p>
               {budget.items.length ? (
                 <>

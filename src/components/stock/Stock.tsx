@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import clsx from "clsx";
 import { ClipboardCheck, Minus, Package, PackageOpen, Plus } from "lucide-react";
 import { Button, ButtonLink } from "@/components/ui/Button";
+import { Hint } from "@/components/ui/Hint";
+import { EASE_OUT, PresenceItem, Ticker, usePresence, useReorder } from "@/components/ui/motion";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { daysText, marginHealth, unitMoney, type StockLine, type StockStatus } from "@/lib/inventory";
 import { formatMoney } from "@/lib/money";
@@ -28,7 +30,10 @@ function LastsBar({ line }: { line: StockLine }) {
   const share = line.status === "out" ? 0 : line.daysLeft === null ? 1 : Math.min(1, line.daysLeft / 60);
   return (
     <span className="block h-1.5 w-full overflow-hidden rounded-full bg-fg/[0.08]" aria-hidden>
-      <span className={clsx("block h-full rounded-full", BAR_STYLE[line.status])} style={{ width: `${Math.max(line.status === "out" ? 0 : 4, share * 100)}%` }} />
+      <span
+        className={clsx("block h-full rounded-full transition-[width,background-color] duration-500", BAR_STYLE[line.status])}
+        style={{ width: `${Math.max(line.status === "out" ? 0 : 4, share * 100)}%`, transitionTimingFunction: EASE_OUT }}
+      />
     </span>
   );
 }
@@ -107,16 +112,23 @@ function StockBody() {
         {/* Five tiles in two columns leave one alone on the last row; it takes the full width there.
             Five across only from xl: at lg the sidebar leaves the money figures too little room. */}
         <dl className="grid grid-cols-2 gap-3 *:last:odd:col-span-2 xl:grid-cols-5 xl:*:last:odd:col-span-1">
-          <Tile label="Money in stock" value={fmt(sum.value)} note="What the shelf cost you" />
+          <Tile label="Money in stock" value={fmt(sum.value)} num={sum.value} hint="What the stock on your shelf cost you." />
           <Tile
             label="Profit on the shelf"
             value={fmt(sum.shelfProfit)}
+            num={sum.shelfProfit}
             tone={sum.shelfProfit > 0 ? "growth" : undefined}
             note={sum.tracked ? `When it sells for ${fmt(sum.sellValue)}` : "Count your stock to see it"}
           />
-          <Tile label="Running low" value={String(sum.low.length)} tone={sum.low.length ? "caution" : undefined} note={sum.low.map((l) => l.product.name).join(", ") || "Nothing right now"} />
-          <Tile label="Out of stock" value={String(sum.out.length)} tone={sum.out.length ? "alert" : undefined} note={sum.out.map((l) => l.product.name).join(", ") || "Nothing right now"} />
-          <Tile label="Slow sellers" value={fmt(sum.slowValue)} note={sum.slow.length ? `Tied up in ${sum.slow.map((l) => l.product.name).join(", ")}` : "Nothing sitting still"} />
+          <Tile label="Running low" value={String(sum.low.length)} num={sum.low.length} tone={sum.low.length ? "caution" : undefined} note={sum.low.map((l) => l.product.name).join(", ") || "Nothing right now"} />
+          <Tile label="Out of stock" value={String(sum.out.length)} num={sum.out.length} tone={sum.out.length ? "alert" : undefined} note={sum.out.map((l) => l.product.name).join(", ") || "Nothing right now"} />
+          <Tile
+            label="Slow sellers"
+            value={fmt(sum.slowValue)}
+            num={sum.slowValue}
+            hint="Money tied up in stock that's barely selling."
+            note={sum.slow.length ? sum.slow.map((l) => l.product.name).join(", ") : "Nothing sitting still"}
+          />
         </dl>
 
         <ProductsPanel lines={sorted} tracked={sum.tracked} total={products.length} currency={currency} onOpen={setForm} />
@@ -137,18 +149,27 @@ function StockBody() {
 
 function ProductsPanel({ lines, tracked, total, currency, onOpen }: { lines: StockLine[]; tracked: number; total: number; currency: string; onOpen: OpenForm }) {
   const fmt = (n: number) => formatMoney(n, currency, { compact: true });
+  // Most urgent first, so a restock or a sale can move a product: it glides to its new place.
+  const cards = useRef<HTMLUListElement>(null);
+  const rows = useRef<HTMLTableSectionElement>(null);
+  const order = lines.map((l) => l.product.id).join();
+  useReorder(cards, order);
+  useReorder(rows, order);
   return (
     <section className="panel @container overflow-hidden">
       <div className="px-5 pt-5 sm:px-6">
-        <h2 className="font-semibold">Products</h2>
-        <p className="mt-1 text-xs leading-relaxed text-muted">
-          {tracked ? `${tracked} of ${total} tracked. Days left use the last 30 days of sales; profit each is after the cost and platform fees.` : "Count what's on your shelf to start tracking."}
-        </p>
+        <div className="flex items-center gap-1.5">
+          <h2 className="font-semibold">Products</h2>
+          <Hint label="How these are worked out">
+            Days left use the last 30 days of sales. Profit each is what one sale leaves after its cost and the platform fees.
+          </Hint>
+        </div>
+        <p className="mt-1 text-xs text-muted">{tracked ? `${tracked} of ${total} tracked` : "Count what's on your shelf to start tracking."}</p>
       </div>
       {/* Cards when narrow; a table from about 760px. */}
-      <ul className="divide-y divide-line @3xl:hidden">
+      <ul ref={cards} className="divide-y divide-line @3xl:hidden">
         {lines.map((l) => (
-          <li key={l.product.id} className="space-y-2 px-5 py-4 sm:px-6">
+          <li key={l.product.id} data-flip={l.product.id} className="space-y-2 px-5 py-4 sm:px-6">
             <div className="flex items-start justify-between gap-3">
               <p className="min-w-0 font-medium">{l.product.name}</p>
               <StatusPill status={l.status} />
@@ -163,7 +184,10 @@ function ProductsPanel({ lines, tracked, total, currency, onOpen }: { lines: Sto
             ) : (
               <>
                 <p className="text-sm tabular-nums text-muted">
-                  <span className="font-semibold text-ink">{l.onHand}</span> in stock · {l.sold30} sold in 30 days
+                  <span className="font-semibold text-ink">
+                    <Ticker value={String(l.onHand)} num={l.onHand} />
+                  </span>{" "}
+                  in stock · {l.sold30} sold in 30 days
                   {l.daysOut >= 3 && <span className="text-alert"> (sold out {l.daysOut} of them)</span>} ·{" "}
                   {l.status === "out" ? "sold out" : `lasts ${daysText(l.daysLeft)}`}
                 </p>
@@ -194,11 +218,11 @@ function ProductsPanel({ lines, tracked, total, currency, onOpen }: { lines: Sto
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-line tabular-nums">
+          <tbody ref={rows} className="divide-y divide-line tabular-nums">
             {lines.map((l) => (
-              <tr key={l.product.id}>
+              <tr key={l.product.id} data-flip={l.product.id}>
                 <td className="px-6 py-3 font-medium">{l.product.name}</td>
-                <td className="px-3 py-3 text-right">{l.status === "untracked" ? "–" : l.onHand}</td>
+                <td className="px-3 py-3 text-right">{l.status === "untracked" ? "–" : <Ticker value={String(l.onHand)} num={l.onHand} />}</td>
                 <td className="px-3 py-3 text-right">
                   {l.status === "untracked" ? "–" : l.sold30}
                   {l.daysOut >= 3 && (
@@ -276,15 +300,18 @@ function StockHistory() {
   const products = usePolaris((s) => s.products);
   const moves = usePolaris((s) => s.stockMoves);
   const names = new Map(products.map((p) => [p.id, p.name]));
-  const recent = moves.filter((m) => names.has(m.productId)).slice(0, 8);
+  const recent = usePresence(
+    moves.filter((m) => names.has(m.productId)).slice(0, 8),
+    (m) => m.id,
+  );
 
   return (
     <section className="panel p-5 sm:p-6">
       <h2 className="font-semibold">Stock history</h2>
-      {recent.length ? (
+      {recent.list.length ? (
         <ul className="mt-3 divide-y divide-line">
-          {recent.map((m) => (
-            <li key={m.id} className="flex items-center gap-3 py-2 text-sm">
+          {recent.list.map(({ key, item: m, state }) => (
+            <PresenceItem key={key} state={state} onSettled={() => recent.settle(key)} className="flex items-center gap-3 py-2 text-sm">
               <span className="w-14 shrink-0 text-xs tabular-nums text-faint">
                 {new Date(`${m.date}T00:00`).toLocaleDateString(undefined, { day: "numeric", month: "short" })}
               </span>
@@ -295,7 +322,7 @@ function StockHistory() {
                 {m.qty > 0 ? "+" : m.qty < 0 ? "−" : "±"}
                 {Math.abs(m.qty)}
               </span>
-            </li>
+            </PresenceItem>
           ))}
         </ul>
       ) : (
@@ -324,14 +351,35 @@ function RowActions({ line, onOpen, align = "start" }: { line: StockLine; onOpen
   );
 }
 
-function Tile({ label, value, note, tone }: { label: string; value: string; note: string; tone?: "growth" | "caution" | "alert" }) {
+function Tile({
+  label,
+  value,
+  num,
+  note,
+  hint,
+  tone,
+}: {
+  label: string;
+  value: string;
+  num: number;
+  note?: string;
+  hint?: string;
+  tone?: "growth" | "caution" | "alert";
+}) {
   return (
     <div className="panel min-w-0 p-4">
-      <dt className="text-xs font-medium text-muted">{label}</dt>
-      <dd className={clsx("mt-1.5 text-xl font-bold tabular-nums", tone === "growth" && "text-growth", tone === "caution" && "text-caution", tone === "alert" && "text-alert")}>{value}</dd>
-      <dd className="mt-1 line-clamp-2 text-xs leading-snug text-faint" title={note}>
-        {note}
+      <dt className="flex items-center gap-1 text-xs font-medium text-muted">
+        {label}
+        {hint && <Hint label={`About ${label}`}>{hint}</Hint>}
+      </dt>
+      <dd className={clsx("mt-1.5 text-xl font-bold tabular-nums", tone === "growth" && "text-growth", tone === "caution" && "text-caution", tone === "alert" && "text-alert")}>
+        <Ticker value={value} num={num} />
       </dd>
+      {note && (
+        <dd className="mt-1 line-clamp-2 text-xs leading-snug text-faint" title={note}>
+          {note}
+        </dd>
+      )}
     </div>
   );
 }

@@ -4,6 +4,10 @@ import { useState } from "react";
 import clsx from "clsx";
 import { AlertTriangle, Plus, Target, Trash2, TrendingDown } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { SeeMore } from "@/components/ui/More";
+import { PresenceItem, Ticker, usePresence } from "@/components/ui/motion";
+import { SectionTitle } from "@/components/ui/SectionTitle";
+import { notify } from "@/components/ui/toast";
 import { THIN_MARGIN, totalOverheads, unitProfit } from "@/lib/finance";
 import { fieldClass, parseAmount } from "@/lib/inputs";
 import { formatMoney } from "@/lib/money";
@@ -29,10 +33,10 @@ export function ProfitPerSale() {
 
   return (
       <section className="panel p-5 sm:p-6">
-        <h2 className="font-semibold">Profit per sale, by platform</h2>
-        <p className="mt-0.5 text-xs text-muted">
-          What you keep from one sale after the cost to make it and the platform&apos;s cut.
-        </p>
+        <SectionTitle
+          title="Profit per sale, by platform"
+          hint={`What you keep from one sale after the cost to make it and the platform's cut. "Thin" means under ${THIN_MARGIN * 100}% of the price is left as profit: a rule of thumb, not a law. Ask ${guide} what's normal for your industry.`}
+        />
         {products.length === 0 ? (
           <p className="mt-4 rounded-xl border border-dashed border-fg/10 p-6 text-center text-sm text-muted">
             Add a product above to see what each sale earns you.
@@ -101,10 +105,6 @@ export function ProfitPerSale() {
               </tbody>
             </table>
             </div>
-            <p className="mt-3 text-xs text-faint">
-              &ldquo;Thin&rdquo; means under {THIN_MARGIN * 100}% of the price is left as profit: a rule of thumb, not a
-              law. Ask {guide} what&apos;s normal for your industry.
-            </p>
           </div>
         )}
       </section>
@@ -138,6 +138,7 @@ function ProductsCard() {
   const [price, setPrice] = useState("");
   const [cost, setCost] = useState("");
   const [error, setError] = useState("");
+  const rows = usePresence(products, (p) => p.id);
 
   function add() {
     const p = parseAmount(price);
@@ -145,20 +146,32 @@ function ProductsCard() {
     if (!name.trim()) return setError("Name the product.");
     if (!(p > 0)) return setError("Enter a selling price above zero.");
     if (!(c >= 0)) return setError("Enter what one unit costs you to make or buy.");
-    saveProduct({ id: newId(), name: name.trim().slice(0, 60), price: p, unitCost: c });
+    const product = { id: newId(), name: name.trim().slice(0, 60), price: p, unitCost: c };
+    saveProduct(product);
+    notify({ title: `${product.name} added`, description: `Sells ${formatMoney(p, currency)}`, action: { label: "Undo", onClick: () => removeProduct(product.id) } });
     setName("");
     setPrice("");
     setCost("");
     setError("");
   }
 
+  function remove(id: string) {
+    const index = products.findIndex((p) => p.id === id);
+    const product = products[index];
+    removeProduct(id);
+    notify({
+      title: `${product.name} removed`,
+      tone: "removed",
+      action: { label: "Undo", onClick: () => usePolaris.setState((s) => ({ products: s.products.toSpliced(index, 0, product) })) },
+    });
+  }
+
   return (
     <section className="panel p-5 sm:p-6">
-      <h2 className="font-semibold">Your products</h2>
-      <p className="mt-0.5 text-xs text-muted">Unit cost = ingredients or materials plus packaging for one item.</p>
+      <SectionTitle title="Your products" hint="Unit cost is the ingredients or materials plus packaging for one item." />
       <ul className="mt-4 divide-y divide-line">
-        {products.map((p) => (
-          <li key={p.id} className="flex items-center gap-3 py-2.5 text-sm">
+        {rows.list.map(({ key, item: p, state }) => (
+          <PresenceItem key={key} state={state} onSettled={() => rows.settle(key)} glow={false} className="flex items-center gap-3 py-2.5 text-sm">
             <span className="min-w-0 flex-1">
               <span className="block truncate font-medium" title={p.name}>
                 {p.name}
@@ -169,13 +182,13 @@ function ProductsCard() {
             </span>
             <button
               type="button"
-              onClick={() => removeProduct(p.id)}
+              onClick={() => remove(p.id)}
               aria-label={`Remove ${p.name}`}
               className="tap-target relative rounded-full p-1.5 text-faint transition-colors hover:bg-fg/[0.06] hover:text-alert"
             >
               <Trash2 className="size-3.5" aria-hidden />
             </button>
-          </li>
+          </PresenceItem>
         ))}
       </ul>
       <form
@@ -210,6 +223,7 @@ function ChannelsCard() {
   const [fee, setFee] = useState("");
   const [fixed, setFixed] = useState("");
   const [error, setError] = useState("");
+  const rows = usePresence(channels, (c) => c.id);
 
   function add() {
     const pct = fee ? parseAmount(fee) : 0;
@@ -217,20 +231,32 @@ function ChannelsCard() {
     if (!name.trim()) return setError("Name the platform, e.g. GrabFood or Shopee.");
     if (!(pct >= 0 && pct < 100)) return setError("The fee should be between 0 and 100%.");
     if (!(fx >= 0)) return setError("The fixed fee should be a number.");
-    saveChannel({ id: newId(), name: name.trim().slice(0, 40), feePercent: pct, feeFixed: fx });
+    const channel = { id: newId(), name: name.trim().slice(0, 40), feePercent: pct, feeFixed: fx };
+    saveChannel(channel);
+    notify({ title: `${channel.name} added`, description: `${pct}% fee`, action: { label: "Undo", onClick: () => removeChannel(channel.id) } });
     setName("");
     setFee("");
     setFixed("");
     setError("");
   }
 
+  function remove(id: string) {
+    const index = channels.findIndex((c) => c.id === id);
+    const channel = channels[index];
+    removeChannel(id);
+    notify({
+      title: `${channel.name} removed`,
+      tone: "removed",
+      action: { label: "Undo", onClick: () => usePolaris.setState((s) => ({ channels: s.channels.toSpliced(index, 0, channel) })) },
+    });
+  }
+
   return (
     <section className="panel p-5 sm:p-6">
-      <h2 className="font-semibold">Where you sell</h2>
-      <p className="mt-0.5 text-xs text-muted">Add each platform and the commission it takes. Check your contract for the exact fee.</p>
+      <SectionTitle title="Where you sell" hint="Add each platform and the commission it takes. Check your contract for the exact fee." />
       <ul className="mt-4 divide-y divide-line">
-        {channels.map((c) => (
-          <li key={c.id} className="flex items-center gap-3 py-2.5 text-sm">
+        {rows.list.map(({ key, item: c, state }) => (
+          <PresenceItem key={key} state={state} onSettled={() => rows.settle(key)} glow={false} className="flex items-center gap-3 py-2.5 text-sm">
             <span className="min-w-0 flex-1 truncate font-medium" title={c.name}>
               {c.name}
             </span>
@@ -239,14 +265,14 @@ function ChannelsCard() {
             </span>
             <button
               type="button"
-              onClick={() => removeChannel(c.id)}
+              onClick={() => remove(c.id)}
               disabled={channels.length === 1}
               aria-label={`Remove ${c.name}`}
               className="tap-target relative rounded-full p-1.5 text-faint transition-colors hover:bg-fg/[0.06] hover:text-alert disabled:opacity-30"
             >
               <Trash2 className="size-3.5" aria-hidden />
             </button>
-          </li>
+          </PresenceItem>
         ))}
       </ul>
       <form
@@ -287,10 +313,11 @@ export function BreakEvenCard() {
 
   return (
     <section className="panel p-5 sm:p-6">
-      <h2 className="flex items-center gap-2 font-semibold">
-        <Target className="size-4 text-star-300" aria-hidden /> Break-even
-      </h2>
-      <p className="mt-0.5 text-xs text-muted">How much you need to sell each month just to cover your fixed costs.</p>
+      <SectionTitle
+        icon={<Target className="size-4 text-star-300" aria-hidden />}
+        title="Break-even"
+        hint="How much you need to sell each month just to cover your fixed costs."
+      />
 
       {!product || fixed === 0 ? (
         <p className="mt-4 rounded-xl border border-dashed border-fg/10 p-6 text-center text-sm text-muted">
@@ -358,22 +385,24 @@ function BreakEvenResult({
   const units = Math.ceil(fixed / profit);
   return (
     <div className="mt-5 grid gap-3 sm:grid-cols-3">
-      <Figure label="Units a month" value={units.toLocaleString()} />
-      <Figure label="About per day" value={(units / 30).toFixed(1)} />
-      <Figure label="Sales needed" value={formatMoney(units * price, currency, { compact: true })} />
-      <p className="text-xs leading-relaxed text-muted sm:col-span-3">
+      <Figure label="Units a month" value={units.toLocaleString()} num={units} />
+      <Figure label="About per day" value={(units / 30).toFixed(1)} num={units} />
+      <Figure label="Sales needed" value={formatMoney(units * price, currency, { compact: true })} num={units * price} />
+      <SeeMore label="How it's worked out" className="text-xs leading-relaxed text-muted sm:col-span-3">
         Your fixed costs are {formatMoney(fixed, currency)} a month and each {name} leaves {formatMoney(profit, currency)} after
         costs and fees. Everything you sell beyond {units.toLocaleString()} a month is profit.
-      </p>
+      </SeeMore>
     </div>
   );
 }
 
-function Figure({ label, value }: { label: string; value: string }) {
+function Figure({ label, value, num }: { label: string; value: string; num: number }) {
   return (
     <div className="rounded-xl bg-fg/[0.04] p-3.5 ring-1 ring-line">
       <p className="text-xs text-muted">{label}</p>
-      <p className="mt-1 text-xl font-bold">{value}</p>
+      <p className="mt-1 text-xl font-bold">
+        <Ticker value={value} num={num} />
+      </p>
     </div>
   );
 }

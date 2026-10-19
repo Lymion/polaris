@@ -5,6 +5,9 @@ import clsx from "clsx";
 import { CalendarHeart, Plus, Trash2 } from "lucide-react";
 import { rovingKeys } from "@/components/ui/a11y";
 import { Button } from "@/components/ui/Button";
+import { PresenceItem, usePresence } from "@/components/ui/motion";
+import { SectionTitle } from "@/components/ui/SectionTitle";
+import { notify } from "@/components/ui/toast";
 import { ACTIVITY_KINDS } from "@/lib/excel";
 import { fieldClass, parseAmount, todayIso } from "@/lib/inputs";
 import { formatMoney } from "@/lib/money";
@@ -25,29 +28,42 @@ export function ActivitiesLog({ month }: { month: string }) {
   const [title, setTitle] = useState("");
   const [cost, setCost] = useState("");
   const [error, setError] = useState("");
+  const rows = usePresence(activities, (a) => a.id);
 
   function add() {
     if (!title.trim()) return setError("Say what happened, e.g. “Weekend 20% off on cupcakes”.");
     if (!date.startsWith(month)) return setError("Pick a date in this month.");
-    saveActivity({ id: newId(), date, kind, title: title.trim().slice(0, 120), cost: parseAmount(cost) || 0 });
+    const activity = { id: newId(), date, kind, title: title.trim().slice(0, 120), cost: parseAmount(cost) || 0 };
+    saveActivity(activity);
+    notify({
+      title: "Activity added",
+      description: activity.title,
+      action: { label: "Undo", onClick: () => removeActivity(activity.id) },
+    });
     setTitle("");
     setCost("");
     setError("");
   }
 
+  function remove(id: string) {
+    const activity = all.find((a) => a.id === id);
+    if (!activity) return;
+    removeActivity(id);
+    notify({ title: "Activity removed", description: activity.title, tone: "removed", action: { label: "Undo", onClick: () => saveActivity(activity) } });
+  }
+
   return (
     <section className="panel p-5 sm:p-6">
-      <h2 className="flex items-center gap-2 font-semibold">
-        <CalendarHeart className="size-4 text-star-300" aria-hidden /> What happened this month?
-      </h2>
-      <p className="mt-0.5 text-xs text-muted">
-        Launches, promotions, events, new ads. Your month report links each one to what it did for sales.
-      </p>
+      <SectionTitle
+        icon={<CalendarHeart className="size-4 text-star-300" aria-hidden />}
+        title="What happened this month?"
+        hint="Launches, promotions, events, new ads. Your month report links each one to what it did for sales."
+      />
 
-      {activities.length > 0 && (
+      {rows.list.length > 0 && (
         <ul className="mt-4 divide-y divide-line">
-          {activities.map((a) => (
-            <li key={a.id} className="flex items-center gap-3 py-2.5 text-sm">
+          {rows.list.map(({ key, item: a, state }) => (
+            <PresenceItem key={key} state={state} onSettled={() => rows.settle(key)} className="flex items-center gap-3 py-2.5 text-sm">
               <span className="w-14 shrink-0 text-xs tabular-nums text-faint">
                 {new Date(`${a.date}T00:00`).toLocaleDateString(undefined, { day: "numeric", month: "short" })}
               </span>
@@ -60,13 +76,13 @@ export function ActivitiesLog({ month }: { month: string }) {
               {a.cost > 0 && <span className="text-xs tabular-nums text-muted">{formatMoney(a.cost, currency)}</span>}
               <button
                 type="button"
-                onClick={() => removeActivity(a.id)}
+                onClick={() => remove(a.id)}
                 aria-label={`Remove ${a.title}`}
                 className="tap-target relative rounded-full p-1.5 text-faint transition-colors hover:bg-fg/[0.06] hover:text-alert"
               >
                 <Trash2 className="size-3.5" aria-hidden />
               </button>
-            </li>
+            </PresenceItem>
           ))}
         </ul>
       )}

@@ -3,7 +3,9 @@
 import { useState, type ReactNode } from "react";
 import clsx from "clsx";
 import { Button } from "@/components/ui/Button";
+import { Hint } from "@/components/ui/Hint";
 import { Modal } from "@/components/ui/Modal";
+import { notify } from "@/components/ui/toast";
 import { unitProfit } from "@/lib/finance";
 import { fieldClass, parseAmount, todayIso } from "@/lib/inputs";
 import { daysText, marginHealth, marginOf, unitMoney } from "@/lib/inventory";
@@ -29,6 +31,7 @@ export function StockForm({ mode, productId, onClose }: { mode: StockFormMode; p
   const recordSold = usePolaris((s) => s.recordSold);
   const countStock = usePolaris((s) => s.countStock);
   const setReorderAt = usePolaris((s) => s.setReorderAt);
+  const undoStockChange = usePolaris((s) => s.undoStockChange);
 
   const [id, setId] = useState(productId ?? products[0]?.id ?? "");
   const product = products.find((p) => p.id === id);
@@ -56,19 +59,32 @@ export function StockForm({ mode, productId, onClose }: { mode: StockFormMode; p
   function save() {
     if (!product) return setError("Pick a product.");
     if (!date) return setError("Pick a date.");
+    // The form closes on save, so a toast says what changed and offers the way back.
+    const undo = (change: ReturnType<typeof countStock>) => (change ? { label: "Undo", onClick: () => undoStockChange(change) } : undefined);
     if (mode === "count") {
       if (!Number.isFinite(units) || units < 0) return setError("Enter how many you counted (0 or more).");
-      countStock(product.id, units, date);
+      const change = countStock(product.id, units, date);
       const level = Math.round(parseAmount(reorder));
       setReorderAt(product.id, reorder.trim() && Number.isFinite(level) ? level : undefined);
+      notify({ title: `${product.name}: ${units} counted`, description: "Stock updated", action: undo(change) });
       return onClose();
     }
     if (!(units > 0)) return setError("Enter how many units.");
     if (mode === "restock") {
       if (logMoney && !(cost > 0)) return setError("Enter what one unit cost, or untick logging the cost.");
-      restock(product.id, units, { date, cost: logMoney ? restockTotal : undefined });
+      const change = restock(product.id, units, { date, cost: logMoney ? restockTotal : undefined });
+      notify({
+        title: `${product.name}: +${units} in stock`,
+        description: logMoney ? `${fmt(restockTotal)} logged in Treasury` : undefined,
+        action: undo(change),
+      });
     } else {
-      recordSold(product.id, units, { date, sale: logMoney ? { amount: saleTotal, channel: channel || undefined } : undefined });
+      const change = recordSold(product.id, units, { date, sale: logMoney ? { amount: saleTotal, channel: channel || undefined } : undefined });
+      notify({
+        title: `${product.name}: ${units} sold`,
+        description: logMoney ? `${fmt(saleTotal)} logged in Treasury` : undefined,
+        action: undo(change),
+      });
     }
     onClose();
   }
@@ -137,8 +153,8 @@ export function StockForm({ mode, productId, onClose }: { mode: StockFormMode; p
             <label className="flex items-start gap-2.5 text-sm">
               <input type="checkbox" checked={logMoney} onChange={(e) => setLogMoney(e.target.checked)} className="mt-0.5 size-4 accent-[var(--color-star-400)]" />
               <span>
-                Log {saleTotal ? <b>{fmt(saleTotal)}</b> : "the sale"} in Treasury as income
-                <span className="block text-xs text-muted">Untick if these sales are already in your sheet, for example from a bank statement.</span>
+                Log {saleTotal ? <b>{fmt(saleTotal)}</b> : "the sale"} in Treasury as income{" "}
+                <Hint label="When to untick this">Untick if these sales are already in your sheet, for example from a bank statement.</Hint>
               </span>
             </label>
           </>

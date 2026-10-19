@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import clsx from "clsx";
 import { ArrowLeft, CalendarDays, Clapperboard, LibraryBig, Megaphone, Palette, type LucideIcon } from "lucide-react";
 import { Mascot, type MascotMood } from "@/components/mascot/Mascot";
+import { Hint } from "@/components/ui/Hint";
 import { mascotName, usePolaris } from "@/lib/store";
 import { STATIONS, type StationId } from "@/lib/studio";
 
@@ -78,15 +79,17 @@ export function WorkspaceFrame({
 
       <header className="mt-6 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
         <div className="flex min-w-0 items-start gap-4">
-          <div className="grid size-12 shrink-0 place-items-center rounded-2xl bg-linear-to-br from-orbit-500 to-surface-700 ring-1 ring-fg/10">
+          <div className="icon-tile grid size-12 shrink-0 place-items-center rounded-2xl bg-linear-to-br from-orbit-500 to-surface-700 ring-1 ring-fg/10">
             <Icon className="size-6 text-star-300" aria-hidden />
           </div>
           <div className="min-w-0">
             <p className="eyebrow text-star-400">Creative Studio</p>
-            <h1 id="station-title" className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
-              {meta.name}
-            </h1>
-            <p className="mt-1.5 text-sm leading-relaxed text-muted">{meta.blurb}</p>
+            <div className="mt-1 flex items-center gap-2">
+              <h1 id="station-title" className="text-2xl font-bold tracking-tight sm:text-3xl">
+                {meta.name}
+              </h1>
+              <Hint label={`About ${meta.name}`}>{meta.blurb}</Hint>
+            </div>
           </div>
         </div>
 

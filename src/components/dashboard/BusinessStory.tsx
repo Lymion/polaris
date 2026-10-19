@@ -9,6 +9,9 @@ import { daysText } from "@/lib/inventory";
 import { Mascot } from "@/components/mascot/Mascot";
 import { MonthWrapped } from "@/components/treasury/wrapped/MonthWrapped";
 import { ButtonLink } from "@/components/ui/Button";
+import { Tooltip } from "@/components/ui/Hint";
+import { Clamp } from "@/components/ui/More";
+import { PresenceItem, Ticker, usePresence } from "@/components/ui/motion";
 import { ACTIVITY_KINDS } from "@/lib/excel";
 import { expensesByCategory, monthSeries, runwayMonths, totalOverheads } from "@/lib/finance";
 import { formatMoney, monthKey } from "@/lib/money";
@@ -91,13 +94,16 @@ export function BusinessStory() {
         <Mascot size={52} className="shrink-0 sm:size-[72px]" />
         <div className="min-w-0 flex-1">
           <p className="text-sm font-semibold text-star-200">{name}&apos;s take on the month</p>
-          <p className="mt-1.5 text-[15px] leading-relaxed">{storyOf({ entries, activities, currency })}</p>
+          {/* The first lines carry the month's money; the rest (biggest cost, top platform) on request. */}
+          <Clamp lines={2} className="mt-1.5 text-[15px] leading-relaxed">
+            {storyOf({ entries, activities, currency })}
+          </Clamp>
           <div className="mt-4 flex flex-wrap gap-2">
             {latest && (
               <button
                 type="button"
                 onClick={() => setWatching(latest)}
-                className="inline-flex items-center gap-2 rounded-full bg-star-400 px-4 py-2 text-sm font-semibold text-on-accent hover:brightness-105"
+                className="inline-flex items-center gap-2 rounded-full bg-star-400 px-4 py-2 text-sm font-semibold text-on-accent transition-[transform,filter] duration-150 ease-out hover:brightness-105 active:scale-[0.97]"
               >
                 <Play className="size-4" aria-hidden /> Watch {latest.stats.label} Wrapped
               </button>
@@ -138,13 +144,14 @@ function MoneyCard() {
         <Stat
           label="Net so far"
           value={fmt(cur.net)}
+          num={cur.net}
           tone={cur.net < 0 ? "bad" : cur.net > 0 ? "good" : undefined}
-          note={prev.income || prev.expenses ? `Last month ended ${fmt(prev.net)}` : undefined}
+          hint={`Money in minus money out since the 1st.${prev.income || prev.expenses ? ` Last month ended ${fmt(prev.net)}.` : ""}`}
         />
       </dl>
       <ul className="mt-4 space-y-2 border-t border-line pt-4 text-sm">
-        <Fact label="Money in" value={fmt(cur.income)} tone={cur.income ? "good" : undefined} />
-        <Fact label="Money out" value={fmt(cur.expenses)} tone={cur.expenses ? "bad" : undefined} />
+        <Fact label="Money in" value={fmt(cur.income)} num={cur.income} tone={cur.income ? "good" : undefined} />
+        <Fact label="Money out" value={fmt(cur.expenses)} num={cur.expenses} tone={cur.expenses ? "bad" : undefined} />
         <Fact label="Fixed costs" value={fixed ? `${fmt(fixed)} a month` : "Not added yet"} />
         <Fact
           label="Cash runway"
@@ -179,32 +186,38 @@ function StockCard() {
             <Stat
               label="Money in stock"
               value={fmt(sum.value)}
-              note={sum.shelfProfit > 0 ? `About ${fmt(sum.shelfProfit)} profit once it sells` : `${sum.tracked} ${sum.tracked === 1 ? "product" : "products"} tracked`}
+              hint={`What your ${sum.tracked} tracked ${sum.tracked === 1 ? "product cost" : "products cost"} you.${sum.shelfProfit > 0 ? ` About ${fmt(sum.shelfProfit)} profit once it sells.` : ""}`}
             />
           </dl>
-          <ul className="mt-4 space-y-2.5 border-t border-line pt-4 text-sm">
+          {/* Each product by name and status; the numbers behind the status show on hover. */}
+          <ul className="-mx-2 mt-4 space-y-0.5 border-t border-line pt-3 text-sm">
             {attention.length ? (
               attention.map((l) => (
-                <li key={l.product.id} className="flex items-center justify-between gap-3">
-                  <span className="min-w-0">
-                    <span className="block truncate font-medium" title={l.product.name}>
-                      {l.product.name}
-                    </span>
-                    <span className="block text-xs text-faint">
-                      {l.status === "out"
-                        ? l.perDay > 0 && l.margin.profit > 0
-                          ? `None left: about ${fmt(l.perDay * 7 * l.margin.profit)} profit missed a week`
-                          : "None left"
-                        : l.status === "slow"
-                          ? `${l.onHand} in stock, ${l.sold30} sold in 30 days: ${fmt(l.value)} tied up`
-                          : `${l.onHand} left, lasts ${daysText(l.daysLeft)}`}
-                    </span>
-                  </span>
-                  <StatusPill status={l.status} />
+                <li key={l.product.id}>
+                  <Tooltip
+                    content={
+                      <>
+                        {/* The name too, in case the row cut it short. */}
+                        <span className="block font-semibold">{l.product.name}</span>
+                        {l.status === "out"
+                          ? l.perDay > 0 && l.margin.profit > 0
+                            ? `None left: about ${fmt(l.perDay * 7 * l.margin.profit)} profit missed a week.`
+                            : "None left."
+                          : l.status === "slow"
+                            ? `${l.onHand} in stock, ${l.sold30} sold in 30 days: ${fmt(l.value)} tied up.`
+                            : `${l.onHand} left, lasts ${daysText(l.daysLeft)}.`}
+                      </>
+                    }
+                  >
+                    <Link href="/stock" className="flex items-center justify-between gap-3 rounded-lg px-2 py-2 transition-colors hover:bg-fg/[0.04]">
+                      <span className="min-w-0 truncate font-medium">{l.product.name}</span>
+                      <StatusPill status={l.status} />
+                    </Link>
+                  </Tooltip>
                 </li>
               ))
             ) : (
-              <li className="text-muted">Everything is stocked and selling.</li>
+              <li className="px-2 text-muted">Everything is stocked and selling.</li>
             )}
           </ul>
         </>
@@ -213,12 +226,12 @@ function StockCard() {
   );
 }
 
-function Fact({ label, value, tone }: { label: string; value: string; tone?: "good" | "bad" }) {
+function Fact({ label, value, num, tone }: { label: string; value: string; num?: number; tone?: "good" | "bad" }) {
   return (
     <li className="flex items-center justify-between gap-3">
       <span className="text-muted">{label}</span>
       <span className={clsx("tabular-nums", tone ? "font-semibold" : "font-medium", tone === "good" && "text-growth", tone === "bad" && "text-alert")}>
-        {value}
+        <Ticker value={value} num={num} />
       </span>
     </li>
   );
@@ -271,19 +284,19 @@ export function useActivityFeed(limit: number) {
 }
 
 function RecentActivity() {
-  const feed = useActivityFeed(5);
+  const feed = usePresence(useActivityFeed(5), (f) => `${f.at}:${f.text}`);
 
   return (
     <section className="panel p-5 sm:p-6">
       <CardTitle icon={History} title="Recent activity" href="/treasury" />
-      {feed.length === 0 ? (
+      {feed.list.length === 0 ? (
         <p className="mt-4 text-sm leading-relaxed text-muted">
           Your activity shows up here as you finish missions, log promos and launches, and save ideas.
         </p>
       ) : (
         <ul className="mt-4 space-y-3">
-          {feed.map((f, i) => (
-            <li key={i} className="flex items-start gap-3">
+          {feed.list.map(({ key, item: f, state }) => (
+            <PresenceItem key={key} state={state} onSettled={() => feed.settle(key)} glow={false} className="flex items-start gap-3">
               <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-full bg-fg/[0.06] text-star-300" aria-hidden>
                 <f.icon className="size-4" />
               </span>
@@ -295,7 +308,7 @@ function RecentActivity() {
                   {f.detail} · {when(f.at)}
                 </span>
               </span>
-            </li>
+            </PresenceItem>
           ))}
         </ul>
       )}
@@ -307,11 +320,10 @@ function StudioCard() {
   const items = usePolaris((s) => s.studioItems);
   const businessName = usePolaris((s) => s.profile.businessName);
   const counts = (Object.keys(STUDIO_KINDS) as StudioTool[]).map((k) => ({ k, n: items.filter((i) => i.output.tool === k).length })).filter((c) => c.n);
-  const latest = items[0];
 
   return (
     <section className="panel relative overflow-hidden p-5 sm:p-6">
-      <div aria-hidden className="pointer-events-none absolute -bottom-24 -right-10 size-64 rounded-full bg-fuchsia-500/15 blur-3xl" />
+      <div aria-hidden className="card-glow pointer-events-none absolute -bottom-24 -right-10 size-64 rounded-full bg-fuchsia-500/15 blur-3xl" />
       <CardTitle icon={Palette} title="Creative Studio" href="/studio" />
       {items.length === 0 ? (
         <p className="relative mt-4 text-sm leading-relaxed text-muted">
@@ -320,7 +332,10 @@ function StudioCard() {
       ) : (
         <>
           <p className="relative mt-4 text-sm text-muted">
-            <span className="text-2xl font-bold text-ink">{items.length}</span> {items.length === 1 ? "idea" : "ideas"} saved
+            <span className="text-2xl font-bold text-ink">
+              <Ticker value={String(items.length)} num={items.length} />
+            </span>{" "}
+            {items.length === 1 ? "idea" : "ideas"} saved
           </p>
           <ul className="relative mt-2 flex flex-wrap gap-1.5">
             {counts.map(({ k, n }) => (
@@ -330,10 +345,6 @@ function StudioCard() {
               </li>
             ))}
           </ul>
-          <p className="relative mt-4 truncate text-sm" title={latest.title}>
-            <span className="text-faint">Latest: </span>
-            <span className="font-medium">{latest.title}</span>
-          </p>
         </>
       )}
       <div className="relative mt-5 flex flex-wrap gap-2">

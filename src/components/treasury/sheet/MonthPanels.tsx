@@ -3,6 +3,9 @@
 import { useState } from "react";
 import clsx from "clsx";
 import { Landmark, Play } from "lucide-react";
+import { Hint } from "@/components/ui/Hint";
+import { Ticker } from "@/components/ui/motion";
+import { SectionTitle } from "@/components/ui/SectionTitle";
 import { monthSeries, runwayMonths } from "@/lib/finance";
 import { fieldClass, parseAmount } from "@/lib/inputs";
 import { formatMoney } from "@/lib/money";
@@ -41,20 +44,27 @@ export function CashCard() {
           />
         </div>
       </label>
-      <p className="mt-4 text-sm leading-relaxed text-muted">
+      <p className="mt-4 flex items-center gap-1.5 text-sm leading-relaxed text-muted">
         {cash === null ? (
           "Add your cash balance to see how long it would last."
         ) : !hasActivity ? (
           "Log a few months of sales and costs to work out your runway."
         ) : runway === null ? (
           <>
-            You&apos;ve made money on average over the last 3 months, so your cash isn&apos;t running down.{" "}
-            <span className="text-ink">Keep it that way.</span>
+            <span className="font-semibold text-growth">Not running down</span>
+            <Hint label="About your runway">
+              You&apos;ve made money on average over the last 3 months, so your cash isn&apos;t running down. Keep it that way.
+            </Hint>
           </>
         ) : (
           <>
-            At your recent loss rate, {formatMoney(cash, currency)} lasts about{" "}
-            <span className={clsx("font-semibold", runway < 3 ? "text-alert" : "text-ink")}>{runway.toFixed(1)} months</span>.
+            <span>
+              Lasts about{" "}
+              <span className={clsx("font-semibold", runway < 3 ? "text-alert" : "text-ink")}>
+                <Ticker value={`${runway.toFixed(1)} months`} num={runway} />
+              </span>
+            </span>
+            <Hint label="About your runway">At your recent loss rate, {formatMoney(cash, currency)} lasts about {runway.toFixed(1)} months.</Hint>
           </>
         )}
       </p>
@@ -70,8 +80,7 @@ export function WrappedStories({ onWatch }: { onWatch: (report: MonthlyReport) =
 
   return (
     <section className="panel p-5 sm:p-6">
-      <h2 className="font-semibold">Your Wrapped stories</h2>
-      <p className="mt-0.5 text-xs text-muted">Every month you&apos;ve wrapped, to watch again anytime</p>
+      <SectionTitle title="Your Wrapped stories" hint="Every month you've wrapped, to watch again anytime." />
       {stories.length === 0 ? (
         <p className="mt-4 rounded-xl border border-dashed border-fg/10 p-6 text-center text-sm text-muted">
           No stories yet. Use &ldquo;Make my Wrapped&rdquo; at the top once a month is filled in.

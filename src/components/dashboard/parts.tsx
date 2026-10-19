@@ -1,6 +1,8 @@
 import Link from "next/link";
 import clsx from "clsx";
 import { ChevronRight, type LucideIcon } from "lucide-react";
+import { Hint } from "@/components/ui/Hint";
+import { Ticker } from "@/components/ui/motion";
 
 export function CardTitle({ icon: Icon, title, href }: { icon: LucideIcon; title: string; href: string }) {
   return (
@@ -20,11 +22,15 @@ export function CardTitle({ icon: Icon, title, href }: { icon: LucideIcon; title
   );
 }
 
-export function Stat({ label, value, tone, note }: { label: string; value: string; tone?: "good" | "bad" | "gold"; note?: string }) {
+/** A labelled figure. `hint` is context for it (last month, what it's worth), kept behind an ⓘ. */
+export function Stat({ label, value, num, tone, hint }: { label: string; value: string; num?: number; tone?: "good" | "bad" | "gold"; hint?: string }) {
   return (
     // A column whose label grows: when one label wraps to two lines, the values in a row still line up.
     <div className="flex min-w-0 flex-col">
-      <dt className="eyebrow flex-1 text-faint">{label}</dt>
+      <dt className="eyebrow flex flex-1 items-center gap-1.5 text-faint">
+        {label}
+        {hint && <Hint label={`About ${label.toLowerCase()}`}>{hint}</Hint>}
+      </dt>
       <dd
         className={clsx(
           "mt-1 text-lg font-bold tabular-nums sm:text-xl",
@@ -33,9 +39,8 @@ export function Stat({ label, value, tone, note }: { label: string; value: strin
           tone === "gold" && "text-star-300",
         )}
       >
-        {value}
+        <Ticker value={value} num={num} />
       </dd>
-      {note && <dd className="mt-1 text-xs leading-snug text-faint">{note}</dd>}
     </div>
   );
 }

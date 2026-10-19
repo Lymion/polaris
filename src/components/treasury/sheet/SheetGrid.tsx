@@ -4,6 +4,8 @@ import { useState, type ReactNode } from "react";
 import clsx from "clsx";
 import { AlertTriangle, Plus, Trash2 } from "lucide-react";
 import { rovingKeys } from "@/components/ui/a11y";
+import { PresenceItem, Ticker, usePresence } from "@/components/ui/motion";
+import { notify } from "@/components/ui/toast";
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from "@/lib/categories";
 import { parseAmount, todayIso } from "@/lib/inputs";
 import { formatMoney } from "@/lib/money";
@@ -53,6 +55,19 @@ export function SheetGrid({ month, flags }: { month: string; flags: Map<string, 
 
   const addRow = () => addEntry({ id: newId(), type: "expense", category: "Other", amount: 0, date: defaultDate(month, rows), note: "" });
   const empty = "This month's sheet is empty. Add rows, upload your bank statement, or fill the Excel template.";
+  const shown = usePresence(rows, (r) => r.id);
+
+  // One tap deletes, so the toast offers the way back instead of asking first.
+  function remove(row: TreasuryEntry) {
+    const index = usePolaris.getState().entries.findIndex((e) => e.id === row.id);
+    removeEntry(row.id);
+    notify({
+      title: "Row deleted",
+      description: [row.note, row.amount ? formatMoney(row.amount, currency) : ""].filter(Boolean).join(" · ") || undefined,
+      tone: "removed",
+      action: { label: "Undo", onClick: () => usePolaris.setState((s) => ({ entries: s.entries.toSpliced(index, 0, row) })) },
+    });
+  }
 
   // The full spreadsheet needs about 1000px. Narrower (phones, small tablets), each row
   // becomes a card instead, so nothing has to be scrolled sideways.
@@ -61,16 +76,18 @@ export function SheetGrid({ month, flags }: { month: string; flags: Map<string, 
       <div className="@5xl:hidden">
         {rows.length === 0 && <p className="px-4 py-10 text-center text-sm text-muted">{empty}</p>}
         <ul className="divide-y divide-line">
-          {rows.map((row) => (
+          {shown.list.map(({ key, item: row, state }) => (
             <RowCard
-              key={row.id}
+              key={key}
+              state={state}
+              onSettled={() => shown.settle(key)}
               row={row}
               issue={flags.get(row.id)}
               channels={channels.map((c) => c.name)}
               onUpdate={(patch) => updateEntry(row.id, patch)}
               onType={(type) => setType(row, type)}
               onAmount={(v) => setAmount(row, row.type, v)}
-              onRemove={() => removeEntry(row.id)}
+              onRemove={() => remove(row)}
             />
           ))}
         </ul>
@@ -78,9 +95,9 @@ export function SheetGrid({ month, flags }: { month: string; flags: Map<string, 
           {/* Three across only when the sheet is wide enough for the amounts; narrower, one row each,
               so a long amount never gets cut off or split from its minus sign. */}
           <dl className="grid gap-1.5 tabular-nums @md:grid-cols-3 @md:gap-2 @md:text-center">
-            <Total label="Money in" value={formatMoney(income, currency)} />
-            <Total label="Money out" value={formatMoney(expenses, currency)} />
-            <Total label="Net" value={formatMoney(income - expenses, currency)} alert={income - expenses < 0} />
+            <Total label="Money in" value={formatMoney(income, currency)} num={income} />
+            <Total label="Money out" value={formatMoney(expenses, currency)} num={expenses} />
+            <Total label="Net" value={formatMoney(income - expenses, currency)} num={income - expenses} alert={income - expenses < 0} />
           </dl>
           <button
             type="button"
@@ -115,11 +132,11 @@ export function SheetGrid({ month, flags }: { month: string; flags: Map<string, 
             </tr>
           </thead>
           <tbody>
-            {rows.map((row) => {
+            {shown.list.map(({ key, item: row, state }) => {
               const issue = flags.get(row.id);
               const categories = row.type === "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
               return (
-                <FlaggableRow key={row.id} issue={issue}>
+                <FlaggableRow key={key} issue={issue} state={state} onSettled={() => shown.settle(key)}>
                   <td className="px-1.5 py-1">
                     <input
                       type="date"
@@ -177,9 +194,9 @@ export function SheetGrid({ month, flags }: { month: string; flags: Map<string, 
                   <td className="px-1.5 py-1">
                     <button
                       type="button"
-                      onClick={() => removeEntry(row.id)}
+                      onClick={() => remove(row)}
                       aria-label="Delete row"
-                      className="grid size-7 place-items-center rounded-full text-faint hover:bg-fg/[0.06] hover:text-alert"
+                      className="grid size-7 place-items-center rounded-full text-faint transition-[transform,background-color,color] duration-150 ease-out hover:bg-fg/[0.06] hover:text-alert active:scale-90"
                     >
                       <Trash2 className="size-3.5" aria-hidden />
                     </button>
@@ -206,10 +223,14 @@ export function SheetGrid({ month, flags }: { month: string; flags: Map<string, 
                   <Plus className="size-3.5" aria-hidden /> Add row
                 </button>
               </td>
-              <td className="px-3 py-3 text-right">{formatMoney(income, currency)}</td>
-              <td className="px-3 py-3 text-right">{formatMoney(expenses, currency)}</td>
+              <td className="px-3 py-3 text-right">
+                <Ticker value={formatMoney(income, currency)} num={income} />
+              </td>
+              <td className="px-3 py-3 text-right">
+                <Ticker value={formatMoney(expenses, currency)} num={expenses} />
+              </td>
               <td className={clsx("px-3 py-3", income - expenses < 0 && "text-alert")} colSpan={3}>
-                Net {formatMoney(income - expenses, currency)}
+                Net <Ticker value={formatMoney(income - expenses, currency)} num={income - expenses} />
               </td>
             </tr>
           </tfoot>
@@ -224,6 +245,8 @@ const field =
 
 /** One transaction as a stacked card, for narrow screens. */
 function RowCard({
+  state,
+  onSettled,
   row,
   issue,
   channels,
@@ -232,6 +255,8 @@ function RowCard({
   onAmount,
   onRemove,
 }: {
+  state: "staying" | "entering" | "leaving";
+  onSettled: () => void;
   row: TreasuryEntry;
   issue?: string;
   channels: string[];
@@ -242,7 +267,7 @@ function RowCard({
 }) {
   const categories = row.type === "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
   return (
-    <li className={clsx("space-y-2 p-3.5", issue && "bg-caution/[0.07]")}>
+    <PresenceItem state={state} onSettled={onSettled} className={clsx("space-y-2 p-3.5", issue && "bg-caution/[0.07]")}>
       <div className="flex items-center gap-2">
         <input
           type="date"
@@ -321,23 +346,37 @@ function RowCard({
           <AlertTriangle className="mt-px size-3.5 shrink-0" aria-hidden /> {issue}
         </p>
       )}
-    </li>
+    </PresenceItem>
   );
 }
 
-function Total({ label, value, alert = false }: { label: string; value: string; alert?: boolean }) {
+function Total({ label, value, num, alert = false }: { label: string; value: string; num: number; alert?: boolean }) {
   return (
     <div className="flex items-baseline justify-between gap-3 @md:block">
       <dt className="text-xs text-faint">{label}</dt>
-      <dd className={clsx("whitespace-nowrap text-sm font-semibold @md:mt-0.5", alert && "text-alert")}>{value}</dd>
+      <dd className={clsx("whitespace-nowrap text-sm font-semibold @md:mt-0.5", alert && "text-alert")}>
+        <Ticker value={value} num={num} />
+      </dd>
     </div>
   );
 }
 
-function FlaggableRow({ issue, children }: { issue?: string; children: ReactNode }) {
+function FlaggableRow({
+  issue,
+  state,
+  onSettled,
+  children,
+}: {
+  issue?: string;
+  state: "staying" | "entering" | "leaving";
+  onSettled: () => void;
+  children: ReactNode;
+}) {
   return (
     <>
-      <tr className={clsx("border-b border-line/60", issue && "bg-caution/[0.07]")}>{children}</tr>
+      <PresenceItem as="tr" fade state={state} onSettled={onSettled} className={clsx("border-b border-line/60", issue && "bg-caution/[0.07]")}>
+        {children}
+      </PresenceItem>
       {issue && (
         <tr className="bg-caution/[0.07]">
           <td colSpan={7} className="px-4 pb-2.5 text-xs text-caution">

@@ -3,6 +3,8 @@
 import clsx from "clsx";
 import { AlertTriangle, ArrowRight, Coins, TrendingDown, TrendingUp } from "lucide-react";
 import { ButtonLink } from "@/components/ui/Button";
+import { Tooltip } from "@/components/ui/Hint";
+import { SectionTitle } from "@/components/ui/SectionTitle";
 import { marginHealth, marginNotes, unitMoney, type FeeMix, type MarginNote, type StockLine } from "@/lib/inventory";
 import { formatMoney } from "@/lib/money";
 import { usePolaris } from "@/lib/store";
@@ -25,12 +27,11 @@ export function MarginsPanel({ lines, mix }: { lines: StockLine[]; mix: FeeMix }
 
   return (
     <section className="panel p-5 sm:p-6">
-      <h2 className="flex items-center gap-2 font-semibold">
-        <Coins className="size-4 text-star-300" aria-hidden /> What each product earns you
-      </h2>
-      <p className="mt-0.5 text-xs leading-relaxed text-muted">
-        Where the money from one sale goes, best earners first. {mix.note}
-      </p>
+      <SectionTitle
+        icon={<Coins className="size-4 text-star-300" aria-hidden />}
+        title="What each product earns you"
+        hint={`Where the money from one sale goes, best earners first. Hover or tap a bar for the exact split. ${mix.note}`}
+      />
       <p className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted" aria-hidden>
         <Key className="bg-fg/25">Cost to make or buy</Key>
         <Key className="bg-caution/70">Platform fees</Key>
@@ -58,14 +59,16 @@ export function MarginsPanel({ lines, mix }: { lines: StockLine[]; mix: FeeMix }
                   <span className="font-normal text-muted"> · {Math.round(l.margin.margin * 100)}%</span>
                 </span>
               </p>
-              <div className="mt-1.5 flex h-2.5 overflow-hidden rounded-full bg-fg/[0.06]" role="img" aria-label={split}>
-                <span className="bg-fg/25" style={{ width: `${cost * 100}%` }} />
-                <span className="bg-caution/70" style={{ width: `${fees * 100}%` }} />
-                <span className="bg-growth" style={{ width: `${profit * 100}%` }} />
-              </div>
-              <p className="mt-1 flex flex-wrap justify-between gap-x-3 text-xs tabular-nums">
-                <span className="text-faint">{split}</span>
-                <span className="text-muted">{l.sold30 > 0 ? `${fmt(l.profit30)} from ${l.sold30} sold in 30 days` : "None sold in 30 days"}</span>
+              {/* The exact split sits behind the bar (hover or focus it); the bar already shows it. */}
+              <Tooltip content={split} tappable>
+                <div tabIndex={0} className="mt-1.5 flex h-2.5 overflow-hidden rounded-full bg-fg/[0.06]" role="img" aria-label={split}>
+                  <span className="bg-fg/25" style={{ width: `${cost * 100}%` }} />
+                  <span className="bg-caution/70" style={{ width: `${fees * 100}%` }} />
+                  <span className="bg-growth" style={{ width: `${profit * 100}%` }} />
+                </div>
+              </Tooltip>
+              <p className="mt-1 text-right text-xs tabular-nums text-muted">
+                {l.sold30 > 0 ? `${fmt(l.profit30)} from ${l.sold30} sold in 30 days` : "None sold in 30 days"}
               </p>
             </li>
           );
@@ -89,11 +92,12 @@ export function MarginsPanel({ lines, mix }: { lines: StockLine[]; mix: FeeMix }
         </div>
       )}
 
-      <div className="mt-5 flex flex-wrap items-center justify-between gap-2 border-t border-line pt-4 text-xs text-muted">
-        <span>Profit per platform, overheads and break-even are in Treasury.</span>
-        <ButtonLink href="/treasury?tab=costs" variant="ghost" size="sm">
-          Change prices or costs <ArrowRight className="size-3.5" aria-hidden />
-        </ButtonLink>
+      <div className="mt-5 flex justify-end border-t border-line pt-4">
+        <Tooltip content="Profit per platform, overheads and break-even are in Treasury.">
+          <ButtonLink href="/treasury?tab=costs" variant="ghost" size="sm">
+            Change prices or costs <ArrowRight className="size-3.5" aria-hidden />
+          </ButtonLink>
+        </Tooltip>
       </div>
     </section>
   );

@@ -8,6 +8,7 @@ import { rovingKeys } from "@/components/ui/a11y";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { notify } from "@/components/ui/toast";
 import { addMonths } from "@/lib/finance";
 import { monthKey } from "@/lib/money";
 import { LESSONS } from "@/lib/lessons";
@@ -244,7 +245,23 @@ function TreasuryBody() {
         }}
       />
 
-      {helper.preview && <ImportPreview transactions={helper.preview} month={month} monthLabel={monthLabel} onClose={helper.closePreview} />}
+      {helper.preview && (
+        <ImportPreview
+          transactions={helper.preview}
+          month={month}
+          monthLabel={monthLabel}
+          onClose={(added) => {
+            helper.closePreview(added);
+            // The rows land in the sheet, which may not be the tab that's open.
+            if (added)
+              notify({
+                title: `${added} ${added === 1 ? "entry" : "entries"} added from your statement`,
+                description: monthLabel,
+                action: tab === "sheet" ? undefined : { label: "View", onClick: () => setTab("sheet") },
+              });
+          }}
+        />
+      )}
 
       {excel.pending && (
         <Modal onClose={excel.cancel} labelledBy="replace-title">
@@ -256,7 +273,19 @@ function TreasuryBody() {
             {excel.pending.replacing} rows in the sheet now.
           </p>
           <div className="mt-6 flex gap-2">
-            <Button onClick={excel.apply}>Replace</Button>
+            <Button
+              onClick={() => {
+                const rows = excel.pending?.rows ?? 0;
+                excel.apply();
+                notify({
+                  title: `${monthLabel} loaded from your file`,
+                  description: `${rows} ${rows === 1 ? "row" : "rows"}`,
+                  action: tab === "sheet" ? undefined : { label: "View", onClick: () => setTab("sheet") },
+                });
+              }}
+            >
+              Replace
+            </Button>
             <Button variant="ghost" onClick={excel.cancel}>
               Cancel
             </Button>

@@ -13,9 +13,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Mascot } from "@/components/mascot/Mascot";
-import { newAdvisorChat, sendAdvisorMessage } from "@/lib/advisorChat";
+import { sendAdvisorMessage } from "@/lib/advisorChat";
 import { mascotName, useHydrated, usePolaris } from "@/lib/store";
-import { ChatComposer, ChatThread } from "./ChatParts";
+import { ChatComposer, ChatThread, startNewChat } from "./ChatParts";
 
 const STARTERS: { icon: LucideIcon; label: string; prompt: string }[] = [
   {
@@ -100,10 +100,10 @@ export function AdvisorChat() {
           <button
             type="button"
             onClick={() => {
-              newAdvisorChat();
+              startNewChat();
               window.scrollTo({ top: 0 });
             }}
-            className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium text-muted ring-1 ring-line transition-colors hover:bg-fg/[0.06] hover:text-ink"
+            className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium text-muted ring-1 ring-line transition-[transform,background-color,color] duration-150 ease-out hover:bg-fg/[0.06] hover:text-ink active:scale-[0.97]"
           >
             <RotateCcw className="size-3.5" aria-hidden /> New chat
           </button>

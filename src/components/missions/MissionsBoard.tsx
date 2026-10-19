@@ -6,7 +6,9 @@ import { Check, ClipboardCheck, LoaderCircle, Plus, Sparkles, Target, Wand2 } fr
 import { PolarisMark } from "@/components/brand/PolarisMark";
 import { rovingKeys } from "@/components/ui/a11y";
 import { Button } from "@/components/ui/Button";
+import { PresenceItem, Ticker, usePresence } from "@/components/ui/motion";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { notify } from "@/components/ui/toast";
 import { AiError, generateMissions } from "@/lib/ai/client";
 import { newId, uncoveredFoundations, useHydrated, usePolaris } from "@/lib/store";
 import type { Mission } from "@/lib/types";
@@ -53,6 +55,8 @@ export function MissionsBoard() {
       const created = await generateMissions({ mode, source: "ai" });
       addMissions(created);
       setTab("active");
+      // Planning takes a while; this says it finished even if the owner looked away.
+      if (mode !== "starter") notify({ title: `${created.length} new ${created.length === 1 ? "mission" : "missions"} planned`, description: created[0]?.title });
     } catch (err) {
       setError(err instanceof AiError ? err.message : "Couldn't plan missions. Try again.");
     } finally {
@@ -115,8 +119,7 @@ export function MissionsBoard() {
           {atLimit && (
             <p className="mb-5 flex items-center gap-2.5 rounded-xl bg-fg/[0.04] px-4 py-3 text-sm text-muted ring-1 ring-line">
               <Target className="size-4 shrink-0 text-star-300" aria-hidden />
-              You have {active.length} missions open. Finish or clear some to unlock new ones; focus beats a long
-              to-do list.
+              {active.length} missions open: finish one to unlock more.
             </p>
           )}
 
@@ -152,10 +155,10 @@ export function MissionsBoard() {
           <div className="mb-5 inline-flex rounded-full bg-fg/[0.04] p-1 ring-1 ring-line" role="tablist" aria-label="Missions" onKeyDown={rovingKeys}>
             {(
               [
-                ["active", `In progress (${active.length})`],
-                ["done", `Completed (${done.length})`],
+                ["active", "In progress", active.length],
+                ["done", "Completed", done.length],
               ] as const
-            ).map(([value, label]) => (
+            ).map(([value, label, count]) => (
               <button
                 key={value}
                 id={`missions-tab-${value}`}
@@ -169,7 +172,7 @@ export function MissionsBoard() {
                   tab === value ? "bg-fg/[0.1] text-ink" : "text-muted hover:text-ink",
                 )}
               >
-                {label}
+                {label} (<Ticker value={String(count)} num={count} />)
               </button>
             ))}
           </div>
@@ -186,7 +189,8 @@ export function MissionsBoard() {
                   : "No completed missions yet. Tick off steps to finish your first one."}
               </p>
             ) : (
-              <Questline missions={list} />
+              // Keyed by tab: switching tabs swaps the whole list, it doesn't animate every card out and in.
+              <Questline key={tab} missions={list} />
             )}
           </div>
         </>
@@ -195,17 +199,27 @@ export function MissionsBoard() {
   );
 }
 
-/** Missions as stars on a constellation line: gold once done. */
+/**
+ * Missions as stars on a constellation line: gold once done. A mission that's finished or deleted
+ * folds out of the line and the rest close up; new ones grow in.
+ */
 function Questline({ missions }: { missions: Mission[] }) {
   const firstOpen = missions.find((m) => m.status !== "done")?.id;
+  const line = usePresence(missions, (m) => m.id);
   return (
     <ol className="relative space-y-4">
-      {missions.map((m, i) => (
-        <li key={m.id} className="relative grid grid-cols-[28px_1fr] gap-3 sm:grid-cols-[36px_1fr] sm:gap-4">
+      {line.list.map(({ key, item: m, state }, i) => (
+        <PresenceItem
+          key={key}
+          state={state}
+          onSettled={() => line.settle(key)}
+          glow="ring:article"
+          className="relative grid grid-cols-[28px_1fr] gap-3 sm:grid-cols-[36px_1fr] sm:gap-4"
+        >
           <div className="relative flex justify-center">
             {/* Runs from just below this star (20px offset + 28/32px tall + 4px gap) to just above
                 the next one (16px list gap + 20px offset - 4px gap), so it never enters a star. */}
-            {i < missions.length - 1 && (
+            {i < line.list.length - 1 && (
               <span
                 aria-hidden
                 className="absolute -bottom-8 top-[52px] w-px bg-linear-to-b from-orbit-400/50 to-orbit-400/15 sm:top-[56px]"
@@ -214,7 +228,7 @@ function Questline({ missions }: { missions: Mission[] }) {
             <StarNode done={m.status === "done"} active={m.status === "active"} />
           </div>
           <MissionCard mission={m} defaultOpen={m.id === firstOpen} />
-        </li>
+        </PresenceItem>
       ))}
     </ol>
   );
@@ -237,7 +251,7 @@ function StarNode({ done, active }: { done: boolean; active: boolean }) {
 function QuestlineHero({ goal, onPlan, error }: { goal: string | null; onPlan: () => void; error: string }) {
   return (
     <section className="panel relative overflow-hidden px-6 py-10 sm:px-10">
-      <div aria-hidden className="pointer-events-none absolute -top-32 left-1/2 size-96 -translate-x-1/2 rounded-full bg-orbit-500/20 blur-3xl" />
+      <div aria-hidden className="card-glow pointer-events-none absolute -top-32 left-1/2 size-96 -translate-x-1/2 rounded-full bg-orbit-500/20 blur-3xl" />
       <div className="relative text-center">
         <PolarisMark size={88} className="mx-auto" />
         <h2 className="mt-5 text-2xl font-bold tracking-tight sm:text-3xl">Chart your first questline</h2>
@@ -300,6 +314,7 @@ function AddMission({ onDone }: { onDone: () => void }) {
     try {
       const created = await generateMissions({ mode: "custom", text, source: "user" });
       addMissions(created);
+      notify({ title: created.length === 1 ? "Mission planned" : `${created.length} missions planned`, description: created[0]?.title });
       onDone();
     } catch (err) {
       setError(err instanceof AiError ? err.message : "Couldn't plan that mission. Try again.");
@@ -310,19 +325,19 @@ function AddMission({ onDone }: { onDone: () => void }) {
 
   function addPlain() {
     if (!text.trim()) return setError("Describe what you want to get done first.");
-    addMissions([
-      {
-        id: newId(),
-        title: text.trim().slice(0, 80),
-        description: "",
-        category: "operations",
-        xp: 50,
-        status: "todo",
-        steps: [],
-        source: "user",
-        createdAt: new Date().toISOString(),
-      },
-    ]);
+    const mission: Mission = {
+      id: newId(),
+      title: text.trim().slice(0, 80),
+      description: "",
+      category: "operations",
+      xp: 50,
+      status: "todo",
+      steps: [],
+      source: "user",
+      createdAt: new Date().toISOString(),
+    };
+    addMissions([mission]);
+    notify({ title: "Mission added", description: mission.title });
     onDone();
   }
 

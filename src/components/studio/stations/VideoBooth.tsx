@@ -84,7 +84,7 @@ export function VideoBooth({ nav }: { nav: StationNav }) {
 
         {/* The stage, lit by the ring light */}
         <div className="relative">
-          <div aria-hidden className="pointer-events-none absolute -top-16 left-1/2 h-64 w-[80%] -translate-x-1/2 rounded-full bg-[#FEF3C7]/10 blur-3xl" />
+          <div aria-hidden className="card-glow pointer-events-none absolute -top-16 left-1/2 h-64 w-[80%] -translate-x-1/2 rounded-full bg-[#FEF3C7]/10 blur-3xl" />
           {run.busy ? (
             <Viewfinder rolling />
           ) : ideas ? (

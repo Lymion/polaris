@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { ArrowRight, ArrowUp, Download, FileUp, ListChecks, LoaderCircle, ShieldCheck, Tags, Upload } from "lucide-react";
 import { Mascot, type MascotMood } from "@/components/mascot/Mascot";
+import { Hint, Tooltip } from "@/components/ui/Hint";
 import { mascotName, usePolaris } from "@/lib/store";
 
 export type AssistTask = "statement" | "categorise" | "check" | null;
@@ -138,9 +139,12 @@ export function LumiAssist({
         </button>
       </form>
 
-      <p className="flex gap-2 text-xs leading-relaxed text-faint">
+      <p className="flex items-center gap-1.5 text-xs text-faint">
         <ShieldCheck className="size-3.5 shrink-0" aria-hidden />
-        Statements aren&apos;t stored. Account and card numbers are hidden before {name} reads the transactions.
+        Statements aren&apos;t stored
+        <Hint label="How statements are handled">
+          Account and card numbers are hidden before {name} reads the transactions, and the file isn&apos;t kept.
+        </Hint>
       </p>
     </aside>
   );
@@ -159,18 +163,18 @@ function AssistButton({
   onClick: () => void;
   disabled: boolean;
 }) {
+  // The label says what it does; the hint (what it takes, what it fixes) waits for a hover.
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      className="flex w-full items-center gap-3 rounded-xl bg-fg/[0.04] px-3.5 py-2.5 text-left ring-1 ring-line transition-[transform,background-color] duration-150 ease-out not-disabled:hover:bg-fg/[0.08] not-disabled:active:scale-[0.98] disabled:opacity-50"
-    >
-      <Icon className="size-4 shrink-0 text-star-300" aria-hidden />
-      <span>
-        <span className="block text-sm font-medium">{label}</span>
-        <span className="block text-xs text-faint">{hint}</span>
-      </span>
-    </button>
+    <Tooltip content={hint}>
+      <button
+        type="button"
+        onClick={onClick}
+        disabled={disabled}
+        className="flex w-full items-center gap-3 rounded-xl bg-fg/[0.04] px-3.5 py-3 text-left ring-1 ring-line transition-[transform,background-color] duration-150 ease-out not-disabled:hover:bg-fg/[0.08] not-disabled:active:scale-[0.98] disabled:opacity-50"
+      >
+        <Icon className="size-4 shrink-0 text-star-300" aria-hidden />
+        <span className="text-sm font-medium">{label}</span>
+      </button>
+    </Tooltip>
   );
 }

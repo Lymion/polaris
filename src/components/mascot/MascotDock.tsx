@@ -4,8 +4,8 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Maximize2, RotateCcw, X } from "lucide-react";
-import { ChatComposer, ChatThread } from "@/components/advisor/ChatParts";
-import { newAdvisorChat, sendAdvisorMessage } from "@/lib/advisorChat";
+import { ChatComposer, ChatThread, startNewChat } from "@/components/advisor/ChatParts";
+import { sendAdvisorMessage } from "@/lib/advisorChat";
 import { effectiveRevenue } from "@/lib/finance";
 import { levelInfo } from "@/lib/levels";
 import { useDialogFocus } from "@/components/ui/a11y";
@@ -179,7 +179,7 @@ function MascotPanel({ page, mood }: { page: string; mood: MascotMood }) {
           <p className="truncate font-bold">{name}</p>
           <p className="truncate text-xs text-muted">Your business guide</p>
         </div>
-        <IconButton label="New chat" onClick={newAdvisorChat}>
+        <IconButton label="New chat" onClick={startNewChat}>
           <RotateCcw className="size-4" aria-hidden />
         </IconButton>
         <Link

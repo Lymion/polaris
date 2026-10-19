@@ -5,6 +5,10 @@ import clsx from "clsx";
 import { Plus, Trash2 } from "lucide-react";
 import { Mascot } from "@/components/mascot/Mascot";
 import { Button } from "@/components/ui/Button";
+import { Hint } from "@/components/ui/Hint";
+import { PresenceItem, Ticker, usePresence } from "@/components/ui/motion";
+import { SectionTitle } from "@/components/ui/SectionTitle";
+import { notify } from "@/components/ui/toast";
 import { averageMonthlySales, totalOverheads } from "@/lib/finance";
 import { OVERHEAD_PRESETS } from "@/lib/categories";
 import { fieldClass, parseAmount } from "@/lib/inputs";
@@ -29,14 +33,33 @@ export function OverheadsSection() {
   const share = sales > 0 ? total / sales : null;
   const unused = OVERHEAD_PRESETS.filter((p) => !overheads.some((o) => o.name === p));
 
+  const rows = usePresence(overheads, (o) => o.id);
+
   function add() {
     const v = parseAmount(amount);
     if (!name.trim()) return setError("Name the cost, e.g. Rent.");
     if (!(v > 0)) return setError("Enter the monthly amount.");
-    saveOverhead({ id: newId(), name: name.trim().slice(0, 40), amount: v });
+    const cost = { id: newId(), name: name.trim().slice(0, 40), amount: v };
+    saveOverhead(cost);
+    notify({
+      title: `${cost.name} added`,
+      description: `${formatMoney(v, currency)} a month`,
+      action: { label: "Undo", onClick: () => removeOverhead(cost.id) },
+    });
     setName("");
     setAmount("");
     setError("");
+  }
+
+  function remove(id: string) {
+    const index = overheads.findIndex((o) => o.id === id);
+    const cost = overheads[index];
+    removeOverhead(id);
+    notify({
+      title: `${cost.name} removed`,
+      tone: "removed",
+      action: { label: "Undo", onClick: () => usePolaris.setState((s) => ({ overheads: s.overheads.toSpliced(index, 0, cost) })) },
+    });
   }
 
   // The monthly total and the biggest costs sit on the Overview with the other headline numbers;
@@ -44,26 +67,26 @@ export function OverheadsSection() {
   return (
     <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
       <section className="panel p-5 sm:p-6">
-        <h2 className="font-semibold">Fixed monthly costs</h2>
-        <p className="mt-0.5 text-xs text-muted">
-          Costs you pay every month whether or not you sell anything. Ingredients and stock don&apos;t go here.
-        </p>
+        <SectionTitle
+          title="Fixed monthly costs"
+          hint="Costs you pay every month whether or not you sell anything. Ingredients and stock don't go here."
+        />
         <ul className="mt-4 divide-y divide-line">
-          {overheads.map((o) => (
-            <li key={o.id} className="flex items-center gap-3 py-2.5 text-sm">
+          {rows.list.map(({ key, item: o, state }) => (
+            <PresenceItem key={key} state={state} onSettled={() => rows.settle(key)} glow={false} className="flex items-center gap-3 py-2.5 text-sm">
               <span className="min-w-0 flex-1 truncate font-medium" title={o.name}>
                 {o.name}
               </span>
               <span className="tabular-nums text-muted">{formatMoney(o.amount, currency)}</span>
               <button
                 type="button"
-                onClick={() => removeOverhead(o.id)}
+                onClick={() => remove(o.id)}
                 aria-label={`Remove ${o.name}`}
                 className="tap-target relative rounded-full p-1.5 text-faint transition-colors hover:bg-fg/[0.06] hover:text-alert"
               >
                 <Trash2 className="size-3.5" aria-hidden />
               </button>
-            </li>
+            </PresenceItem>
           ))}
         </ul>
         {unused.length > 0 && (
@@ -104,10 +127,11 @@ export function OverheadsSection() {
       </section>
 
       <div className="grid gap-3">
-        <Tile label="Cost to stay open, per day" value={formatMoney(total / 30, currency)} note="Your fixed costs spread over 30 days" />
+        <Tile label="Cost to stay open, per day" value={formatMoney(total / 30, currency)} num={total} hint="Your fixed costs spread over 30 days." />
         <Tile
           label="Share of your average sales"
           value={share === null ? "–" : `${Math.round(share * 100)}%`}
+          num={share ?? undefined}
           note={share === null ? "Log sales in the Monthly sheet to see this" : `of ${formatMoney(sales, currency, { compact: true })} a month`}
           tone={share !== null && share >= 1 ? "bad" : undefined}
         />
@@ -127,8 +151,7 @@ export function BiggestFixedCosts({ className }: { className?: string }) {
 
   return (
     <section className={clsx("panel p-5 sm:p-6", className)}>
-      <h2 className="font-semibold">Biggest fixed costs</h2>
-      <p className="mt-0.5 text-xs text-muted">Monthly amount per cost</p>
+      <SectionTitle title="Biggest fixed costs" hint="What each fixed cost takes every month, biggest first." />
       <div className="mt-5">
         {overheads.length ? (
           <BarList rows={[...overheads].sort((a, b) => b.amount - a.amount).map((o) => ({ label: o.name, amount: o.amount }))} currency={currency} />
@@ -155,11 +178,16 @@ export function BiggestFixedCosts({ className }: { className?: string }) {
   );
 }
 
-function Tile({ label, value, note, tone }: { label: string; value: string; note?: string; tone?: "bad" }) {
+function Tile({ label, value, num, note, hint, tone }: { label: string; value: string; num?: number; note?: string; hint?: string; tone?: "bad" }) {
   return (
     <div className="panel p-4">
-      <p className="text-xs font-medium text-muted">{label}</p>
-      <p className={clsx("mt-1.5 text-2xl font-bold", tone === "bad" && "text-alert")}>{value}</p>
+      <p className="flex items-center gap-1 text-xs font-medium text-muted">
+        {label}
+        {hint && <Hint label={`About ${label}`}>{hint}</Hint>}
+      </p>
+      <p className={clsx("mt-1.5 text-2xl font-bold", tone === "bad" && "text-alert")}>
+        <Ticker value={value} num={num} />
+      </p>
       {note && <p className="mt-1 text-xs text-faint">{note}</p>}
     </div>
   );

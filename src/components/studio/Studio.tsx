@@ -4,6 +4,7 @@ import { useEffect, useState, type AnimationEvent, type ComponentType } from "re
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import { MessageCircle, Palette } from "lucide-react";
+import { Tooltip } from "@/components/ui/Hint";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { mascotName, useHydrated, usePolaris, useProfessional, useWorld } from "@/lib/store";
 import { STATIONS, type StationId } from "@/lib/studio";
@@ -207,29 +208,28 @@ function Room({ scene, onEnter, onZoomEnd }: { scene: Scene; onEnter: (id: Stati
         {STATIONS.map((s) => {
           const Icon = STATION_ICONS[s.id];
           const active = hovered === s.id;
+          // The name says where it goes; what's made there shows on hover, and Lumi says it too.
           return (
-            <button
-              key={s.id}
-              type="button"
-              onClick={() => onEnter(s.id)}
-              onPointerEnter={() => setHovered(s.id)}
-              onPointerLeave={() => setHovered((h) => (h === s.id ? null : h))}
-              className={clsx(
-                "panel flex items-start gap-3 p-4 text-left transition-colors xl:flex-col xl:gap-2.5",
-                active ? "bg-star-400/10 ring-1 ring-star-400/50" : "hover:bg-fg/[0.06]",
-              )}
-            >
-              <span className={clsx("grid size-9 shrink-0 place-items-center rounded-xl", active ? "bg-star-400 text-on-accent" : "bg-fg/[0.06] text-star-300")}>
-                <Icon className="size-[18px]" aria-hidden />
-              </span>
-              <span className="min-w-0">
-                <span className="block text-sm font-semibold">
+            <Tooltip key={s.id} content={s.blurb}>
+              <button
+                type="button"
+                onClick={() => onEnter(s.id)}
+                onPointerEnter={() => setHovered(s.id)}
+                onPointerLeave={() => setHovered((h) => (h === s.id ? null : h))}
+                className={clsx(
+                  "panel flex items-center gap-3 p-4 text-left transition-[transform,background-color] duration-150 ease-out active:scale-[0.98] xl:flex-col xl:items-start xl:gap-2.5",
+                  active ? "bg-star-400/10 ring-1 ring-star-400/50" : "hover:bg-fg/[0.06]",
+                )}
+              >
+                <span className={clsx("grid size-9 shrink-0 place-items-center rounded-xl transition-colors", active ? "bg-star-400 text-on-accent" : "bg-fg/[0.06] text-star-300")}>
+                  <Icon className="size-[18px]" aria-hidden />
+                </span>
+                <span className="min-w-0 text-sm font-semibold">
                   {s.name}
                   {s.id === "library" && saved > 0 && <span className="ml-1.5 font-normal text-faint">({saved})</span>}
                 </span>
-                <span className="mt-0.5 block text-xs leading-snug text-muted">{s.blurb}</span>
-              </span>
-            </button>
+              </button>
+            </Tooltip>
           );
         })}
       </nav>

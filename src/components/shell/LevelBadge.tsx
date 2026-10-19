@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Lock } from "lucide-react";
+import { EASE_OUT, Ticker } from "@/components/ui/motion";
 import { useHydrated, usePolaris } from "@/lib/store";
 import { useLevel } from "@/lib/useLevel";
 
@@ -21,7 +22,9 @@ export function LevelBadge({ compact = false }: { compact?: boolean }) {
       >
         <span className="text-star-300">Lv {lvl.level}</span>
         <span className="text-faint">·</span>
-        <span className="text-muted">{lvl.xp.toLocaleString()} XP</span>
+        <span className="text-muted">
+          <Ticker value={`${lvl.xp.toLocaleString()} XP`} num={lvl.xp} />
+        </span>
         {lvl.blockedByGate && <Lock className="size-3 text-star-300" aria-label="Next level locked" />}
       </Link>
     );
@@ -38,7 +41,7 @@ export function LevelBadge({ compact = false }: { compact?: boolean }) {
       <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-fg/[0.08]">
         <div
           className="h-full rounded-full bg-linear-to-r from-orbit-400 to-star-400 transition-[width] duration-700"
-          style={{ width: `${Math.round(lvl.progress * 100)}%` }}
+          style={{ width: `${Math.round(lvl.progress * 100)}%`, transitionTimingFunction: EASE_OUT }}
         />
       </div>
       <p className="mt-1.5 flex items-center gap-1 text-xs text-faint">
@@ -47,7 +50,7 @@ export function LevelBadge({ compact = false }: { compact?: boolean }) {
             <Lock className="size-3 shrink-0 text-star-300" aria-hidden /> Needs {lvl.nextGate}
           </>
         ) : lvl.next ? (
-          `${lvl.xpToNext.toLocaleString()} XP to Level ${lvl.next.level}`
+          <Ticker value={`${lvl.xpToNext.toLocaleString()} XP to Level ${lvl.next.level}`} num={-lvl.xpToNext} />
         ) : (
           "Max level reached"
         )}

@@ -4,10 +4,22 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
-import { ArrowRight, CalendarDays, CheckCircle2, Compass, MessagesSquare, Play, RotateCcw, TriangleAlert, type LucideIcon } from "lucide-react";
+import {
+  ArrowRight,
+  CalendarDays,
+  CheckCircle2,
+  ChevronRight,
+  Compass,
+  MessagesSquare,
+  Play,
+  RotateCcw,
+  TriangleAlert,
+  type LucideIcon,
+} from "lucide-react";
 import { Wordmark } from "@/components/brand/PolarisMark";
 import { Mascot } from "@/components/mascot/Mascot";
 import { Columns, CountUp, Delta, Pop, StoryPlayer, type Slide } from "@/components/story/Story";
+import { Tooltip } from "@/components/ui/Hint";
 import { CHART_COLORS } from "@/lib/categories";
 import { formatMoney } from "@/lib/money";
 import { mascotName, usePolaris } from "@/lib/store";
@@ -356,65 +368,58 @@ export function YourWeekStory({ week, onClose }: { week: YourWeek; onClose: () =
   return <StoryPlayer label="Your Week" slides={slides} onClose={onClose} />;
 }
 
-/** Your Week on the home page: the headline, what needs doing, and the story to play. */
+/**
+ * Your Week on the home page: the headline, the problems by name, and the story to play. Why each
+ * one matters shows on hover and keyboard focus; the story tells the rest.
+ */
 export function YourWeekCard() {
   const week = useYourWeek();
   const [playing, setPlaying] = useState(false);
-  const sorted = week.lastWeek.length ? week.lastWeek.filter((f) => f.verdict === "solved" || f.verdict === "better").length : null;
 
   return (
     <section aria-labelledby="week-title" className="panel relative overflow-hidden p-5 sm:p-6">
-      <div aria-hidden className="pointer-events-none absolute -right-20 -top-24 size-64 rounded-full bg-[#0E7490]/25 blur-3xl" />
-      {/* The button only moves beside the cards from xl: at lg the sidebar leaves too little room. */}
-      <div className="relative flex flex-col gap-5 xl:flex-row xl:items-center xl:gap-8">
-        <div className="min-w-0 flex-1">
+      <div aria-hidden className="card-glow pointer-events-none absolute -right-20 -top-24 size-64 rounded-full bg-[#0E7490]/25 blur-3xl" />
+      <div className="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+        <div className="min-w-0">
           <p className="eyebrow text-star-400">Your Week · {week.label}</p>
           <h2 id="week-title" className="mt-1.5 text-lg font-semibold leading-snug sm:text-xl">
             {week.headline}
           </h2>
-          {sorted !== null && (
-            <p className="mt-1 text-sm text-muted">
-              A week ago: {sorted} of {week.lastWeek.length} {week.lastWeek.length === 1 ? "problem" : "problems"} sorted or better since.
-            </p>
-          )}
-          {/* On a phone the button sits under the headline, where it's on screen. */}
-          <PlayButton onClick={() => setPlaying(true)} className="mt-4 inline-flex xl:hidden" />
-          {week.priorities.length > 0 && (
-            <ol className="mt-4 grid gap-2.5 md:grid-cols-3">
-              {week.priorities.map((p, i) => {
-                const tone = TONE[p.tone];
-                return (
-                  <li key={p.id} className="min-w-0">
-                    <Link href={p.href} className="group flex h-full gap-3 rounded-xl bg-fg/[0.04] p-3 ring-1 ring-line transition-colors hover:bg-fg/[0.07]">
-                      <span className={clsx("grid size-7 shrink-0 place-items-center rounded-lg text-xs font-bold", tone.ring)}>{i + 1}</span>
-                      <span className="min-w-0">
-                        <span className="block text-sm font-semibold leading-snug">{p.title}</span>
-                        <span className="mt-0.5 block text-xs leading-relaxed text-muted">{p.why}</span>
-                      </span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ol>
-          )}
         </div>
-        <PlayButton onClick={() => setPlaying(true)} className="hidden xl:inline-flex" />
+        <PlayButton onClick={() => setPlaying(true)} />
       </div>
+      {week.priorities.length > 0 && (
+        <ol className="relative mt-4 grid gap-2 md:grid-cols-3">
+          {week.priorities.map((p, i) => {
+            const tone = TONE[p.tone];
+            return (
+              <li key={p.id} className="min-w-0">
+                <Tooltip content={p.why}>
+                  <Link
+                    href={p.href}
+                    className="flex h-full items-center gap-3 rounded-xl bg-fg/[0.04] px-3 py-2.5 ring-1 ring-line transition-[background-color,transform] duration-150 ease-out hover:bg-fg/[0.07] active:scale-[0.98]"
+                  >
+                    <span className={clsx("grid size-6 shrink-0 place-items-center rounded-md text-xs font-bold", tone.ring)}>{i + 1}</span>
+                    <span className="min-w-0 flex-1 text-sm font-semibold leading-snug">{p.title}</span>
+                    <ChevronRight className="size-4 shrink-0 text-faint" aria-hidden />
+                  </Link>
+                </Tooltip>
+              </li>
+            );
+          })}
+        </ol>
+      )}
       {playing && <YourWeekStory week={week} onClose={() => setPlaying(false)} />}
     </section>
   );
 }
 
-/** The display class comes from the caller: a base `inline-flex` here would beat a caller's `hidden`. */
-function PlayButton({ onClick, className }: { onClick: () => void; className: string }) {
+function PlayButton({ onClick }: { onClick: () => void }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={clsx(
-        "shrink-0 items-center justify-center gap-2 rounded-full bg-star-400 px-5 py-3 text-sm font-semibold text-on-accent shadow-[0_8px_24px_-8px_var(--accent-glow)] transition-[transform,filter] duration-150 ease-out hover:brightness-105 active:scale-[0.97]",
-        className,
-      )}
+      className="inline-flex shrink-0 items-center justify-center gap-2 self-start rounded-full bg-star-400 px-5 py-2.5 text-sm font-semibold text-on-accent shadow-[0_8px_24px_-8px_var(--accent-glow)] transition-[transform,filter] duration-150 ease-out hover:brightness-105 active:scale-[0.97]"
     >
       <Play className="size-4" aria-hidden /> Play your week
     </button>

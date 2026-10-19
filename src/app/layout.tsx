@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Berkshire_Swash, Fredoka, Plus_Jakarta_Sans } from "next/font/google";
 import { AppShell } from "@/components/shell/AppShell";
+import { Toaster } from "@/components/ui/toast";
 import { PREFS_BOOT_SCRIPT } from "@/lib/appearance";
 import "./globals.css";
 
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             page content, so a light theme flashed dark first. */}
         <script dangerouslySetInnerHTML={{ __html: PREFS_BOOT_SCRIPT }} />
         <AppShell>{children}</AppShell>
+        <Toaster />
       </body>
     </html>
   );

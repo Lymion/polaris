@@ -1,10 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import clsx from "clsx";
 import { Check, ChevronDown, CircleHelp, ClipboardCheck, Info, RotateCcw, Trash2 } from "lucide-react";
 import { Mascot } from "@/components/mascot/Mascot";
 import { Button } from "@/components/ui/Button";
+import { Hint } from "@/components/ui/Hint";
+import { animateHeight, Ticker } from "@/components/ui/motion";
+import { notify } from "@/components/ui/toast";
 import { CATEGORY_LABELS, CATEGORY_STYLES } from "@/lib/categories";
 import { mascotName, usePolaris } from "@/lib/store";
 import type { Mission } from "@/lib/types";
@@ -17,8 +21,9 @@ export function MissionCard({ mission, defaultOpen = false }: { mission: Mission
   const openMascot = usePolaris((s) => s.openMascot);
   const name = usePolaris((s) => mascotName(s.profile));
   const [open, setOpen] = useState(defaultOpen);
+  const stepsBox = useRef<HTMLDivElement>(null);
   const [reporting, setReporting] = useState(false);
-  const [confirm, setConfirm] = useState<"delete" | "reopen" | null>(null);
+  const [confirm, setConfirm] = useState<"reopen" | null>(null);
 
   const done = mission.status === "done";
   const stepsDone = mission.steps.filter((s) => s.done).length;
@@ -30,8 +35,8 @@ export function MissionCard({ mission, defaultOpen = false }: { mission: Mission
     .map((s) => `- ${s.text}`)
     .join("\n")}`;
 
-  /** Destructive actions need a second tap within 3 seconds. */
-  function confirmThen(kind: "delete" | "reopen", action: () => void) {
+  /** Reopening hands back XP, so it needs a second tap within 3 seconds. */
+  function confirmThen(kind: "reopen", action: () => void) {
     if (confirm === kind) {
       action();
       setConfirm(null);
@@ -39,6 +44,18 @@ export function MissionCard({ mission, defaultOpen = false }: { mission: Mission
       setConfirm(kind);
       setTimeout(() => setConfirm((c) => (c === kind ? null : c)), 3000);
     }
+  }
+
+  // Deleting is one tap: the toast's Undo puts the mission back where it was.
+  function remove() {
+    const index = usePolaris.getState().missions.findIndex((m) => m.id === mission.id);
+    removeMission(mission.id);
+    notify({
+      title: "Mission deleted",
+      description: mission.title,
+      tone: "removed",
+      action: { label: "Undo", onClick: () => usePolaris.setState((s) => ({ missions: s.missions.toSpliced(index, 0, mission) })) },
+    });
   }
 
   return (
@@ -56,33 +73,40 @@ export function MissionCard({ mission, defaultOpen = false }: { mission: Mission
           <span className="ml-auto text-xs font-bold text-star-300">+{mission.xp} XP</span>
         </div>
 
-        <h3 className={clsx("mt-3 text-lg font-semibold leading-snug", done && "text-muted line-through decoration-faint")}>
-          {mission.title}
-        </h3>
-        {mission.description && <p className="mt-1 text-sm leading-relaxed text-muted">{mission.description}</p>}
+        {/* What the mission is for waits behind the ⓘ: the title and steps say what to do. The ⓘ
+            sits beside the heading, centred on its first line, so the heading reads as just its title. */}
+        <div className="mt-3 flex items-start gap-2">
+          <h3 className={clsx("text-lg font-semibold leading-snug", done && "text-muted line-through decoration-faint")}>{mission.title}</h3>
+          {mission.description && (
+            <span className="flex h-[1.547rem] shrink-0 items-center">
+              <Hint label="About this mission">{mission.description}</Hint>
+            </span>
+          )}
+        </div>
+        {/* A safety note stays in view, kept to one line. */}
         {mission.category === "legal" && !done && (
           <p className="mt-3 flex items-start gap-2 rounded-lg bg-sky-400/[0.07] px-3 py-2 text-xs leading-relaxed text-sky-200/80 ring-1 ring-sky-400/20">
             <Info className="mt-px size-3.5 shrink-0" aria-hidden />
-            Rules, forms and fees change. Confirm each step with the official office or an accountant before you act.
+            Rules change: check each step with the official office or an accountant.
           </p>
         )}
 
         {mission.steps.length > 0 && (
           <button
             type="button"
-            onClick={() => setOpen(!open)}
+            onClick={() => animateHeight(stepsBox.current, () => flushSync(() => setOpen(!open)))}
             aria-expanded={open}
             aria-controls={stepsId}
             className="group tap-target relative mt-2.5 flex w-full items-center gap-3 py-1.5 text-left"
           >
             <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-fg/[0.08]">
               <div
-                className="h-full rounded-full bg-linear-to-r from-orbit-400 to-star-400 transition-[width] duration-500"
+                className="h-full rounded-full bg-linear-to-r from-orbit-400 to-star-400 transition-[width] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]"
                 style={{ width: `${Math.round(progress * 100)}%` }}
               />
             </div>
             <span className="text-xs font-medium tabular-nums text-muted">
-              {stepsDone}/{mission.steps.length} steps
+              <Ticker value={`${stepsDone}/${mission.steps.length}`} num={stepsDone} /> steps
             </span>
             <ChevronDown
               className={clsx("size-4 text-faint transition-transform group-hover:text-ink", open && "rotate-180")}
@@ -92,55 +116,74 @@ export function MissionCard({ mission, defaultOpen = false }: { mission: Mission
         )}
       </div>
 
-      {open && mission.steps.length > 0 && (
-        <ul id={stepsId} className="space-y-1 border-t border-line bg-fg/[0.02] px-3 py-3">
-          {mission.steps.map((step) => (
-            <li key={step.id} className="flex items-start gap-1 rounded-lg transition-colors hover:bg-fg/[0.04]">
-              <label className={clsx("flex flex-1 items-start gap-3 px-2 py-2 pointer-coarse:py-3", done ? "cursor-default" : "cursor-pointer")}>
-                <input
-                  type="checkbox"
-                  checked={step.done}
-                  disabled={done}
-                  onChange={() => toggleStep(mission.id, step.id)}
-                  className="peer sr-only"
-                />
-                <span
-                  aria-hidden
-                  className={clsx(
-                    "mt-0.5 grid size-5 shrink-0 place-items-center rounded-md ring-1 transition-[background-color,box-shadow] duration-150 peer-focus-visible:ring-2 peer-focus-visible:ring-focus",
-                    step.done ? "bg-star-400 ring-star-400" : "bg-fg/[0.04] ring-fg/20",
+      <div ref={stepsBox}>
+        {open && mission.steps.length > 0 && (
+          <div id={stepsId} className="border-t border-line bg-fg/[0.02] px-3 py-3">
+            <ul className="space-y-1">
+              {mission.steps.map((step) => (
+                <li key={step.id} className="flex items-start gap-1 rounded-lg transition-colors hover:bg-fg/[0.04]">
+                  <label className={clsx("flex flex-1 items-start gap-3 px-2 py-2 pointer-coarse:py-3", done ? "cursor-default" : "cursor-pointer")}>
+                    <input
+                      type="checkbox"
+                      checked={step.done}
+                      disabled={done}
+                      onChange={() => toggleStep(mission.id, step.id)}
+                      className="peer sr-only"
+                    />
+                    <span
+                      aria-hidden
+                      className={clsx(
+                        "mt-0.5 grid size-5 shrink-0 place-items-center rounded-md ring-1 transition-[background-color,box-shadow] duration-150 peer-focus-visible:ring-2 peer-focus-visible:ring-focus",
+                        step.done ? "bg-star-400 ring-star-400" : "bg-fg/[0.04] ring-fg/20",
+                      )}
+                    >
+                      {/* Always drawn, so ticking it springs in (and an already-ticked one doesn't on load). */}
+                      <Check
+                        className={clsx(
+                          "size-3.5 text-space-900 transition-[scale,opacity] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]",
+                          step.done ? "scale-100 opacity-100" : "scale-50 opacity-0",
+                        )}
+                        strokeWidth={3}
+                      />
+                    </span>
+                    <span className={clsx("text-sm leading-relaxed transition-colors duration-200", step.done ? "text-faint line-through" : "text-ink")}>
+                      {step.text}
+                    </span>
+                  </label>
+                  {!done && (
+                    <button
+                      type="button"
+                      onClick={() => openMascot(`Explain this step of my mission "${mission.title}": "${step.text}". Exactly how do I do it, for my business?`)}
+                      aria-label={`Ask ${name} about this step`}
+                      title={`Ask ${name} about this step`}
+                      className="tap-target relative mr-1 mt-1.5 grid size-7 shrink-0 place-items-center rounded-full text-faint transition-colors hover:bg-star-400/15 hover:text-star-300 pointer-coarse:mt-2.5"
+                    >
+                      <CircleHelp className="size-4" aria-hidden />
+                    </button>
                   )}
-                >
-                  {step.done && <Check className="size-3.5 text-space-900" strokeWidth={3} />}
-                </span>
-                <span className={clsx("text-sm leading-relaxed", step.done ? "text-faint line-through" : "text-ink")}>
-                  {step.text}
-                </span>
-              </label>
-              {!done && (
-                <button
-                  type="button"
-                  onClick={() =>
-                    openMascot(
-                      `Explain this step of my mission "${mission.title}": "${step.text}". Exactly how do I do it, for my business?`,
-                    )
-                  }
-                  aria-label={`Ask ${name} about this step`}
-                  title={`Ask ${name} about this step`}
-                  className="tap-target relative mr-1 mt-1.5 grid size-7 shrink-0 place-items-center rounded-full text-faint transition-colors hover:bg-star-400/15 hover:text-star-300 pointer-coarse:mt-2.5"
-                >
-                  <CircleHelp className="size-4" aria-hidden />
-                </button>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
 
-      {!done && allStepsDone && (
-        <div className="flex items-center gap-3 border-t border-star-400/30 bg-star-400/10 px-5 py-3">
-          <ClipboardCheck className="size-5 shrink-0 text-star-300" aria-hidden />
-          <p className="flex-1 text-sm text-star-200">Every step is ticked. Report your results to claim the XP.</p>
+      {/* Unfolds when the last step is ticked: the moment to report. Always in the page so the
+          change animates instead of popping in. */}
+      {!done && mission.steps.length > 0 && (
+        <div
+          className={clsx(
+            "grid transition-[grid-template-rows,opacity] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]",
+            allStepsDone ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
+          )}
+          inert={!allStepsDone || undefined}
+        >
+          <div className="min-h-0 overflow-hidden">
+            <div className="flex items-center gap-3 border-t border-star-400/30 bg-star-400/10 px-5 py-3">
+              <ClipboardCheck className="size-5 shrink-0 text-star-300" aria-hidden />
+              <p className="flex-1 text-sm text-star-200">Every step is ticked. Report your results to claim the XP.</p>
+            </div>
+          </div>
         </div>
       )}
 
@@ -195,16 +238,15 @@ export function MissionCard({ mission, defaultOpen = false }: { mission: Mission
         )}
         <button
           type="button"
-          onClick={() => confirmThen("delete", () => removeMission(mission.id))}
-          aria-label={confirm === "delete" ? "Confirm delete" : "Delete mission"}
+          onClick={remove}
+          aria-label="Delete mission"
+          title="Delete mission"
           className={clsx(
-            "tap-target relative inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-xs font-medium transition-colors",
+            "tap-target relative inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-xs font-medium text-faint transition-[transform,background-color,color] duration-150 ease-out hover:bg-fg/[0.06] hover:text-alert active:scale-90",
             !done && "ml-auto",
-            confirm === "delete" ? "bg-alert/15 text-alert" : "text-faint hover:bg-fg/[0.06] hover:text-alert",
           )}
         >
           <Trash2 className="size-3.5" aria-hidden />
-          {confirm === "delete" && "Tap again to delete"}
         </button>
       </div>
 

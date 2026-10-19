@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import clsx from "clsx";
 import { Trash2, X } from "lucide-react";
 import { Chip } from "@/components/ui/Chip";
+import { notify } from "@/components/ui/toast";
 import { usePolaris } from "@/lib/store";
 import type { StudioItem, StudioTool } from "@/lib/studio";
 import { useStudioContext } from "../kit";
@@ -25,7 +25,6 @@ export function IdeaLibrary({ nav }: { nav: StationNav }) {
   const removeStudioItem = usePolaris((s) => s.removeStudioItem);
   const [filter, setFilter] = useState<StudioTool | "all">("all");
   const [openId, setOpenId] = useState<string | null>(null);
-  const [confirming, setConfirming] = useState(false);
   const bookRef = useRef<HTMLDivElement>(null);
 
   const shown = filter === "all" ? items : items.filter((i) => i.output.tool === filter);
@@ -49,8 +48,20 @@ export function IdeaLibrary({ nav }: { nav: StationNav }) {
         : { mood: "idle", text: `${items.length} idea${items.length === 1 ? "" : "s"} on the shelves. Pick a book to open it.` };
 
   function choose(item: StudioItem) {
-    setConfirming(false);
     setOpenId((id) => (id === item.id ? null : item.id));
+  }
+
+  // One tap takes it off the shelf; Undo puts it back where it stood.
+  function remove(item: StudioItem) {
+    const index = items.findIndex((i) => i.id === item.id);
+    removeStudioItem(item.id);
+    setOpenId(null);
+    notify({
+      title: "Removed from your library",
+      description: item.title,
+      tone: "removed",
+      action: { label: "Undo", onClick: () => usePolaris.setState((s) => ({ studioItems: s.studioItems.toSpliced(index, 0, item) })) },
+    });
   }
 
   const counts = (Object.keys(KINDS) as StudioTool[]).map((k) => ({ k, n: items.filter((i) => i.output.tool === k).length }));
@@ -134,18 +145,10 @@ export function IdeaLibrary({ nav }: { nav: StationNav }) {
             <div className="flex gap-2">
               <button
                 type="button"
-                onClick={() => {
-                  if (!confirming) return setConfirming(true);
-                  removeStudioItem(open.id);
-                  setOpenId(null);
-                  setConfirming(false);
-                }}
-                className={clsx(
-                  "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors",
-                  confirming ? "bg-alert text-space-950" : "bg-fg/[0.06] text-muted hover:bg-fg/[0.12] hover:text-ink",
-                )}
+                onClick={() => remove(open)}
+                className="tap-target relative inline-flex items-center gap-1.5 rounded-full bg-fg/[0.06] px-3 py-1.5 text-xs font-semibold text-muted transition-[transform,background-color,color] duration-150 ease-out hover:bg-fg/[0.12] hover:text-ink active:scale-[0.97]"
               >
-                <Trash2 className="size-3.5" aria-hidden /> {confirming ? "Tap again to remove" : "Remove"}
+                <Trash2 className="size-3.5" aria-hidden /> Remove
               </button>
               <button
                 type="button"

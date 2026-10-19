@@ -39,6 +39,16 @@ export interface MascotRequest {
   prompt: string | null;
 }
 
+/** What one stock change did, so it can be taken back exactly. `delta` is the change in stock on hand. */
+export interface StockChange {
+  productId: string;
+  moveId: string;
+  entryId?: string;
+  delta: number;
+  /** A first count starts tracking; taking it back stops tracking again. */
+  untracked?: boolean;
+}
+
 interface PolarisState {
   profile: BusinessProfile;
   xp: number;
@@ -119,11 +129,13 @@ interface PolarisState {
   /**
    * Stock in. With `cost`, also logs what it cost as a Treasury expense ("Ingredients / stock").
    */
-  restock: (productId: string, qty: number, opts: { date: string; cost?: number; note?: string }) => void;
+  restock: (productId: string, qty: number, opts: { date: string; cost?: number; note?: string }) => StockChange | null;
   /** Stock out through sales. With `sale`, also logs the money as Treasury income. */
-  recordSold: (productId: string, qty: number, opts: { date: string; sale?: { amount: number; channel?: string } }) => void;
+  recordSold: (productId: string, qty: number, opts: { date: string; sale?: { amount: number; channel?: string } }) => StockChange | null;
   /** Sets a product's stock to what was actually counted (and starts tracking it). */
-  countStock: (productId: string, actual: number, date: string) => void;
+  countStock: (productId: string, actual: number, date: string) => StockChange | null;
+  /** Takes back one restock, sale or count: its history line, its Treasury entry and its effect on stock. */
+  undoStockChange: (change: StockChange) => void;
   setReorderAt: (productId: string, level: number | undefined) => void;
   saveChannel: (channel: SalesChannel) => void;
   removeChannel: (id: string) => void;
@@ -362,48 +374,59 @@ export const usePolaris = create<PolarisState>()(
       saveProduct: (product) => set((s) => ({ products: upsert(s.products, product) })),
       removeProduct: (id) => set((s) => ({ products: s.products.filter((p) => p.id !== id) })),
 
-      restock: (productId, qty, { date, cost, note }) =>
-        set((s) => {
-          const p = s.products.find((x) => x.id === productId);
-          if (!p || !(qty > 0)) return {};
-          const move: StockMove = { id: newId(), productId, date, kind: "restock", qty, note };
-          const entry: TreasuryEntry | null =
-            cost && cost > 0 ? { id: newId(), type: "expense", category: "Ingredients / stock", amount: cost, date, note: `Restock: ${p.name} × ${qty}` } : null;
-          return {
-            products: s.products.map((x) => (x.id === productId ? { ...x, stock: (x.stock ?? 0) + qty } : x)),
-            stockMoves: [move, ...s.stockMoves].slice(0, 2000),
-            entries: entry ? [entry, ...s.entries] : s.entries,
-          };
-        }),
+      restock: (productId, qty, { date, cost, note }) => {
+        const p = get().products.find((x) => x.id === productId);
+        if (!p || !(qty > 0)) return null;
+        const move: StockMove = { id: newId(), productId, date, kind: "restock", qty, note };
+        const entry: TreasuryEntry | null =
+          cost && cost > 0 ? { id: newId(), type: "expense", category: "Ingredients / stock", amount: cost, date, note: `Restock: ${p.name} × ${qty}` } : null;
+        set((s) => ({
+          products: s.products.map((x) => (x.id === productId ? { ...x, stock: (x.stock ?? 0) + qty } : x)),
+          stockMoves: [move, ...s.stockMoves].slice(0, 2000),
+          entries: entry ? [entry, ...s.entries] : s.entries,
+        }));
+        return { productId, moveId: move.id, entryId: entry?.id, delta: qty };
+      },
 
-      recordSold: (productId, qty, { date, sale }) =>
-        set((s) => {
-          const p = s.products.find((x) => x.id === productId);
-          if (!p || !(qty > 0)) return {};
-          const move: StockMove = { id: newId(), productId, date, kind: "sold", qty: -qty };
-          const entry: TreasuryEntry | null =
-            sale && sale.amount > 0
-              ? { id: newId(), type: "income", category: "Sales", amount: sale.amount, date, note: `${p.name} × ${qty}`, channel: sale.channel }
-              : null;
-          return {
-            // Stock can't go below nothing; selling more than was recorded means the count was off.
-            products: s.products.map((x) => (x.id === productId ? { ...x, stock: Math.max(0, (x.stock ?? 0) - qty) } : x)),
-            stockMoves: [move, ...s.stockMoves].slice(0, 2000),
-            entries: entry ? [entry, ...s.entries] : s.entries,
-          };
-        }),
+      recordSold: (productId, qty, { date, sale }) => {
+        const p = get().products.find((x) => x.id === productId);
+        if (!p || !(qty > 0)) return null;
+        const move: StockMove = { id: newId(), productId, date, kind: "sold", qty: -qty };
+        const entry: TreasuryEntry | null =
+          sale && sale.amount > 0
+            ? { id: newId(), type: "income", category: "Sales", amount: sale.amount, date, note: `${p.name} × ${qty}`, channel: sale.channel }
+            : null;
+        // Stock can't go below nothing; selling more than was recorded means the count was off.
+        const before = p.stock ?? 0;
+        const after = Math.max(0, before - qty);
+        set((s) => ({
+          products: s.products.map((x) => (x.id === productId ? { ...x, stock: after } : x)),
+          stockMoves: [move, ...s.stockMoves].slice(0, 2000),
+          entries: entry ? [entry, ...s.entries] : s.entries,
+        }));
+        return { productId, moveId: move.id, entryId: entry?.id, delta: after - before };
+      },
 
-      countStock: (productId, actual, date) =>
-        set((s) => {
-          const p = s.products.find((x) => x.id === productId);
-          if (!p || !(actual >= 0)) return {};
-          const diff = actual - (p.stock ?? 0);
-          const move: StockMove = { id: newId(), productId, date, kind: "count", qty: diff };
-          return {
-            products: s.products.map((x) => (x.id === productId ? { ...x, stock: actual } : x)),
-            stockMoves: [move, ...s.stockMoves].slice(0, 2000),
-          };
-        }),
+      countStock: (productId, actual, date) => {
+        const p = get().products.find((x) => x.id === productId);
+        if (!p || !(actual >= 0)) return null;
+        const diff = actual - (p.stock ?? 0);
+        const move: StockMove = { id: newId(), productId, date, kind: "count", qty: diff };
+        set((s) => ({
+          products: s.products.map((x) => (x.id === productId ? { ...x, stock: actual } : x)),
+          stockMoves: [move, ...s.stockMoves].slice(0, 2000),
+        }));
+        return { productId, moveId: move.id, delta: diff, untracked: p.stock === undefined };
+      },
+
+      undoStockChange: ({ productId, moveId, entryId, delta, untracked }) =>
+        set((s) => ({
+          products: s.products.map((x) =>
+            x.id === productId ? { ...x, stock: untracked ? undefined : Math.max(0, (x.stock ?? 0) - delta) } : x,
+          ),
+          stockMoves: s.stockMoves.filter((m) => m.id !== moveId),
+          entries: entryId ? s.entries.filter((e) => e.id !== entryId) : s.entries,
+        })),
 
       setReorderAt: (productId, level) =>
         set((s) => ({ products: s.products.map((x) => (x.id === productId ? { ...x, reorderAt: level } : x)) })),

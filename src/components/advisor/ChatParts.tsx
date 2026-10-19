@@ -6,7 +6,8 @@ import clsx from "clsx";
 import { ArrowUp, ListPlus, LoaderCircle, Square } from "lucide-react";
 import { Mascot } from "@/components/mascot/Mascot";
 import { Markdown } from "@/components/ui/Markdown";
-import { sendAdvisorMessage, stopAdvisor } from "@/lib/advisorChat";
+import { notify } from "@/components/ui/toast";
+import { newAdvisorChat, sendAdvisorMessage, stopAdvisor } from "@/lib/advisorChat";
 import { AiError, generateMissions } from "@/lib/ai/client";
 import { parseAdvisorReply } from "@/lib/ai/shared";
 import { CATEGORY_LABELS, CATEGORY_STYLES } from "@/lib/categories";
@@ -18,18 +19,21 @@ export function ChatThread({ compact = false }: { compact?: boolean }) {
   const thread = usePolaris((s) => s.advisorThread);
   const streaming = usePolaris((s) => s.chatStreaming);
   const live = streaming !== null ? parseAdvisorReply(streaming) : null;
+  // Messages already there when the chat opened stay still; only what's sent now rises in.
+  const [seen] = useState(() => new Set(thread.map((m) => m.id)));
 
   return (
     <div className={compact ? "space-y-5" : "space-y-6"}>
       {thread.map((m) =>
         m.role === "user" ? (
-          <UserBubble key={m.id} text={m.content} />
+          <UserBubble key={m.id} text={m.content} fresh={!seen.has(m.id)} />
         ) : (
+          // A finished reply takes the place of the streaming one without moving again.
           <AssistantMessage key={m.id} message={m} compact={compact} />
         ),
       )}
       {live && (
-        <AssistantShell area={live.area}>
+        <AssistantShell area={live.area} fresh>
           {live.body ? (
             <Markdown live>{live.body}</Markdown>
           ) : (
@@ -41,6 +45,15 @@ export function ChatThread({ compact = false }: { compact?: boolean }) {
       )}
     </div>
   );
+}
+
+/** Clears the chat, keeping the old one a tap away. */
+export function startNewChat() {
+  const thread = usePolaris.getState().advisorThread;
+  newAdvisorChat();
+  if (thread.length) {
+    notify({ title: "Started a new chat", tone: "removed", action: { label: "Undo", onClick: () => usePolaris.setState({ advisorThread: thread }) } });
+  }
 }
 
 export function ChatComposer({ page, className }: { page?: string; className?: string }) {
@@ -102,9 +115,9 @@ export function ChatComposer({ page, className }: { page?: string; className?: s
 
 // Messages are memoized: while a reply streams in, the thread re-renders on every chunk,
 // and finished messages shouldn't re-render with it.
-const UserBubble = memo(function UserBubble({ text }: { text: string }) {
+const UserBubble = memo(function UserBubble({ text, fresh }: { text: string; fresh: boolean }) {
   return (
-    <div className="flex justify-end">
+    <div className={clsx("flex origin-bottom-right justify-end", fresh && "animate-rise-in")}>
       <p className="max-w-[85%] whitespace-pre-wrap rounded-3xl rounded-br-lg bg-orbit-600/50 px-4 py-3 text-sm leading-relaxed ring-1 ring-orbit-400/30 sm:text-[15px]">
         {text}
       </p>
@@ -112,9 +125,9 @@ const UserBubble = memo(function UserBubble({ text }: { text: string }) {
   );
 });
 
-function AssistantShell({ area, children }: { area?: MissionCategory | null; children: ReactNode }) {
+function AssistantShell({ area, fresh = false, children }: { area?: MissionCategory | null; fresh?: boolean; children: ReactNode }) {
   return (
-    <div className="flex gap-2.5 animate-rise-in">
+    <div className={clsx("flex origin-top-left gap-2.5", fresh && "animate-rise-in")}>
       <Mascot size={36} still className="-mt-1 shrink-0" />
       <div className="min-w-0 flex-1">
         {area && (

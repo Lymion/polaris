@@ -4,6 +4,7 @@ import { useEffect, useState, useSyncExternalStore, type ReactNode } from "react
 import clsx from "clsx";
 import { Bookmark, BookmarkCheck, Check, Copy } from "lucide-react";
 import { Chip } from "@/components/ui/Chip";
+import { notify } from "@/components/ui/toast";
 import { AiError, generateStudio } from "@/lib/ai/client";
 import { newId, usePolaris } from "@/lib/store";
 import type { StudioOutput, StudioTool } from "@/lib/studio";
@@ -36,6 +37,13 @@ function subscribe(listener: () => void) {
   return () => listeners.delete(listener);
 }
 
+const MADE: Record<StudioTool, string> = { brand: "Your brand kit", campaign: "Your campaign plans", video: "Your video ideas", calendar: "Your week of posts" };
+
+/** Opens a station from anywhere in the studio: the studio follows the address. */
+const openStation = (id: string) => {
+  window.location.hash = id;
+};
+
 /** Form state for a station that survives walking away and back. */
 export function useDraft<T>(key: string, initial: T) {
   const [value, setValue] = useState<T>(() => (drafts.has(key) ? (drafts.get(key) as T) : initial));
@@ -62,6 +70,16 @@ export function useStudioRun<T extends StudioTool>(tool: T) {
     try {
       const output = await generateStudio(tool, input);
       patchRun(tool, { output, saved: {}, busy: false });
+      // Lumi keeps working if you walk off; say so when it's done somewhere you're not looking.
+      const here = window.location.pathname === "/studio";
+      if (!here || window.location.hash.slice(1) !== tool) {
+        notify({
+          title: `${MADE[tool]} ${tool === "brand" ? "is" : "are"} ready`,
+          description: here ? undefined : "In the Creative Studio",
+          tone: "info",
+          action: here ? { label: "View", onClick: () => openStation(tool) } : undefined,
+        });
+      }
     } catch (err) {
       patchRun(tool, {
         busy: false,
@@ -87,6 +105,7 @@ export function useStudioRun<T extends StudioTool>(tool: T) {
     const id = newId();
     saveStudioItem({ id, createdAt: new Date().toISOString(), title, output: piece });
     patchRun(tool, { saved: { ...run.saved, [key]: id } });
+    notify({ title: "Saved to your Idea library", description: title, action: { label: "View", onClick: () => openStation("library") } });
   }
 
   return {

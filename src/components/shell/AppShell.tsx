@@ -36,7 +36,14 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   // Keep <html data-theme> in step with the saved look (the boot script sets it before paint).
   useEffect(() => {
-    if (hydrated) applyPrefs(prefs);
+    if (!hydrated) return;
+    applyPrefs(prefs);
+    // "Match device" follows the device switching between light and dark while the app is open.
+    if (prefs.theme !== "professional" || prefs.scheme !== "system") return;
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const follow = () => applyPrefs(prefs);
+    media.addEventListener("change", follow);
+    return () => media.removeEventListener("change", follow);
   }, [hydrated, prefs]);
 
   // Currency follows the country. Fill in a missing country from the browser, and replace the
