@@ -29,8 +29,9 @@ import type {
 export interface Celebration {
   id: string;
   xp: number;
-  /** What earned it: a mission title or a sales milestone. */
+  /** What earned it: a mission title, a lesson, a weekly win or a sales milestone. */
   title: string;
+  what: "mission" | "lesson" | "win" | "sales";
   levelUp: { level: number; title: string } | null;
 }
 
@@ -63,6 +64,8 @@ interface PolarisState {
   cashOnHand: number | null;
   /** Money lessons passed (quiz answered correctly). Each gives XP once. */
   lessonsDone: string[];
+  /** Weekly rewards already given ("money:2026-W42"), so each pays once a week. */
+  wins: string[];
   /** First-visit tours already shown (finished or skipped), e.g. "treasury". */
   toursSeen: string[];
   /** Look and feel: classic dashboard or interactive world, and the colour theme. */
@@ -180,13 +183,39 @@ interface Progress {
 }
 
 /** Builds the celebration for a change in XP or sales, with a level-up if one happened. */
-function celebrate(before: Progress, after: Progress, currency: string, title: string): Celebration | null {
+function celebrate(before: Progress, after: Progress, currency: string, title: string, what: Celebration["what"]): Celebration | null {
   const a = levelInfo(before.xp, effectiveRevenue(before.revenue, before.entries), currency);
   const b = levelInfo(after.xp, effectiveRevenue(after.revenue, after.entries), currency);
   const gained = after.xp - before.xp;
   const levelUp = b.level > a.level ? { level: b.level, title: b.title } : null;
   if (!gained && !levelUp) return null;
-  return { id: newId(), xp: gained, title, levelUp };
+  return { id: newId(), xp: gained, title, what, levelUp };
+}
+
+/** This week as "2026-W42" (ISO weeks, starting Monday). */
+function weekKey(d = new Date()) {
+  const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  t.setUTCDate(t.getUTCDate() + 4 - (t.getUTCDay() || 7));
+  const year = t.getUTCFullYear();
+  return `${year}-W${Math.ceil(((t.getTime() - Date.UTC(year, 0, 1)) / 86_400_000 + 1) / 7)}`;
+}
+
+/** Small XP for keeping the books up to date: the first time each week you log money, and update stock. */
+const WEEKLY_WINS = {
+  money: { xp: 10, title: "Money logged this week" },
+  stock: { xp: 10, title: "Stock updated this week" },
+} as const;
+
+/**
+ * The XP, wins and celebration for a change that may earn this week's `kind` win. Also catches a
+ * level-up from sales in `entries` (logged sales count toward the level milestones).
+ */
+function award(s: PolarisState, kind: keyof typeof WEEKLY_WINS, entries = s.entries) {
+  const id = `${kind}:${weekKey()}`;
+  const win = s.wins.includes(id) ? null : WEEKLY_WINS[kind];
+  const xp = s.xp + (win?.xp ?? 0);
+  const celebration = celebrate(s, { ...s, entries, xp }, s.profile.currency, win?.title ?? "Sales milestone reached", win ? "win" : "sales");
+  return { xp, wins: win ? [...s.wins, id].slice(-60) : s.wins, celebration: celebration ?? s.celebration };
 }
 
 /** Everything that is saved in the browser (and goes into a backup file). The rest is per-visit. */
@@ -203,6 +232,7 @@ export function savedData(s: PolarisState) {
     overheads: s.overheads,
     cashOnHand: s.cashOnHand,
     lessonsDone: s.lessonsDone,
+    wins: s.wins,
     toursSeen: s.toursSeen,
     prefs: s.prefs,
     activities: s.activities,
@@ -230,6 +260,7 @@ export const usePolaris = create<PolarisState>()(
       overheads: [],
       cashOnHand: null,
       lessonsDone: [],
+      wins: [],
       toursSeen: [],
       prefs: DEFAULT_PREFS,
       activities: [],
@@ -259,7 +290,7 @@ export const usePolaris = create<PolarisState>()(
             bestMonth: Math.max(0, bestMonth),
             updatedAt: new Date().toISOString(),
           };
-          const celebration = celebrate(s, { ...s, revenue }, s.profile.currency, "Sales milestone reached");
+          const celebration = celebrate(s, { ...s, revenue }, s.profile.currency, "Sales milestone reached", "sales");
           return { revenue, celebration: celebration ?? s.celebration };
         }),
 
@@ -308,7 +339,7 @@ export const usePolaris = create<PolarisState>()(
             profile,
             insights,
             xp,
-            celebration: celebrate(s, { ...s, xp }, s.profile.currency, m.title),
+            celebration: celebrate(s, { ...s, xp }, s.profile.currency, m.title, "mission"),
           };
         }),
 
@@ -341,23 +372,17 @@ export const usePolaris = create<PolarisState>()(
         set((s) => ({ advisorThread: s.advisorThread.map((m) => (m.id === id ? { ...m, ...patch } : m)) })),
       clearAdvisorThread: () => set({ advisorThread: [] }),
 
-      // Logged sales count toward level milestones, so a sale can level the business up.
+      // Logged sales count toward level milestones, so a sale can level the business up. The
+      // first money logged each week earns a little XP.
       addEntry: (entry) =>
         set((s) => {
           const entries = [entry, ...s.entries];
-          const celebration =
-            entry.type === "income"
-              ? celebrate(s, { ...s, entries }, s.profile.currency, "Sales milestone reached")
-              : null;
-          return { entries, celebration: celebration ?? s.celebration };
+          return { entries, ...award(s, "money", entries) };
         }),
       addEntries: (added) =>
         set((s) => {
           const entries = [...added, ...s.entries];
-          const celebration = added.some((e) => e.type === "income")
-            ? celebrate(s, { ...s, entries }, s.profile.currency, "Sales milestone reached")
-            : null;
-          return { entries, celebration: celebration ?? s.celebration };
+          return { entries, ...award(s, "money", entries) };
         }),
       updateEntry: (id, patch) =>
         set((s) => ({ entries: s.entries.map((e) => (e.id === id ? { ...e, ...patch } : e)) })),
@@ -384,6 +409,7 @@ export const usePolaris = create<PolarisState>()(
           products: s.products.map((x) => (x.id === productId ? { ...x, stock: (x.stock ?? 0) + qty } : x)),
           stockMoves: [move, ...s.stockMoves].slice(0, 2000),
           entries: entry ? [entry, ...s.entries] : s.entries,
+          ...award(s, "stock"),
         }));
         return { productId, moveId: move.id, entryId: entry?.id, delta: qty };
       },
@@ -399,11 +425,15 @@ export const usePolaris = create<PolarisState>()(
         // Stock can't go below nothing; selling more than was recorded means the count was off.
         const before = p.stock ?? 0;
         const after = Math.max(0, before - qty);
-        set((s) => ({
-          products: s.products.map((x) => (x.id === productId ? { ...x, stock: after } : x)),
-          stockMoves: [move, ...s.stockMoves].slice(0, 2000),
-          entries: entry ? [entry, ...s.entries] : s.entries,
-        }));
+        set((s) => {
+          const entries = entry ? [entry, ...s.entries] : s.entries;
+          return {
+            products: s.products.map((x) => (x.id === productId ? { ...x, stock: after } : x)),
+            stockMoves: [move, ...s.stockMoves].slice(0, 2000),
+            entries,
+            ...award(s, "stock", entries),
+          };
+        });
         return { productId, moveId: move.id, entryId: entry?.id, delta: after - before };
       },
 
@@ -415,6 +445,7 @@ export const usePolaris = create<PolarisState>()(
         set((s) => ({
           products: s.products.map((x) => (x.id === productId ? { ...x, stock: actual } : x)),
           stockMoves: [move, ...s.stockMoves].slice(0, 2000),
+          ...award(s, "stock"),
         }));
         return { productId, moveId: move.id, delta: diff, untracked: p.stock === undefined };
       },
@@ -444,7 +475,7 @@ export const usePolaris = create<PolarisState>()(
           return {
             lessonsDone: [...s.lessonsDone, id],
             xp: next,
-            celebration: celebrate(s, { ...s, xp: next }, s.profile.currency, `Lesson: ${title}`),
+            celebration: celebrate(s, { ...s, xp: next }, s.profile.currency, `Lesson passed: ${title}`, "lesson"),
           };
         }),
       markTourSeen: (id) => set((s) => (s.toursSeen.includes(id) ? {} : { toursSeen: [...s.toursSeen, id] })),
@@ -463,6 +494,7 @@ export const usePolaris = create<PolarisState>()(
           overheads: [],
           cashOnHand: null,
           lessonsDone: [],
+          wins: [],
           toursSeen: [],
           activities: [],
           stockMoves: [],

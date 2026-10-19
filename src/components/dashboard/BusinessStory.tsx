@@ -9,7 +9,7 @@ import { daysText } from "@/lib/inventory";
 import { Mascot } from "@/components/mascot/Mascot";
 import { MonthWrapped } from "@/components/treasury/wrapped/MonthWrapped";
 import { ButtonLink } from "@/components/ui/Button";
-import { Tooltip } from "@/components/ui/Hint";
+import { Hint, Tooltip } from "@/components/ui/Hint";
 import { Clamp } from "@/components/ui/More";
 import { PresenceItem, Ticker, usePresence } from "@/components/ui/motion";
 import { ACTIVITY_KINDS } from "@/lib/excel";
@@ -157,6 +157,13 @@ function MoneyCard() {
           label="Cash runway"
           value={cash === null ? "Add your cash balance" : runway === null ? "Not running down" : `About ${runway.toFixed(1)} months`}
           tone={runway !== null && runway < 3 ? "bad" : undefined}
+          hint={
+            cash === null
+              ? "How long your cash would last if things carried on as they are. Add what's in the bank in Treasury."
+              : runway === null && cur.net < 0
+                ? "This month is down so far, but over the last 3 months more came in than went out, so your cash isn't shrinking overall."
+                : `How long your ${fmt(cash)} would last, going by your average over the last 3 months.`
+          }
         />
       </ul>
     </section>
@@ -192,30 +199,35 @@ function StockCard() {
           {/* Each product by name and status; the numbers behind the status show on hover. */}
           <ul className="-mx-2 mt-4 space-y-0.5 border-t border-line pt-3 text-sm">
             {attention.length ? (
-              attention.map((l) => (
-                <li key={l.product.id}>
-                  <Tooltip
-                    content={
-                      <>
-                        {/* The name too, in case the row cut it short. */}
-                        <span className="block font-semibold">{l.product.name}</span>
-                        {l.status === "out"
-                          ? l.perDay > 0 && l.margin.profit > 0
-                            ? `None left: about ${fmt(l.perDay * 7 * l.margin.profit)} profit missed a week.`
-                            : "None left."
-                          : l.status === "slow"
-                            ? `${l.onHand} in stock, ${l.sold30} sold in 30 days: ${fmt(l.value)} tied up.`
-                            : `${l.onHand} left, lasts ${daysText(l.daysLeft)}.`}
-                      </>
-                    }
-                  >
-                    <Link href="/stock" className="flex items-center justify-between gap-3 rounded-lg px-2 py-2 transition-colors hover:bg-fg/[0.04]">
-                      <span className="min-w-0 truncate font-medium">{l.product.name}</span>
-                      <StatusPill status={l.status} />
-                    </Link>
-                  </Tooltip>
-                </li>
-              ))
+              attention.map((l) => {
+                const detail = (
+                  <>
+                    {/* The name too, in case the row cut it short. */}
+                    <span className="block font-semibold">{l.product.name}</span>
+                    {l.status === "out"
+                      ? l.perDay > 0 && l.margin.profit > 0
+                        ? `None left: about ${fmt(l.perDay * 7 * l.margin.profit)} profit missed a week.`
+                        : "None left."
+                      : l.status === "slow"
+                        ? `${l.onHand} in stock, ${l.sold30} sold in 30 days: ${fmt(l.value)} tied up.`
+                        : `${l.onHand} left, lasts ${daysText(l.daysLeft)}.`}
+                  </>
+                );
+                return (
+                  // Hover shows the numbers; touch screens get an ⓘ to tap.
+                  <li key={l.product.id} className="flex items-center gap-1 rounded-lg transition-colors has-[a:hover]:bg-fg/[0.04]">
+                    <Tooltip content={detail}>
+                      <Link href="/stock" className="flex min-w-0 flex-1 items-center justify-between gap-3 rounded-lg px-2 py-2">
+                        <span className="min-w-0 truncate font-medium">{l.product.name}</span>
+                        <StatusPill status={l.status} />
+                      </Link>
+                    </Tooltip>
+                    <span className="mr-1 hidden pointer-coarse:flex">
+                      <Hint label={`About ${l.product.name}`}>{detail}</Hint>
+                    </span>
+                  </li>
+                );
+              })
             ) : (
               <li className="px-2 text-muted">Everything is stocked and selling.</li>
             )}
@@ -226,10 +238,13 @@ function StockCard() {
   );
 }
 
-function Fact({ label, value, num, tone }: { label: string; value: string; num?: number; tone?: "good" | "bad" }) {
+function Fact({ label, value, num, tone, hint }: { label: string; value: string; num?: number; tone?: "good" | "bad"; hint?: string }) {
   return (
     <li className="flex items-center justify-between gap-3">
-      <span className="text-muted">{label}</span>
+      <span className="flex items-center gap-1.5 text-muted">
+        {label}
+        {hint && <Hint label={`About ${label.toLowerCase()}`}>{hint}</Hint>}
+      </span>
       <span className={clsx("tabular-nums", tone ? "font-semibold" : "font-medium", tone === "good" && "text-growth", tone === "bad" && "text-alert")}>
         <Ticker value={value} num={num} />
       </span>

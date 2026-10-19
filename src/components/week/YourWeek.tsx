@@ -19,7 +19,7 @@ import {
 import { Wordmark } from "@/components/brand/PolarisMark";
 import { Mascot } from "@/components/mascot/Mascot";
 import { Columns, CountUp, Delta, Pop, StoryPlayer, type Slide } from "@/components/story/Story";
-import { Tooltip } from "@/components/ui/Hint";
+import { Hint, Tooltip } from "@/components/ui/Hint";
 import { CHART_COLORS } from "@/lib/categories";
 import { formatMoney } from "@/lib/money";
 import { mascotName, usePolaris } from "@/lib/store";
@@ -393,17 +393,21 @@ export function YourWeekCard() {
           {week.priorities.map((p, i) => {
             const tone = TONE[p.tone];
             return (
-              <li key={p.id} className="min-w-0">
+              // Why it matters shows on hover; touch screens, which can't hover, get an ⓘ to tap instead.
+              <li
+                key={p.id}
+                className="flex min-w-0 items-center rounded-xl bg-fg/[0.04] ring-1 ring-line transition-[background-color,transform] duration-150 ease-out has-[a:hover]:bg-fg/[0.07] has-[a:active]:scale-[0.98]"
+              >
                 <Tooltip content={p.why}>
-                  <Link
-                    href={p.href}
-                    className="flex h-full items-center gap-3 rounded-xl bg-fg/[0.04] px-3 py-2.5 ring-1 ring-line transition-[background-color,transform] duration-150 ease-out hover:bg-fg/[0.07] active:scale-[0.98]"
-                  >
+                  <Link href={p.href} className="flex h-full min-w-0 flex-1 items-center gap-3 rounded-xl px-3 py-2.5">
                     <span className={clsx("grid size-6 shrink-0 place-items-center rounded-md text-xs font-bold", tone.ring)}>{i + 1}</span>
                     <span className="min-w-0 flex-1 text-sm font-semibold leading-snug">{p.title}</span>
-                    <ChevronRight className="size-4 shrink-0 text-faint" aria-hidden />
+                    <ChevronRight className="size-4 shrink-0 text-faint pointer-coarse:hidden" aria-hidden />
                   </Link>
                 </Tooltip>
+                <span className="mr-3 hidden pointer-coarse:flex">
+                  <Hint label={`Why "${p.title}" matters`}>{p.why}</Hint>
+                </span>
               </li>
             );
           })}

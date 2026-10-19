@@ -262,6 +262,14 @@
   --desk-top-a: #26387a;
   --desk-top-b: #1d2c63;
   --desk-edge: #111b45;
+
+  /* The stars down the missions timeline: done, under way, not started. */
+  --node-done: #f5b942;
+  --node-done-edge: #f7a531;
+  --node-active: #7fb4ff;
+  --node-active-edge: #7fb4ff;
+  --node-todo: #0b1b3f;
+  --node-todo-edge: #64729a;
 }
 
 /* Daylight: a bright, airy version of the same app. */
@@ -502,6 +510,12 @@
   --panel-shadow: none;
   --selection: rgb(168 199 250 / 0.3);
   --starlight: linear-gradient(#e3e3e3, #e3e3e3);
+  --node-done: #a8c7fa;
+  --node-done-edge: #a8c7fa;
+  --node-active: #1e1f20;
+  --node-active-edge: #a8c7fa;
+  --node-todo: #282a2c;
+  --node-todo-edge: #80868b;
 
   /* Every gradient fill becomes its first colour: buttons, level badge and progress bars in the
      accent, tints as flat tints. Islands that stay dark keep their own colours. (:where keeps it

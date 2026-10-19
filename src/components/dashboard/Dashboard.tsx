@@ -42,12 +42,14 @@ export function Dashboard() {
 
 /**
  * Level and XP toward the next one. What the next level needs waits behind the ⓘ; it comes into
- * view, with the way to report sales, only once the XP is there and sales are what's missing.
+ * view, with the way to report sales, once the XP is there and sales are what's missing (or
+ * before any sales are known at all).
  */
 function LevelCard() {
   const lvl = useLevel();
   // The next level, when its XP is reached and only the sales milestone stands in the way.
   const stuck = lvl.blockedByGate ? lvl.next : null;
+  const noSales = usePolaris((s) => !s.revenue.updatedAt && !s.entries.some((e) => e.type === "income"));
   return (
     <section aria-label="Your level" className="panel relative overflow-hidden p-4 sm:p-5 xl:w-[600px] xl:shrink-0">
       <div aria-hidden className="card-glow pointer-events-none absolute -right-16 -top-20 size-56 rounded-full bg-orbit-500/20 blur-3xl" />
@@ -94,6 +96,13 @@ function LevelCard() {
             <span className="font-semibold text-star-200">{lvl.nextGate}</span>.
           </p>
           <ReportSales variant="primary" />
+        </div>
+      )}
+      {!stuck && lvl.next && noSales && (
+        // First run: until any sales are logged or reported, say how they're counted.
+        <div className="relative mt-3 flex flex-wrap items-center gap-x-3 gap-y-2.5">
+          <p className="min-w-[13rem] flex-1 text-xs leading-snug text-muted">Sales count toward your level. Log them in Treasury, or give rough totals.</p>
+          <ReportSales />
         </div>
       )}
     </section>

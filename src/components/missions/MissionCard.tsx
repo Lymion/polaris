@@ -74,13 +74,17 @@ export function MissionCard({ mission, defaultOpen = false }: { mission: Mission
         </div>
 
         {/* What the mission is for waits behind the ⓘ: the title and steps say what to do. The ⓘ
-            sits beside the heading, centred on its first line, so the heading reads as just its title. */}
-        <div className="mt-3 flex items-start gap-2">
-          <h3 className={clsx("text-lg font-semibold leading-snug", done && "text-muted line-through decoration-faint")}>{mission.title}</h3>
+            follows the title's last word (the heading is inline), outside the heading itself, so
+            the heading reads as just its title. */}
+        <div className="mt-3">
+          <h3 className={clsx("inline text-lg font-semibold leading-snug", done && "text-muted line-through decoration-faint")}>{mission.title}</h3>
           {mission.description && (
-            <span className="flex h-[1.547rem] shrink-0 items-center">
-              <Hint label="About this mission">{mission.description}</Hint>
-            </span>
+            <>
+              {" "}
+              <Hint label="About this mission" className="ml-0.5">
+                {mission.description}
+              </Hint>
+            </>
           )}
         </div>
         {/* A safety note stays in view, kept to one line. */}

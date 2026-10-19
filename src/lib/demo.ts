@@ -369,6 +369,7 @@ export function demoBusiness(now = new Date()) {
     overheads: OVERHEADS,
     cashOnHand: 14800,
     lessonsDone: [] as string[],
+    wins: [] as string[],
     toursSeen: ["treasury"],
     activities,
     stockMoves: demoStockMoves(now),

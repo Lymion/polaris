@@ -31,7 +31,7 @@ export interface ReadBackup {
 }
 
 const isObject = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null && !Array.isArray(v);
-const arrays = ["missions", "insights", "entries", "products", "channels", "overheads", "lessonsDone", "toursSeen", "activities", "stockMoves", "studioItems", "advisorThread"] as const;
+const arrays = ["missions", "insights", "entries", "products", "channels", "overheads", "lessonsDone", "wins", "toursSeen", "activities", "stockMoves", "studioItems", "advisorThread"] as const;
 
 /** Checks a backup file and returns what's in it, or throws with a reason the owner can act on. */
 export function readBackup(text: string): ReadBackup {

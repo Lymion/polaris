@@ -237,10 +237,13 @@ function Questline({ missions }: { missions: Mission[] }) {
 function StarNode({ done, active }: { done: boolean; active: boolean }) {
   return (
     <svg viewBox="-10 -10 20 20" className={clsx("mt-5 size-7 sm:size-8", active && !done && "animate-twinkle")} aria-hidden>
+      {/* Colours from the theme (globals.css --node-*), so dark Workspace can recolour them. */}
       <path
         d="M0,-9 Q1.6,-1.6 9,0 Q1.6,1.6 0,9 Q-1.6,1.6 -9,0 Q-1.6,-1.6 0,-9 Z"
-        fill={done ? "#F5B942" : active ? "#7FB4FF" : "#0B1B3F"}
-        stroke={done ? "#F7A531" : active ? "#7FB4FF" : "#64729A"}
+        style={{
+          fill: done ? "var(--node-done)" : active ? "var(--node-active)" : "var(--node-todo)",
+          stroke: done ? "var(--node-done-edge)" : active ? "var(--node-active-edge)" : "var(--node-todo-edge)",
+        }}
         strokeWidth="1.2"
         strokeLinejoin="round"
       />

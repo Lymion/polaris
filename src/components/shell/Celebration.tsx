@@ -7,7 +7,7 @@ import { useDialogFocus } from "@/components/ui/a11y";
 import { Button } from "@/components/ui/Button";
 import { usePolaris, type Celebration as Celebrated } from "@/lib/store";
 
-/** XP toast after a mission, or a level-up dialog when the mission crosses a level. */
+/** XP toast after a mission, lesson or weekly win, or a level-up dialog when it crosses a level. */
 export function Celebration() {
   const celebration = usePolaris((s) => s.celebration);
   const dismiss = usePolaris((s) => s.dismissCelebration);
@@ -39,9 +39,13 @@ function LevelUp({ celebration, onDismiss }: { celebration: Celebrated; onDismis
         </h2>
         <p className="relative mt-1 text-lg text-starlight font-semibold">{celebration.levelUp?.title}</p>
         <p className="relative mt-4 text-sm text-muted">
-          {celebration.xp > 0 ? (
+          {celebration.xp > 0 && celebration.what === "mission" ? (
             <>
               You completed <span className="text-ink">{celebration.title}</span> and earned {celebration.xp} XP.
+            </>
+          ) : celebration.xp > 0 ? (
+            <>
+              <span className="text-ink">{celebration.title}</span>: +{celebration.xp} XP.
             </>
           ) : (
             <>{celebration.title}. Your business just reached a new stage!</>
@@ -63,9 +67,10 @@ function XpToast({ celebration, onDismiss }: { celebration: Celebrated; onDismis
   }, [onDismiss]);
 
   return (
+    // At the top, under the phone header: the bottom of the screen is where the other toasts stack.
     <div
       role="status"
-      className="fixed inset-x-4 bottom-24 z-50 mx-auto flex max-w-sm items-center gap-3 rounded-2xl bg-surface-800/95 p-4 shadow-2xl ring-1 ring-star-400/40 backdrop-blur animate-rise-in lg:inset-x-auto lg:bottom-auto lg:right-8 lg:top-8"
+      className="fixed inset-x-4 top-[calc(env(safe-area-inset-top)+4.25rem)] z-50 mx-auto flex max-w-sm items-center gap-3 rounded-2xl bg-surface-800/95 p-4 shadow-2xl ring-1 ring-star-400/40 backdrop-blur animate-rise-in lg:inset-x-auto lg:right-8 lg:top-8"
     >
       <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-linear-to-br from-star-300 to-star-600">
         <Sparkles className="size-5 text-space-900" aria-hidden />
@@ -73,7 +78,7 @@ function XpToast({ celebration, onDismiss }: { celebration: Celebrated; onDismis
       <div className="min-w-0 flex-1">
         <p className="text-sm font-bold text-star-200">+{celebration.xp} XP</p>
         <p className="truncate text-xs text-muted" title={celebration.title}>
-          Mission complete: {celebration.title}
+          {celebration.what === "mission" ? `Mission complete: ${celebration.title}` : celebration.title}
         </p>
       </div>
       <button onClick={onDismiss} aria-label="Dismiss" className="tap-target relative rounded-full p-1 text-faint transition-colors hover:text-ink">

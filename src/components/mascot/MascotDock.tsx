@@ -15,7 +15,11 @@ import { Mascot, type MascotMood } from "./Mascot";
 interface Tip {
   text: string;
   action?: { label: string; prompt: string };
+  /** Friendly but says nothing about the business: skipped on phones, where the bubble covers the page. */
+  filler?: boolean;
 }
+
+const isPhone = () => window.matchMedia("(max-width: 1023px)").matches;
 
 const PAGE_NAMES: Record<string, string> = {
   "/": "Home dashboard",
@@ -57,15 +61,23 @@ export function MascotDock() {
     if (!hydrated || !profile.onboarded || open || onAdvisorPage || shownOn.current.has(pathname)) return;
     const show = setTimeout(() => {
       shownOn.current.add(pathname);
-      setBubble(tipFor(pathname, usePolaris.getState()));
+      const tip = tipFor(pathname, usePolaris.getState());
+      if (!(tip.filler && isPhone())) setBubble(tip);
     }, 1200);
     return () => clearTimeout(show);
   }, [hydrated, profile.onboarded, pathname, open, onAdvisorPage]);
 
+  // On a phone the bubble sits over the page, so it goes sooner, and as soon as you scroll to read.
   useEffect(() => {
     if (!bubble) return;
-    const hide = setTimeout(() => setBubble(null), 12000);
-    return () => clearTimeout(hide);
+    const phone = isPhone();
+    const hide = setTimeout(() => setBubble(null), phone ? 7000 : 12000);
+    const onScroll = () => setBubble(null);
+    if (phone) window.addEventListener("scroll", onScroll, { passive: true, once: true });
+    return () => {
+      clearTimeout(hide);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, [bubble]);
 
   if (!hydrated || !profile.onboarded) return null;
@@ -311,10 +323,10 @@ function tipFor(pathname: string, state: ReturnType<typeof usePolaris.getState>)
         },
       };
     }
-    return { text: "Stuck on a step? Tap the little ? next to it and I'll explain how to do it." };
+    return { text: "Stuck on a step? Tap the little ? next to it and I'll explain how to do it.", filler: true };
   }
-  if (pathname === "/studio") return { text: "Need a spark? My book is full of ideas. Just ask!" };
-  if (pathname === "/treasury") return { text: "Money talk! Ask me what margins or overheads mean, using your own numbers." };
+  if (pathname === "/studio") return { text: "Need a spark? My book is full of ideas. Just ask!", filler: true };
+  if (pathname === "/treasury") return { text: "Money talk! Ask me what margins or overheads mean, using your own numbers.", filler: true };
   if (pathname === "/stock") {
     return {
       text: "Not sure what to restock first? I can weigh what each product earns against what's sitting on the shelf.",
@@ -327,5 +339,5 @@ function tipFor(pathname: string, state: ReturnType<typeof usePolaris.getState>)
   if (open.length === 0) {
     return { text: `Hi ${owner}! Head to Missions and I'll chart your first questline.` };
   }
-  return { text: `Tap me anytime you're stuck, ${owner}. I've got a whole book of answers!` };
+  return { text: `Tap me anytime you're stuck, ${owner}. I've got a whole book of answers!`, filler: true };
 }
