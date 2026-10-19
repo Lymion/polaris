@@ -122,7 +122,7 @@ Think like an experienced small-business mentor. A healthy business needs much m
 - branding: name, logo, story, packaging, a consistent look
 
 Rules:
-- title: max 7 words, starts with a verb, specific (e.g. "Compare three flour suppliers' prices", not "Improve operations").
+- title: max 7 words, starts with a verb, specific, in sentence case: capitalise only the first word and names (e.g. "Compare three flour suppliers' prices", not "Improve operations" or "Compare Three Flour Suppliers' Prices").
 - description: one sentence on why this matters for this business right now.
 - steps: 3 to 5 concrete actions, each doable in under a day. Include real specifics: what to prepare, who to contact, what to compare, what to write down.
 - checkIn: 1 to 3 questions the user answers when they finish, asking for concrete results that prove the mission was done AND tell us about the state of their business. Prefer numbers. Examples: "What click-through rate did your best ad creative get?" (percent), "What is your margin per cake on GrabFood after fees?" (percent), "How many suppliers sent you a quote?" (number), "What is your new cost to make one cake?" (money), "What is your registration status or number?" (text).
@@ -161,7 +161,7 @@ function gapInstructions(gaps: Foundation[], slots: number) {
 
 export function missionRequest(
   mode: MissionMode,
-  opts: { text?: string; profile: Partial<BusinessProfile>; existing: string[]; gaps: Foundation[]; nextGate?: string | null },
+  opts: { text?: string; profile: Partial<BusinessProfile>; existing: string[]; gaps: Foundation[]; nextGate?: string | null; max?: number },
 ) {
   const { goal, stage } = opts.profile;
   const focus = stage && STAGE_FOCUS[stage];
@@ -190,8 +190,10 @@ Do not create any other missions.${existing}`;
 Build on what they have already done and the numbers they reported: fix their weakest numbers first and double down on what works.
 Do not create missions for setting up business basics. "foundations" must be [] for every mission.
 ${stageLine}Use at least 2 different categories.${existing}`;
-    case "advice":
-      return `Turn this advice from their advisor into 2 to 4 missions. Keep the advisor's intent; group related steps.\n\nAdvice:\n"""\n${opts.text}\n"""${existing}`;
+    case "advice": {
+      const max = opts.max ?? 3;
+      return `Turn this advice from their advisor into ${max === 1 ? "exactly 1 mission" : `1 to ${max} missions`}. Keep the advisor's intent and group related points: a list of small habits or tips is ONE mission with each tip as a step. Only make separate missions for clearly separate projects.\n\nAdvice:\n"""\n${opts.text}\n"""${existing}`;
+    }
     case "custom":
       return `The user wants to work on: "${opts.text}". Create exactly 1 mission for it, with clear steps.${existing}`;
   }

@@ -18,6 +18,8 @@ interface MissionsRequest {
   facts?: unknown;
   /** The next level's sales milestone, e.g. "RM4,400 in total sales". */
   nextGate?: string;
+  /** Advice: the most missions to make (what's left under the open-mission limit). */
+  max?: number;
 }
 
 const MODES: MissionMode[] = ["starter", "foundations", "growth", "advice", "custom"];
@@ -56,12 +58,14 @@ export async function POST(req: Request) {
     .slice(0, 40)
     .map((t) => t.slice(0, 80));
   const nextGate = typeof body.nextGate === "string" ? body.nextGate.slice(0, 80) : null;
+  // Advice makes 1 to 3 missions, fewer when the owner has little room left.
+  const max = Math.min(3, Math.max(1, Math.floor(Number(body.max) || 3)));
 
   const request = {
     model: MODELS.smart,
     messages: [
       { role: "system", content: [MISSIONS_PROMPT, businessContext(profile, facts)].filter(Boolean).join("\n\n") },
-      { role: "user", content: missionRequest(body.mode, { text, profile, existing, gaps, nextGate }) },
+      { role: "user", content: missionRequest(body.mode, { text, profile, existing, gaps, nextGate, max }) },
     ],
     temperature: 0.7,
     max_tokens: 3500,
@@ -87,5 +91,5 @@ export async function POST(req: Request) {
   if (best.length === 0) {
     return Response.json({ error: "Couldn't plan missions right now. Try again in a moment." }, { status: 502 });
   }
-  return Response.json({ missions: body.mode === "custom" ? best.slice(0, 1) : best });
+  return Response.json({ missions: body.mode === "custom" ? best.slice(0, 1) : body.mode === "advice" ? best.slice(0, max) : best });
 }

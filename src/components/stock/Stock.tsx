@@ -21,18 +21,20 @@ const BAR_STYLE: Record<StockStatus, string> = {
   out: "bg-alert",
   low: "bg-caution",
   ok: "bg-growth",
+  new: "bg-star-400",
   slow: "bg-faint",
   untracked: "bg-transparent",
 };
 
-/** How long stock lasts, as a bar: full at two months or more. */
+/** How long stock lasts, as a bar: full at two months or more, empty when sold out or too new to say. */
 function LastsBar({ line }: { line: StockLine }) {
-  const share = line.status === "out" ? 0 : line.daysLeft === null ? 1 : Math.min(1, line.daysLeft / 60);
+  const empty = line.status === "out" || line.status === "new";
+  const share = empty ? 0 : line.daysLeft === null ? 1 : Math.min(1, line.daysLeft / 60);
   return (
     <span className="block h-1.5 w-full overflow-hidden rounded-full bg-fg/[0.08]" aria-hidden>
       <span
         className={clsx("block h-full rounded-full transition-[width,background-color] duration-500", BAR_STYLE[line.status])}
-        style={{ width: `${Math.max(line.status === "out" ? 0 : 4, share * 100)}%`, transitionTimingFunction: EASE_OUT }}
+        style={{ width: `${Math.max(empty ? 0 : 4, share * 100)}%`, transitionTimingFunction: EASE_OUT }}
       />
     </span>
   );
@@ -60,8 +62,8 @@ function StockBody() {
   const [form, setForm] = useState<{ mode: StockFormMode; productId?: string } | null>(null);
   const fmt = (n: number) => formatMoney(n, currency, { compact: true });
 
-  // Most urgent first: out, low, healthy, slow, then the ones not tracked yet.
-  const order: StockStatus[] = ["out", "low", "ok", "slow", "untracked"];
+  // Most urgent first: out, low, healthy, new, slow, then the ones not tracked yet.
+  const order: StockStatus[] = ["out", "low", "ok", "new", "slow", "untracked"];
   const sorted = [...lines].sort((a, b) => order.indexOf(a.status) - order.indexOf(b.status) || (a.daysLeft ?? 1e9) - (b.daysLeft ?? 1e9));
 
   const header = (
@@ -72,14 +74,15 @@ function StockBody() {
       description="What's on your shelf, what each product earns you and what to restock next, so your money goes where it makes the most."
       actions={
         products.length > 0 && (
+          // Until something is tracked, counting is the first step, so it's the main button.
           <>
-            <Button onClick={() => setForm({ mode: "restock" })}>
+            <Button variant={sum.tracked ? "primary" : "secondary"} onClick={() => setForm({ mode: "restock" })}>
               <Plus className="size-4" aria-hidden /> Restock
             </Button>
             <Button variant="secondary" onClick={() => setForm({ mode: "sold" })}>
               <Minus className="size-4" aria-hidden /> Record sales
             </Button>
-            <Button variant="secondary" onClick={() => setForm({ mode: "count" })}>
+            <Button variant={sum.tracked ? "secondary" : "primary"} onClick={() => setForm({ mode: "count" })}>
               <ClipboardCheck className="size-4" aria-hidden /> Count stock
             </Button>
           </>
@@ -187,9 +190,16 @@ function ProductsPanel({ lines, tracked, total, currency, onOpen }: { lines: Sto
                   <span className="font-semibold text-ink">
                     <Ticker value={String(l.onHand)} num={l.onHand} />
                   </span>{" "}
-                  in stock · {l.sold30} sold in 30 days
-                  {l.daysOut >= 3 && <span className="text-alert"> (sold out {l.daysOut} of them)</span>} ·{" "}
-                  {l.status === "out" ? "sold out" : `lasts ${daysText(l.daysLeft)}`}
+                  in stock ·{" "}
+                  {l.status === "new" ? (
+                    "only just counted, so too soon to tell how fast it sells"
+                  ) : (
+                    <>
+                      {l.sold30} sold in 30 days
+                      {l.daysOut >= 3 && <span className="text-alert"> (sold out {l.daysOut} of them)</span>} ·{" "}
+                      {l.status === "out" ? "sold out" : l.daysLeft === null ? "no recent sales" : `lasts ${daysText(l.daysLeft)}`}
+                    </>
+                  )}
                 </p>
                 <LastsBar line={l} />
                 <RowActions line={l} onOpen={onOpen} />
@@ -236,7 +246,9 @@ function ProductsPanel({ lines, tracked, total, currency, onOpen }: { lines: Sto
                     <span className="text-faint">–</span>
                   ) : (
                     <span className="block space-y-1">
-                      <span className="block text-xs text-muted">{l.status === "out" ? "Ran out" : daysText(l.daysLeft)}</span>
+                      <span className="block text-xs text-muted">
+                        {l.status === "out" ? "Ran out" : l.status === "new" ? "Too soon to tell" : daysText(l.daysLeft)}
+                      </span>
                       <LastsBar line={l} />
                     </span>
                   )}

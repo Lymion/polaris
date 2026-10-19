@@ -5,6 +5,7 @@ const STATUS_STYLE: Record<StockStatus, string> = {
   out: "bg-alert/15 text-alert ring-alert/30",
   low: "bg-caution/15 text-caution ring-caution/30",
   ok: "bg-growth/15 text-growth ring-growth/30",
+  new: "bg-star-400/10 text-star-200 ring-star-400/30",
   slow: "bg-fg/[0.06] text-muted ring-line",
   untracked: "bg-transparent text-faint ring-line",
 };

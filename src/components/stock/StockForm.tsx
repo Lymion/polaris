@@ -162,7 +162,7 @@ export function StockForm({ mode, productId, onClose }: { mode: StockFormMode; p
 
         {mode === "count" && (
           <>
-            {product && units > 0 && <CountMargin product={product} units={units} />}
+            {product && <CountMargin product={product} units={units} />}
             <label className="block space-y-1.5 text-sm">
               <span className="font-medium">Warn me when it falls to</span>
               <input inputMode="numeric" value={reorder} onChange={(e) => setReorder(e.target.value)} placeholder="Automatic: about two weeks of sales" className={fieldClass} />
@@ -289,12 +289,22 @@ function SaleMargin({ product, units, channel }: { product: Product; units: numb
   );
 }
 
-/** What the counted stock holds: the money in it and the profit it makes once sold. */
+/**
+ * What the counted stock holds: the money in it and the profit it makes once sold. Shown from the
+ * start, so the buttons below don't jump down when the first digit is typed.
+ */
 function CountMargin({ product, units }: { product: Product; units: number }) {
   const currency = usePolaris((s) => s.profile.currency);
   const { mix } = useStock();
   const fmt = (n: number) => formatMoney(n, currency, { compact: true });
   const m = marginOf(product, mix);
+  if (!(units > 0)) {
+    return (
+      <Explain>
+        <p className="text-muted">Type how many are on the shelf to see the money in them and the profit they&apos;ll make.</p>
+      </Explain>
+    );
+  }
   return (
     <Explain>
       <p>

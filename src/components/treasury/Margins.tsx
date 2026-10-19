@@ -167,7 +167,7 @@ function ProductsCard() {
   }
 
   return (
-    <section className="panel p-5 sm:p-6">
+    <section className="panel @container p-5 sm:p-6">
       <SectionTitle title="Your products" hint="Unit cost is the ingredients or materials plus packaging for one item." />
       <ul className="mt-4 divide-y divide-line">
         {rows.list.map(({ key, item: p, state }) => (
@@ -191,17 +191,18 @@ function ProductsCard() {
           </PresenceItem>
         ))}
       </ul>
+      {/* In a narrow card the name gets a row of its own, so it isn't squeezed to a few letters. */}
       <form
-        className="mt-3 grid grid-cols-[1fr_5.5rem_5.5rem] gap-2"
+        className="mt-3 grid grid-cols-2 gap-2 @md:grid-cols-[1fr_5.5rem_5.5rem]"
         onSubmit={(e) => {
           e.preventDefault();
           add();
         }}
       >
-        <input value={name} onChange={(e) => { setName(e.target.value); setError(""); }} placeholder="e.g. Chocolate cake" aria-label="Product name" className={fieldClass} />
+        <input value={name} onChange={(e) => { setName(e.target.value); setError(""); }} placeholder="e.g. Chocolate cake" aria-label="Product name" className={clsx(fieldClass, "col-span-2 @md:col-span-1")} />
         <input inputMode="decimal" value={price} onChange={(e) => { setPrice(e.target.value); setError(""); }} placeholder="Price" aria-label={`Selling price in ${currency}`} className={fieldClass} />
         <input inputMode="decimal" value={cost} onChange={(e) => { setCost(e.target.value); setError(""); }} placeholder="Unit cost" aria-label={`Cost per unit in ${currency}`} className={fieldClass} />
-        <Button type="submit" variant="secondary" size="sm" className="col-span-3 justify-self-start">
+        <Button type="submit" variant="secondary" size="sm" className="col-span-2 justify-self-start @md:col-span-3">
           <Plus className="size-3.5" aria-hidden /> Add product
         </Button>
       </form>
@@ -252,7 +253,7 @@ function ChannelsCard() {
   }
 
   return (
-    <section className="panel p-5 sm:p-6">
+    <section className="panel @container p-5 sm:p-6">
       <SectionTitle title="Where you sell" hint="Add each platform and the commission it takes. Check your contract for the exact fee." />
       <ul className="mt-4 divide-y divide-line">
         {rows.list.map(({ key, item: c, state }) => (
@@ -276,16 +277,16 @@ function ChannelsCard() {
         ))}
       </ul>
       <form
-        className="mt-3 grid grid-cols-[1fr_5rem_5.5rem] gap-2"
+        className="mt-3 grid grid-cols-2 gap-2 @md:grid-cols-[1fr_5rem_5.5rem]"
         onSubmit={(e) => {
           e.preventDefault();
           add();
         }}
       >
-        <input value={name} onChange={(e) => { setName(e.target.value); setError(""); }} placeholder="e.g. GrabFood" aria-label="Platform name" className={fieldClass} />
+        <input value={name} onChange={(e) => { setName(e.target.value); setError(""); }} placeholder="e.g. GrabFood" aria-label="Platform name" className={clsx(fieldClass, "col-span-2 @md:col-span-1")} />
         <input inputMode="decimal" value={fee} onChange={(e) => { setFee(e.target.value); setError(""); }} placeholder="Fee %" aria-label="Commission percentage" className={fieldClass} />
         <input inputMode="decimal" value={fixed} onChange={(e) => { setFixed(e.target.value); setError(""); }} placeholder="+ per order" aria-label={`Fixed fee per order in ${currency}`} className={fieldClass} />
-        <Button type="submit" variant="secondary" size="sm" className="col-span-3 justify-self-start">
+        <Button type="submit" variant="secondary" size="sm" className="col-span-2 justify-self-start @md:col-span-3">
           <Plus className="size-3.5" aria-hidden /> Add platform
         </Button>
       </form>

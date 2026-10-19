@@ -11,7 +11,7 @@ import { newAdvisorChat, sendAdvisorMessage, stopAdvisor } from "@/lib/advisorCh
 import { AiError, generateMissions } from "@/lib/ai/client";
 import { parseAdvisorReply } from "@/lib/ai/shared";
 import { CATEGORY_LABELS, CATEGORY_STYLES } from "@/lib/categories";
-import { usePolaris } from "@/lib/store";
+import { MAX_OPEN_MISSIONS, openSlots, usePolaris } from "@/lib/store";
 import type { AdvisorMessage, MissionCategory } from "@/lib/types";
 
 /** The shared conversation plus the reply streaming in. */
@@ -153,6 +153,7 @@ const AssistantMessage = memo(function AssistantMessage({
 }) {
   const updateMessage = usePolaris((s) => s.updateAdvisorMessage);
   const addMissions = usePolaris((s) => s.addMissions);
+  const slots = usePolaris((s) => openSlots(s.missions));
   const [converting, setConverting] = useState(false);
   const [error, setError] = useState("");
 
@@ -171,7 +172,7 @@ const AssistantMessage = memo(function AssistantMessage({
     setConverting(true);
     setError("");
     try {
-      const created = await generateMissions({ mode: "advice", text: message.content, source: "advisor" });
+      const created = await generateMissions({ mode: "advice", text: message.content, source: "advisor", max: slots });
       addMissions(created);
       updateMessage(message.id, { missionsAdded: created.length });
     } catch (err) {
@@ -192,6 +193,10 @@ const AssistantMessage = memo(function AssistantMessage({
               <Link href="/missions" className="tap-target relative underline underline-offset-2">
                 View
               </Link>
+            </p>
+          ) : slots === 0 ? (
+            <p className="text-xs text-muted">
+              You have {MAX_OPEN_MISSIONS} missions open. Finish one and you can turn this into missions.
             </p>
           ) : (
             <button

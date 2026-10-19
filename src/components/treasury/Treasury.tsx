@@ -7,6 +7,7 @@ import { BookOpen, Play, RefreshCw, Sparkles, Stethoscope, Wallet } from "lucide
 import { rovingKeys } from "@/components/ui/a11y";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
+import { reducedMotion } from "@/components/ui/motion";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { notify } from "@/components/ui/toast";
 import { addMonths } from "@/lib/finance";
@@ -67,6 +68,15 @@ function TreasuryBody() {
   function setTab(next: Tab) {
     setTabState(next);
     window.history.replaceState(null, "", next === "overview" ? window.location.pathname : `?tab=${next}`);
+  }
+  // The form for one sale or cost is on the sheet tab: once it's drawn, bring it into view, ready to type.
+  function logMoney() {
+    setTab("sheet");
+    setTimeout(() => {
+      const form = document.getElementById("log-money");
+      form?.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "center" });
+      form?.querySelector<HTMLInputElement>("input")?.focus({ preventScroll: true });
+    }, 50);
   }
   // The money lessons open by themselves on the first visit; after that, from the header button.
   const [lessons, setLessons] = useState<"first" | "again" | null>(() =>
@@ -173,6 +183,7 @@ function TreasuryBody() {
           <OverviewTab
             selected={selected}
             nav={nav}
+            onLog={logMoney}
             helper={
               <LumiAssist
                 busy={helper.busy}

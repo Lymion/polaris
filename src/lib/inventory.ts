@@ -6,8 +6,8 @@ import { THIN_MARGIN, unitProfit } from "./finance";
 import { formatMoney } from "./money";
 import type { Product, SalesChannel, StockMove, TreasuryEntry } from "./types";
 
-/** How a product's stock is doing. */
-export type StockStatus = "out" | "low" | "ok" | "slow" | "untracked";
+/** How a product's stock is doing. "new": tracked under a month with no sales yet, too soon to judge. */
+export type StockStatus = "out" | "low" | "ok" | "new" | "slow" | "untracked";
 
 /**
  * Platform fees, averaged over where recent sales came from, so "profit each" matches how the
@@ -57,6 +57,8 @@ export interface StockLine {
   margin: Margin;
   /** Profit from what sold in the last 30 days. */
   profit30: number;
+  /** Days of the last 30 its stock has been on record: 30 once it's been tracked a month. */
+  trackedDays: number;
 }
 
 /** Below two weeks of stock is running low; more than three months of it is slow. */
@@ -169,8 +171,24 @@ export function stockLines(products: Product[], moves: StockMove[], mix: FeeMix 
     if (!tracked) status = "untracked";
     else if (onHand <= 0) status = "out";
     else if (onHand <= reorderAt) status = "low";
+    // Under a month on record is too soon to call anything slow: a product counted today has
+    // sold nothing yet because it was only just counted.
+    else if (shelf.recorded < 30) status = sold30 ? "ok" : "new";
     else if (sold30 === 0 || (daysLeft !== null && daysLeft > SLOW_DAYS)) status = "slow";
-    return { product, onHand, sold30, daysOut: shelf.out, perDay, daysLeft, value: onHand * product.unitCost, reorderAt, status, margin, profit30: sold30 * margin.profit };
+    return {
+      product,
+      onHand,
+      sold30,
+      daysOut: shelf.out,
+      perDay,
+      daysLeft,
+      value: onHand * product.unitCost,
+      reorderAt,
+      status,
+      margin,
+      profit30: sold30 * margin.profit,
+      trackedDays: tracked ? shelf.recorded : 0,
+    };
   });
 }
 
@@ -211,6 +229,7 @@ export const STATUS_LABEL: Record<StockStatus, string> = {
   out: "Out of stock",
   low: "Running low",
   ok: "Healthy",
+  new: "New",
   slow: "Slow seller",
   untracked: "Not tracked",
 };
@@ -344,6 +363,14 @@ export function stockFacts(
   if (sum.slow.length) {
     parts.push(
       `Slow sellers: ${sum.slow.map((l) => `${l.product.name} (${l.onHand} in stock, ${l.sold30} sold in 30 days; a discount over ${pct(l.margin.maxDiscount)} would sell at a loss)`).join(", ")}, ${fmt(sum.slowValue)} tied up.`,
+    );
+  }
+  const fresh = lines.filter((l) => l.status !== "untracked" && l.trackedDays < 30);
+  if (fresh.length) {
+    parts.push(
+      `Only tracked a short while, so it's too soon to judge how these sell; don't call them slow or unsold: ${fresh
+        .map((l) => `${l.product.name} (tracked ${l.trackedDays <= 1 ? "since today" : `for ${l.trackedDays} days`})`)
+        .join(", ")}. Sales logged in Treasury without naming a product aren't counted against any product.`,
     );
   }
   return parts.join(" ");

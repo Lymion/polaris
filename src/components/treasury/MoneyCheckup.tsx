@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { AiError, generateMissions, reviewMoney } from "@/lib/ai/client";
 import type { MoneyReview } from "@/lib/ai/shared";
-import { mascotName, usePolaris } from "@/lib/store";
+import { MAX_OPEN_MISSIONS, mascotName, openSlots, usePolaris } from "@/lib/store";
 
 /** Score bands: the meter fill carries severity (status colour plus a text label). */
 function band(score: number) {
@@ -23,6 +23,7 @@ function band(score: number) {
 export function MoneyCheckup({ onClose }: { onClose: () => void }) {
   const name = usePolaris((s) => mascotName(s.profile));
   const addMissions = usePolaris((s) => s.addMissions);
+  const slots = usePolaris((s) => openSlots(s.missions));
   const [review, setReview] = useState<MoneyReview | null>(null);
   const [error, setError] = useState("");
   const [converting, setConverting] = useState(false);
@@ -45,7 +46,7 @@ export function MoneyCheckup({ onClose }: { onClose: () => void }) {
       const text = `Money check-up (score ${review.score}/100): ${review.headline}\nIssues:\n${review.issues
         .map((i) => `- ${i.title}: ${i.detail}`)
         .join("\n")}\nActions:\n${review.actions.map((a) => `- ${a}`).join("\n")}`;
-      const created = await generateMissions({ mode: "advice", text, source: "advisor" });
+      const created = await generateMissions({ mode: "advice", text, source: "advisor", max: slots });
       addMissions(created);
       setAdded(created.length);
     } catch (err) {
@@ -157,6 +158,10 @@ export function MoneyCheckup({ onClose }: { onClose: () => void }) {
                 <Link href="/missions" onClick={onClose} className="underline underline-offset-2">
                   View
                 </Link>
+              </p>
+            ) : slots === 0 ? (
+              <p className="text-center text-sm text-muted">
+                You have {MAX_OPEN_MISSIONS} missions open. Finish one and you can turn this into missions.
               </p>
             ) : (
               <Button className="w-full" onClick={toMissions} disabled={converting}>

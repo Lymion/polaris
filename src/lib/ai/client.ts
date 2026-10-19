@@ -163,6 +163,8 @@ export async function generateMissions(opts: {
   mode: MissionMode;
   text?: string;
   source: Mission["source"];
+  /** At most this many (advice): what's left under the open-mission limit. */
+  max?: number;
 }): Promise<Mission[]> {
   const state = usePolaris.getState();
   const lvl = levelInfo(state.xp, effectiveRevenue(state.revenue, state.entries), state.profile.currency);
@@ -170,6 +172,7 @@ export async function generateMissions(opts: {
     mode: opts.mode,
     profile: state.profile,
     text: opts.text,
+    max: opts.max,
     existing: state.missions.map((m) => m.title),
     gaps: uncoveredFoundations(state.profile, state.missions),
     facts: businessFacts(state),

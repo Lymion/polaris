@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import clsx from "clsx";
+import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/Button";
 import { CHART_COLORS } from "@/lib/categories";
 import type { MonthSummary } from "@/lib/finance";
 import { formatMoney } from "@/lib/money";
@@ -15,8 +17,11 @@ function niceScale(max: number) {
   return { top: step * 4, step };
 }
 
-/** Money in vs money out per month: grouped columns with hover details and a table view. */
-export function CashflowChart({ months, currency }: { months: MonthSummary[]; currency: string }) {
+/**
+ * Money in vs money out per month: grouped columns with hover details and a table view. Empty, it
+ * offers the way to log the first sale (`onLog`).
+ */
+export function CashflowChart({ months, currency, onLog }: { months: MonthSummary[]; currency: string; onLog?: () => void }) {
   const [asTable, setAsTable] = useState(false);
   const [active, setActive] = useState<number | null>(null);
   const max = Math.max(...months.map((m) => Math.max(m.income, m.expenses)));
@@ -24,9 +29,14 @@ export function CashflowChart({ months, currency }: { months: MonthSummary[]; cu
 
   if (max === 0) {
     return (
-      <p className="grid h-56 place-items-center rounded-xl border border-dashed border-fg/10 px-6 text-center text-sm text-muted">
-        Nothing logged in these months yet. Add sales and costs to see your cashflow.
-      </p>
+      <div className="flex h-56 flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-fg/10 px-6 text-center">
+        <p className="text-sm text-muted">Nothing logged in these months yet. Add sales and costs to see your cashflow.</p>
+        {onLog && (
+          <Button size="sm" onClick={onLog}>
+            <Plus className="size-4" aria-hidden /> Log a sale or cost
+          </Button>
+        )}
+      </div>
     );
   }
 

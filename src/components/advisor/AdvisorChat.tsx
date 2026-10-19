@@ -72,13 +72,14 @@ export function AdvisorChat() {
     void sendAdvisorMessage(q, PAGE);
   }, [hydrated, searchParams, router]);
 
-  // Open saved conversations at the latest message.
+  // Open saved conversations at the latest message (an empty one stays at the top, title in view).
   useEffect(() => {
-    if (hydrated) window.scrollTo({ top: document.body.scrollHeight });
+    if (hydrated && usePolaris.getState().advisorThread.length) window.scrollTo({ top: document.body.scrollHeight });
   }, [hydrated]);
 
-  // Follow the conversation while the user is near the bottom.
+  // Follow the conversation while the user is near the bottom (nothing to follow before it starts).
   useEffect(() => {
+    if (threadLength === 0 && streaming === null) return;
     const nearBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 240;
     if (nearBottom) window.scrollTo({ top: document.body.scrollHeight });
   }, [threadLength, streaming]);

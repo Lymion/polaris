@@ -43,7 +43,8 @@ export function MascotDock() {
   );
   const celebrating = usePolaris((s) => s.celebration !== null);
 
-  const [bubble, setBubble] = useState<Tip | null>(null);
+  // The tip and the page it's about: it only shows there, so it doesn't follow you to the next page.
+  const [tip, setBubble] = useState<(Tip & { path: string }) | null>(null);
   const shownOn = useRef(new Set<string>());
 
   const name = mascotName(profile);
@@ -55,14 +56,17 @@ export function MascotDock() {
   // Pages can describe what's on screen (e.g. the sheet being edited) so Lumi can see it.
   const page = pageContext ? `${pageName}. ${pageContext}` : pageName;
   const onAdvisorPage = pathname.startsWith("/advisor");
+  // Leaving the page it was about drops the tip.
+  if (tip && tip.path !== pathname) setBubble(null);
+  const bubble = tip?.path === pathname ? tip : null;
 
   // Say something useful once per page per visit, based on the latest state.
   useEffect(() => {
     if (!hydrated || !profile.onboarded || open || onAdvisorPage || shownOn.current.has(pathname)) return;
     const show = setTimeout(() => {
       shownOn.current.add(pathname);
-      const tip = tipFor(pathname, usePolaris.getState());
-      if (!(tip.filler && isPhone())) setBubble(tip);
+      const next = tipFor(pathname, usePolaris.getState());
+      if (!(next.filler && isPhone())) setBubble({ ...next, path: pathname });
     }, 1200);
     return () => clearTimeout(show);
   }, [hydrated, profile.onboarded, pathname, open, onAdvisorPage]);
@@ -328,6 +332,10 @@ function tipFor(pathname: string, state: ReturnType<typeof usePolaris.getState>)
   if (pathname === "/studio") return { text: "Need a spark? My book is full of ideas. Just ask!", filler: true };
   if (pathname === "/treasury") return { text: "Money talk! Ask me what margins or overheads mean, using your own numbers.", filler: true };
   if (pathname === "/stock") {
+    // Advice about what to restock needs something on the shelf to weigh first.
+    if (!state.products.some((p) => p.stock !== undefined)) {
+      return { text: "Count what's on your shelf and I'll warn you before anything runs out.", filler: true };
+    }
     return {
       text: "Not sure what to restock first? I can weigh what each product earns against what's sitting on the shelf.",
       action: { label: "What should I stock more of?", prompt: "Looking at what each product earns and how fast it sells, what should I stock more of, and what should I stop buying?" },

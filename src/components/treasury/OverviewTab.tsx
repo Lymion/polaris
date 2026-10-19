@@ -18,7 +18,7 @@ import { ActivitiesLog } from "./sheet/ActivitiesLog";
  * money went and what was done that month. `nav` is the shared month picker; `helper` is Lumi's
  * money helper panel.
  */
-export function OverviewTab({ selected, nav, helper }: { selected: Date; nav: ReactNode; helper: ReactNode }) {
+export function OverviewTab({ selected, nav, helper, onLog }: { selected: Date; nav: ReactNode; helper: ReactNode; onLog: () => void }) {
   const entries = usePolaris((s) => s.entries);
   const overheads = usePolaris((s) => s.overheads);
   const currency = usePolaris((s) => s.profile.currency);
@@ -84,7 +84,7 @@ export function OverviewTab({ selected, nav, helper }: { selected: Date; nav: Re
         <section className="panel p-5 sm:p-6 xl:col-span-3">
           <SectionTitle title="Last 6 months" hint={`Money in and out per month, ending ${monthName}.`} />
           <div className="mt-5">
-            <CashflowChart months={series} currency={currency} />
+            <CashflowChart months={series} currency={currency} onLog={onLog} />
           </div>
         </section>
         <div className="xl:col-span-2">{helper}</div>

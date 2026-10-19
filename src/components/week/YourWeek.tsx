@@ -375,6 +375,8 @@ export function YourWeekStory({ week, onClose }: { week: YourWeek; onClose: () =
 export function YourWeekCard() {
   const week = useYourWeek();
   const [playing, setPlaying] = useState(false);
+  // Before the first missions, getting them is the one thing to do: the story waits in second place.
+  const firstRun = usePolaris((s) => s.missions.length === 0);
 
   return (
     <section aria-labelledby="week-title" className="panel relative overflow-hidden p-5 sm:p-6">
@@ -386,7 +388,7 @@ export function YourWeekCard() {
             {week.headline}
           </h2>
         </div>
-        <PlayButton onClick={() => setPlaying(true)} />
+        <PlayButton onClick={() => setPlaying(true)} quiet={firstRun} />
       </div>
       {week.priorities.length > 0 && (
         <ol className="relative mt-4 grid gap-2 md:grid-cols-3">
@@ -398,15 +400,26 @@ export function YourWeekCard() {
                 key={p.id}
                 className="flex min-w-0 items-center rounded-xl bg-fg/[0.04] ring-1 ring-line transition-[background-color,transform] duration-150 ease-out has-[a:hover]:bg-fg/[0.07] has-[a:active]:scale-[0.98]"
               >
-                <Tooltip content={p.why}>
+                <Tooltip
+                  content={
+                    <>
+                      {/* A long title (a mission's next step) is cut to two lines, so the tip starts with it in full. */}
+                      {p.title.length > 50 && <span className="mb-1 block font-semibold">{p.title}</span>}
+                      {p.why}
+                    </>
+                  }
+                >
                   <Link href={p.href} className="flex h-full min-w-0 flex-1 items-center gap-3 rounded-xl px-3 py-2.5">
                     <span className={clsx("grid size-6 shrink-0 place-items-center rounded-md text-xs font-bold", tone.ring)}>{i + 1}</span>
-                    <span className="min-w-0 flex-1 text-sm font-semibold leading-snug">{p.title}</span>
+                    <span className="line-clamp-2 min-w-0 flex-1 text-sm font-semibold leading-snug">{p.title}</span>
                     <ChevronRight className="size-4 shrink-0 text-faint pointer-coarse:hidden" aria-hidden />
                   </Link>
                 </Tooltip>
                 <span className="mr-3 hidden pointer-coarse:flex">
-                  <Hint label={`Why "${p.title}" matters`}>{p.why}</Hint>
+                  <Hint label={`Why "${p.title}" matters`}>
+                    {p.title.length > 50 && <span className="mb-1 block font-semibold">{p.title}</span>}
+                    {p.why}
+                  </Hint>
                 </span>
               </li>
             );
@@ -418,12 +431,17 @@ export function YourWeekCard() {
   );
 }
 
-function PlayButton({ onClick }: { onClick: () => void }) {
+function PlayButton({ onClick, quiet }: { onClick: () => void; quiet: boolean }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex shrink-0 items-center justify-center gap-2 self-start rounded-full bg-star-400 px-5 py-2.5 text-sm font-semibold text-on-accent shadow-[0_8px_24px_-8px_var(--accent-glow)] transition-[transform,filter] duration-150 ease-out hover:brightness-105 active:scale-[0.97]"
+      className={clsx(
+        "inline-flex shrink-0 items-center justify-center gap-2 self-start rounded-full px-5 py-2.5 text-sm font-semibold transition-[transform,filter,background-color] duration-150 ease-out active:scale-[0.97]",
+        quiet
+          ? "bg-fg/[0.06] text-ink ring-1 ring-line hover:bg-fg/[0.1]"
+          : "bg-star-400 text-on-accent shadow-[0_8px_24px_-8px_var(--accent-glow)] hover:brightness-105",
+      )}
     >
       <Play className="size-4" aria-hidden /> Play your week
     </button>

@@ -33,6 +33,8 @@ export interface Celebration {
   title: string;
   what: "mission" | "lesson" | "win" | "sales";
   levelUp: { level: number; title: string } | null;
+  /** The level-up came from sales reaching the milestone, not from the XP. */
+  bySales: boolean;
 }
 
 export interface MascotRequest {
@@ -189,7 +191,9 @@ function celebrate(before: Progress, after: Progress, currency: string, title: s
   const gained = after.xp - before.xp;
   const levelUp = b.level > a.level ? { level: b.level, title: b.title } : null;
   if (!gained && !levelUp) return null;
-  return { id: newId(), xp: gained, title, what, levelUp };
+  // With the new XP but the old sales, would it have levelled up? If not, the sales did it.
+  const bySales = !!levelUp && levelInfo(after.xp, effectiveRevenue(before.revenue, before.entries), currency).level <= a.level;
+  return { id: newId(), xp: gained, title, what, levelUp, bySales };
 }
 
 /** This week as "2026-W42" (ISO weeks, starting Monday). */
@@ -563,6 +567,12 @@ export function newId() {
 export function mascotName(profile: BusinessProfile) {
   return profile.mascotName.trim() || "Lumi";
 }
+
+/** New missions pause at this many open ones, so owners finish what they start. */
+export const MAX_OPEN_MISSIONS = 6;
+
+/** How many more missions fit under the limit right now. */
+export const openSlots = (missions: Mission[]) => Math.max(0, MAX_OPEN_MISSIONS - missions.filter((m) => m.status !== "done").length);
 
 /** Basics with no mission yet (open or done) and not already in place. */
 export function uncoveredFoundations(profile: BusinessProfile, missions: Mission[]): Foundation[] {

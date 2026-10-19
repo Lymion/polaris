@@ -21,11 +21,12 @@ function LevelUp({ celebration, onDismiss }: { celebration: Celebrated; onDismis
   const dialog = useRef<HTMLDivElement>(null);
   useDialogFocus(dialog);
 
+  // Above dialogs (z-60): a lesson passed inside the lessons dialog can level you up.
   return (
     <div
       ref={dialog}
       tabIndex={-1}
-      className="fixed inset-0 z-50 grid place-items-center bg-surface-950/80 px-4 outline-none backdrop-blur-sm"
+      className="fixed inset-0 z-[70] grid place-items-center bg-surface-950/80 px-4 outline-none backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-labelledby="levelup-title"
@@ -39,7 +40,17 @@ function LevelUp({ celebration, onDismiss }: { celebration: Celebrated; onDismis
         </h2>
         <p className="relative mt-1 text-lg text-starlight font-semibold">{celebration.levelUp?.title}</p>
         <p className="relative mt-4 text-sm text-muted">
-          {celebration.xp > 0 && celebration.what === "mission" ? (
+          {celebration.bySales ? (
+            <>
+              Your sales unlocked it
+              {celebration.xp > 0 && (
+                <>
+                  , and <span className="text-ink">{celebration.title.toLowerCase()}</span> earned +{celebration.xp} XP
+                </>
+              )}
+              .
+            </>
+          ) : celebration.xp > 0 && celebration.what === "mission" ? (
             <>
               You completed <span className="text-ink">{celebration.title}</span> and earned {celebration.xp} XP.
             </>
@@ -70,7 +81,7 @@ function XpToast({ celebration, onDismiss }: { celebration: Celebrated; onDismis
     // At the top, under the phone header: the bottom of the screen is where the other toasts stack.
     <div
       role="status"
-      className="fixed inset-x-4 top-[calc(env(safe-area-inset-top)+4.25rem)] z-50 mx-auto flex max-w-sm items-center gap-3 rounded-2xl bg-surface-800/95 p-4 shadow-2xl ring-1 ring-star-400/40 backdrop-blur animate-rise-in lg:inset-x-auto lg:right-8 lg:top-8"
+      className="fixed inset-x-4 top-[calc(env(safe-area-inset-top)+4.25rem)] z-[70] mx-auto flex max-w-sm items-center gap-3 rounded-2xl bg-surface-800/95 p-4 shadow-2xl ring-1 ring-star-400/40 backdrop-blur animate-rise-in lg:inset-x-auto lg:right-8 lg:top-8"
     >
       <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-linear-to-br from-star-300 to-star-600">
         <Sparkles className="size-5 text-space-900" aria-hidden />

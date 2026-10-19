@@ -10,7 +10,7 @@ import { PresenceItem, Ticker, usePresence } from "@/components/ui/motion";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { notify } from "@/components/ui/toast";
 import { AiError, generateMissions } from "@/lib/ai/client";
-import { newId, uncoveredFoundations, useHydrated, usePolaris } from "@/lib/store";
+import { MAX_OPEN_MISSIONS, newId, uncoveredFoundations, useHydrated, usePolaris } from "@/lib/store";
 import type { Mission } from "@/lib/types";
 import { BusinessBasics } from "./BusinessBasics";
 import { MissionCard } from "./MissionCard";
@@ -23,9 +23,6 @@ const PLANNING_MESSAGES = [
 ];
 
 type Tab = "active" | "done";
-
-/** "More missions" pauses at this many open missions, so users finish what they start. */
-const MAX_OPEN = 6;
 
 export function MissionsBoard() {
   const hydrated = useHydrated();
@@ -70,7 +67,7 @@ export function MissionsBoard() {
   const done = missions.filter((m) => m.status === "done").reverse();
   const list = tab === "active" ? active : done;
   const gaps = uncoveredFoundations(profile, missions);
-  const atLimit = active.length >= MAX_OPEN;
+  const atLimit = active.length >= MAX_OPEN_MISSIONS;
 
   return (
     <>
@@ -102,7 +99,7 @@ export function MissionsBoard() {
               <Button
                 onClick={() => plan("growth")}
                 disabled={planning || atLimit}
-                title={atLimit ? `Finish or clear a mission first (max ${MAX_OPEN} open)` : "Plan growth missions"}
+                title={atLimit ? `Finish or clear a mission first (max ${MAX_OPEN_MISSIONS} open)` : "Plan growth missions"}
               >
                 {planning ? <LoaderCircle className="size-4 animate-spin" aria-hidden /> : <Sparkles className="size-4" aria-hidden />}
                 More missions
@@ -116,7 +113,8 @@ export function MissionsBoard() {
         <QuestlineHero goal={profile.goal} onPlan={() => plan("starter", true)} error={error} />
       ) : (
         <>
-          {atLimit && (
+          {/* Not on a first questline, which fills every slot at once: there it reads as a telling-off. */}
+          {atLimit && done.length > 0 && (
             <p className="mb-5 flex items-center gap-2.5 rounded-xl bg-fg/[0.04] px-4 py-3 text-sm text-muted ring-1 ring-line">
               <Target className="size-4 shrink-0 text-star-300" aria-hidden />
               {active.length} missions open: finish one to unlock more.

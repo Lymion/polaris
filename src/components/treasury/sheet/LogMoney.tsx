@@ -61,7 +61,8 @@ export function LogMoney({ month, className }: { month: string; className?: stri
 
   return (
     <form
-      className={clsx("panel p-5 sm:p-6", className)}
+      id="log-money"
+      className={clsx("panel scroll-mt-24 p-5 sm:p-6", className)}
       onSubmit={(e) => {
         e.preventDefault();
         submit();
