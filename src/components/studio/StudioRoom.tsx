@@ -14,7 +14,8 @@ const SPOTS: Record<StationId | "idle", [number, number]> = {
   brand: [3.3, 7.0],
   campaign: [2.6, 1.6],
   calendar: [1.6, 2.8],
-  library: [7.2, 2.0],
+  // In front of the shelf, clear of the video booth's ring light (any further left, Lumi stands behind it).
+  library: [8.0, 1.6],
   video: [5.7, 6.5],
 };
 
@@ -400,6 +401,12 @@ export function StudioRoom({
             </>,
           )}
 
+          {/* Lumi walks to the station you point at. Drawn before the video booth, the nearest thing
+              to you, so its ring light and camera pass in front of Lumi on the way across. */}
+          <g className="studio-lumi" style={{ transform: `translate(${lx - 55}px, ${ly - 104}px)` }}>
+            <Mascot size={110} mood={zooming ? "happy" : hovered ? "talking" : "idle"} greet />
+          </g>
+
           {/* Video booth: tripod camera, ring light and a little stage */}
           {station(
             "video",
@@ -438,11 +445,6 @@ export function StudioRoom({
               <circle cx={iso(6.5, 5.85, 2.02)[0]} cy={iso(6.5, 5.85, 2.02)[1]} r="3.5" fill="#EF4444" className="m-twinkle" />
             </>,
           )}
-
-          {/* Lumi walks to the station you point at */}
-          <g className="studio-lumi" style={{ transform: `translate(${lx - 55}px, ${ly - 104}px)` }}>
-            <Mascot size={110} mood={zooming ? "happy" : hovered ? "talking" : "idle"} greet />
-          </g>
 
           {/* Floating labels */}
           {STATIONS.map((s) => {
