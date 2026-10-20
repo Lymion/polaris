@@ -118,19 +118,19 @@ const ARC: {
   extra: { day: number; kind: ActivityKind; title: string; cost: number; boost?: Partial<Record<Online, number>>; popup?: number }[];
 }[] = [
   {
-    sales: 4200,
+    sales: 5200,
     share: { ig: 0.45, shopee: 0.35, tiktok: 0.1, web: 0.1 },
     ads: 600,
     extra: [{ day: 3, kind: "launch", title: "Soft launch: first drop of 12 pieces", cost: 0, boost: { ig: 1.4 } }],
   },
   {
-    sales: 6100,
+    sales: 7400,
     share: { ig: 0.35, shopee: 0.33, tiktok: 0.22, web: 0.1 },
     ads: 900,
     extra: [{ day: 8, kind: "event", title: "Started weekly TikTok Live try-ons", cost: 0, boost: { tiktok: 1.6 } }],
   },
   {
-    sales: 7800,
+    sales: 10200,
     share: { ig: 0.3, shopee: 0.3, tiktok: 0.28, web: 0.12 },
     ads: 1400,
     extra: [
@@ -139,19 +139,19 @@ const ARC: {
     ],
   },
   {
-    sales: 9400,
+    sales: 12000,
     share: { ig: 0.25, shopee: 0.32, tiktok: 0.3, web: 0.13 },
     ads: 2200,
     extra: [{ day: 20, kind: "event", title: "Pop-up at a weekend bazaar", cost: 350, popup: 2100 }],
   },
   {
-    sales: 10600,
+    sales: 13800,
     share: { ig: 0.22, shopee: 0.3, tiktok: 0.32, web: 0.16 },
     ads: 1600,
     extra: [{ day: 6, kind: "launch", title: "Office Edit capsule: 4 new pieces", cost: 0, boost: { tiktok: 1.4, web: 1.5 } }],
   },
   {
-    sales: 12800,
+    sales: 16000,
     share: { ig: 0.2, shopee: 0.33, tiktok: 0.31, web: 0.16 },
     ads: 2400,
     extra: [{ day: 13, kind: "ads", title: "Meta retargeting ads for cart abandoners", cost: 900, boost: { web: 1.3 } }],
@@ -184,9 +184,10 @@ export function demoBusiness(now = new Date()) {
       if (date <= today) activities.push({ id: id(), date, kind: c.kind, title: c.title, cost: c.cost });
     }
 
-    // Sales arrive as a weekly batch per channel; a campaign lifts its own week, and the TikTok
-    // Lives and influencers keep lifting the rest of the month.
-    const weeks = [7, 14, 21, 28, days];
+    // Sales arrive as twice-weekly payouts per channel, so the month-to-date never sits far behind
+    // its costs; a campaign lifts its own stretch, and the TikTok Lives and influencers keep
+    // lifting the rest of the month.
+    const weeks = [3, 7, 10, 14, 17, 21, 24, 28, days];
     weeks.forEach((end, w) => {
       const from = w === 0 ? 1 : weeks[w - 1] + 1;
       const share = (end - from + 1) / days;
@@ -202,7 +203,7 @@ export function demoBusiness(now = new Date()) {
         const amount = Math.round(month.sales * share * month.share[ch] * boost * (0.85 + rand() * 0.3));
         if (amount < 40) continue;
         const orders = Math.max(1, Math.round(amount / 118));
-        add(end, { type: "income", category: "Sales", amount, note: `${orders} order${orders === 1 ? "" : "s"}, week to the ${end}`, channel: CHANNEL_NAME[ch] });
+        add(end, { type: "income", category: "Sales", amount, note: `${orders} order${orders === 1 ? "" : "s"}, paid out on the ${end}`, channel: CHANNEL_NAME[ch] });
         const fee = CHANNELS.find((c) => c.id === ch)!;
         fees += (amount * fee.feePercent) / 100 + orders * fee.feeFixed;
       }
@@ -212,19 +213,21 @@ export function demoBusiness(now = new Date()) {
       if (c.popup) add(c.day, { type: "income", category: "Sales", amount: c.popup, note: "Bazaar sales, cash and QR", channel: "Pop-up bazaar" });
     }
 
-    // Costs: overheads on their days, stock in two batches, ads in two halves, couriers twice.
-    const planned = month.sales * 1.15;
+    // Costs: overheads on their days, ads in two halves, couriers twice, and stock bought late in
+    // the month for the next one, as the business orders ahead of each drop.
+    const planned = month.sales * 1.1;
     add(1, { type: "expense", category: "Rent", amount: 1200, note: "Studio rent" });
-    add(2, { type: "expense", category: "Ingredients / stock", amount: planned * 0.22, note: "Fabric: satin, linen and crepe" });
     add(3, { type: "expense", category: "Other", amount: 180, note: "Website & apps" });
-    add(4, { type: "expense", category: "Packaging", amount: planned * 0.03, note: "Boxes, tissue and thank-you cards" });
+    add(4, { type: "expense", category: "Packaging", amount: planned * 0.025, note: "Boxes, tissue and thank-you cards" });
     add(5, { type: "expense", category: "Utilities", amount: 150, note: "Phone & internet" });
     add(7, { type: "expense", category: "Marketing", amount: month.ads * 0.5, note: "Meta and TikTok ads" });
-    add(15, { type: "expense", category: "Transport", amount: planned * 0.02, note: "Courier: first half of the month" });
-    add(16, { type: "expense", category: "Ingredients / stock", amount: planned * 0.16, note: "Tailor batch: dresses and co-ords" });
-    add(20, { type: "expense", category: "Marketing", amount: month.ads * 0.5, note: "Meta and TikTok ads" });
-    add(28, { type: "expense", category: "Staff", amount: 1100, note: "Part-time packer" });
-    add(days, { type: "expense", category: "Transport", amount: planned * 0.02, note: "Courier: second half of the month" });
+    add(15, { type: "expense", category: "Transport", amount: planned * 0.015, note: "Courier: first half of the month" });
+    add(21, { type: "expense", category: "Marketing", amount: month.ads * 0.5, note: "Meta and TikTok ads" });
+    add(22, { type: "expense", category: "Ingredients / stock", amount: planned * 0.17, note: "Tailor batch: dresses and co-ords" });
+    add(26, { type: "expense", category: "Ingredients / stock", amount: planned * 0.15, note: "Fabric for next month's drop: satin, linen and crepe" });
+    // The packer joined once orders outgrew Aina's evenings.
+    if (i >= 2) add(28, { type: "expense", category: "Staff", amount: 1100, note: "Part-time packer" });
+    add(days, { type: "expense", category: "Transport", amount: planned * 0.015, note: "Courier: second half of the month" });
     if (i === 0) add(6, { type: "expense", category: "Equipment", amount: 450, note: "Garment steamer and clothing rack" });
     for (const c of month.extra) {
       if (c.cost) add(c.day, { type: "expense", category: "Marketing", amount: c.cost, note: c.title });
