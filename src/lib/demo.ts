@@ -35,6 +35,7 @@ export const DEMO_PROFILE: BusinessProfile = {
   currency: "MYR",
   mascotName: "Lumi",
   onboarded: true,
+  demo: true,
 };
 
 // Stock tells a story too: the best seller is nearly gone, the blazer sold out, the skirt sits still.

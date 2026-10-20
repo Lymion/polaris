@@ -159,6 +159,12 @@ function gapInstructions(gaps: Foundation[], slots: number) {
   }`;
 }
 
+/**
+ * For the sample business only: the first growth mission is a quick win that can be done and
+ * reported in a few minutes, so a demo can show a mission from plan to XP. Nemotron still plans it.
+ */
+const DEMO_QUICK_WIN = `Make the FIRST mission a quick win the owner can finish today in under 15 minutes: exactly 3 short, simple steps (for example, film one 15-second try-on clip of the best seller, post it to TikTok and Instagram Stories, and pin a comment with the price), and exactly 1 easy check-in question with a number answer (for example, how many views it got). Give it 50 XP. The other missions are normal.`;
+
 export function missionRequest(
   mode: MissionMode,
   opts: { text?: string; profile: Partial<BusinessProfile>; existing: string[]; gaps: Foundation[]; nextGate?: string | null; max?: number },
@@ -189,7 +195,7 @@ Do not create any other missions.${existing}`;
       }.
 Build on what they have already done and the numbers they reported: fix their weakest numbers first and double down on what works.
 Do not create missions for setting up business basics. "foundations" must be [] for every mission.
-${stageLine}Use at least 2 different categories.${existing}`;
+${stageLine}Use at least 2 different categories.${opts.profile.demo ? `\n${DEMO_QUICK_WIN}` : ""}${existing}`;
     case "advice": {
       const max = opts.max ?? 3;
       return `Turn this advice from their advisor into ${max === 1 ? "exactly 1 mission" : `1 to ${max} missions`}. Keep the advisor's intent and group related points: a list of small habits or tips is ONE mission with each tip as a step. Only make separate missions for clearly separate projects.\n\nAdvice:\n"""\n${opts.text}\n"""${existing}`;

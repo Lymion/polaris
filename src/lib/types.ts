@@ -43,6 +43,8 @@ export interface BusinessProfile {
   /** What the user named their mascot guide. Empty until they choose. */
   mascotName: string;
   onboarded: boolean;
+  /** The sample business (Atelier Nura), loaded from /welcome#atelier-nura. */
+  demo?: boolean;
 }
 
 /** Self-reported sales, in the profile currency. Gates the higher levels. */
