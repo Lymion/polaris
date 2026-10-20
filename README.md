@@ -4,9 +4,9 @@
 
 Built for the **Nebius × NVIDIA Global AI Hackathon** (Best Apps and Agents track). Every AI feature runs on **NVIDIA Nemotron** models through **Nebius Token Factory**.
 
-- **Live demo:** _link added after deployment_
+- **Live demo:** https://polaris-jade-ten.vercel.app (start your own business there)
+- **Demo business:** https://polaris-jade-ten.vercel.app/welcome#atelier-nura loads Atelier Nura, a small Malaysian fashion label with a few months of sales, stock and costs.
 - **Demo video:** _link added after upload_
-- **Try the demo business:** open `/welcome#atelier-nura` to load Atelier Nura, a small Malaysian fashion label with a few months of sales, stock and costs.
 
 ## Why
 
