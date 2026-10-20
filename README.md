@@ -5,7 +5,6 @@
 Built for the **Nebius × NVIDIA Global AI Hackathon** (Best Apps and Agents track). Every AI feature runs on **NVIDIA Nemotron** models through **Nebius Token Factory**.
 
 - **Live demo:** https://polaris-jade-ten.vercel.app (start your own business there)
-- **Demo business:** https://polaris-jade-ten.vercel.app/welcome#atelier-nura loads Atelier Nura, a small Malaysian fashion label with a few months of sales, stock and costs.
 - **Demo video:** _link added after upload_
 
 ## Why
@@ -69,7 +68,7 @@ Needs Node.js 20.9 or newer (tested on Node 24) and a Nebius Token Factory API k
    npm run dev
    ```
 
-3. Open http://localhost:3000. To skip setup and explore with sample data, open http://localhost:3000/welcome#atelier-nura.
+3. Open http://localhost:3000.
 
 For a production build: `npm run build`, then `npm start`.
 
