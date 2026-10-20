@@ -5,7 +5,7 @@
 Built for the **Nebius × NVIDIA Global AI Hackathon** (Best Apps and Agents track). Every AI feature runs on **NVIDIA Nemotron** models through **Nebius Token Factory**.
 
 - **Live demo:** https://polaris-jade-ten.vercel.app (start your own business there)
-- **Demo video:** _link added after upload_
+- **Demo video:** https://www.youtube.com/watch?v=Xvv595PI7Uc
 
 ## Why
 
