@@ -47,3 +47,29 @@ next-env.d.ts
 
 # screen recordings and the edited demo video
 /footage/
+
+# --- added by the 2026-11-02 reorg ---
+# secrets
+.env
+*.key
+secrets/
+# dependencies and build output
+dist/
+__pycache__/
+*.pyc
+venv/
+.venv/
+*.log
+# large binaries and media
+*.mp4
+*.mov
+*.mkv
+*.wav
+*.zip
+*.7z
+*.exe
+*.msi
+*.dll
+# OS junk
+Thumbs.db
+desktop.ini
